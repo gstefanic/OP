@@ -1,0 +1,9 @@
+true
+false
+false
+2
+6
+43
+Izjema!
+4
+41

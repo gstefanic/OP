@@ -1,0 +1,1241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+          "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>Prikaz rezultatov testiranja</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+            .tableBase { border-collapse: collapse; }
+            .tableBase > tbody > tr > td { border: 1px solid black; padding: 7px;}
+            .tableResults { table-layout: fixed; border-spacing: 0px; border-collapse: separate; }
+            table#nasredini { margin-left:auto; margin-right:auto; }
+            table tbody td.hoverOk {background-color:#9F9; border: 1px solid #63B563; width: 15px; color: black; text-align: center; }
+            .hoverOk:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #63B563; }
+            .hoverOk:hover td { background: transparent; }
+            .hoverOk > a:link, .hoverOk > a:visited, .hoverOk > a:hover, .hoverOk > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverErr {background-color:#FFBF00; border: 1px solid #CB9800; width: 15px; color: black; text-align: center; }
+            .hoverErr:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #CB9800; }
+            .hoverErr:hover td { background: transparent; }
+            .hoverErr > a:link, .hoverErr > a:visited, .hoverErr > a:hover, .hoverErr > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverRuntime {background-color:#FF9; border: 1px solid #D8D87E; width: 15px; color: black; text-align: center; }
+            .hoverRuntime:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #D8D87E; }
+            .hoverRuntime:hover td { background: transparent; }
+            .hoverRuntime > a:link, .hoverRuntime > a:visited, .hoverRuntime > a:hover, .hoverRuntime > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverCompile {background-color:#C00000; border: 1px solid #710B0B; width: 15px; color: black; text-align: center; }
+            .hoverCompile:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #710B0B; }
+            .hoverCompile:hover td { background: transparent; }
+            .hoverCompile > a:link, .hoverCompile > a:visited, .hoverCompile > a:hover, .hoverCompile > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverMissing {background-color:#F0F0F0; border: 1px solid #ABABAB; width: 15px; color: black; text-align: center; }
+            .hoverMissing:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #ABABAB; }
+            .hoverMissing:hover td { background: transparent; }
+            .hoverMissing > a:link, .hoverMissing > a:visited, .hoverMissing > a:hover, .hoverMissing > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverTimeout {background-color:#B9F; border: 1px solid #9070CE; width: 15px; color: black; text-align: center; }
+            .hoverTimeout:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #9070CE; }
+            .hoverTimeout:hover td { background: transparent; }
+            .hoverTimeout > a:link, .hoverTimeout > a:visited, .hoverTimeout > a:hover, .hoverTimeout > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverImage {background-color:#D0E0F0; border: 1px solid #a6b3c0; width: 15px; color: black; text-align: center; }
+            .hoverImage:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #a6b3c0; }
+            .hoverImage:hover td { background: transparent; }
+            .hoverImage > a:link, .hoverImage > a:visited, .hoverImage > a:hover, .hoverImage > a:active { color: black; font-size: 0.9em; }
+            .tableCommon { border-collapse: collapse; }
+            .tableOK > tbody > tr > td { border: 1px solid #63B563; padding: 7px;}
+            .tableError > tbody > tr > td { border: 1px solid #CB9800; padding: 7px;}
+            .tableRuntime > tbody > tr > td { border: 1px solid #D8D87E; padding: 7px;}
+            .tableCompiler > tbody > tr > td { border: 1px solid #710B0B; padding: 7px;}
+            .tableMissing > tbody > tr > td { border: 1px solid #ABABAB; padding: 7px;}
+            .tableTimeout > tbody > tr > td { border: 1px solid #9070CE; padding: 7px;}
+            .tableImage > tbody > tr > td { border: 1px solid #a6b3c0; padding: 7px;}
+            .tableSummary { table-layout: fixed; }
+            .texttt { font-family: DejaVu Sans Mono, monospace; font-size: 0.8em; }
+            table.diff > tbody > tr > td { border: none; font-family: DejaVu Sans Mono, monospace}
+            .diff_add { color: green; font-family: DejaVu Sans Mono, monospace; }
+            .diff_sub { color: blue; font-family: DejaVu Sans Mono, monospace; }
+            .diff_chg { color: red; font-family: DejaVu Sans Mono, monospace; }
+            a { color: blue; text-decoration: none; height: 100%; width: 100%; vertical-align: middle; }
+            a:link { color: blue; text-decoration: none; }
+            a:link { color: blue; text-decoration: none; }
+            a:hover { color: blue; text-decoration: underline; }
+            body, td { font: normal normal 100%/1.0 DejaVu Sans, sans-serif; }
+            h1 { font-weight: bold; font-size: 150%; }
+            h2 { font-weight: normal; font-size: 125%; border-top: 1px solid black; border-bottom: 1px solid black; background: #DEF; padding: 5px; margin-top: 36px; margin-bottom: 36px}
+            .container{ margin: 0px auto; width: 70%; min-width: 700px; margin-top: 1.8cm; margin-bottom: 1.8cm; }
+            .rwordb{ color: blue; font-weight: bold; }
+            .rwordv{ color:#8000ff; font-weight: bold; }
+            .vcomment{ color: green; }
+            .bcomment{ color: green; }
+            .niz{ color:#a31515; }
+            .stevilo{ color:#ff8000; }
+            tab { padding-left: 4em; }
+            #grad1 {
+                background: -webkit-linear-gradient(left, #E0E0E0 , white);
+                background: -o-linear-gradient(right, #E0E0E0, white);
+                background: -moz-linear-gradient(right, #E0E0E0, white);
+                background: linear-gradient(to right, #E0E0E0 , white);
+            }
+            #grad2 {
+                background: -webkit-linear-gradient(left, #FFBF00 , white);
+                background: -o-linear-gradient(right, #FFBF00, white);
+                background: -moz-linear-gradient(right, #FFBF00, white);
+                background: linear-gradient(to right, #FFBF00 , white);
+            }
+            .capSlika { display:block; height: 25px; margin:0 auto; font-size: 1.0em; text-align: left; }
+            .dborder { padding: 0px; border: 1px solid #CACACA; }
+            .capText { display: block; margin:0 auto; font-size: 0.9em; text-align: left; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <a name="top"></a>
+        <h1 id="grad2" style="padding: 10px; border: 0px solid black; color: #000000;">Rezultati preverjanja <span style="color: #700000;">Naloga05.java</span> (1/10)</h1>
+        <div style="height: 20px"></div>
+        <a name="summary"></a>
+        <h2>Povzetek rezultatov</h2>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase1">1</a></td>
+                <td class="hoverErr"><a href="#testcase2">2</a></td>
+                <td class="hoverErr"><a href="#testcase3">3</a></td>
+                <td class="hoverErr"><a href="#testcase4">4</a></td>
+                <td class="hoverErr"><a href="#testcase5">5</a></td>
+                <td class="hoverErr"><a href="#testcase6">6</a></td>
+                <td class="hoverErr"><a href="#testcase7">7</a></td>
+                <td class="hoverErr"><a href="#testcase8">8</a></td>
+                <td class="hoverErr"><a href="#testcase9">9</a></td>
+                <td class="hoverErr"><a href="#testcase10">10</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <div style="height: 20px"></div>
+        <h2>Rezultati</h2>
+        <a name="testcase1"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 1</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            30<br/>
+-16<br/>
+10<br/>
+-450<br/>
+450<br/>
+-24<br/>
+700<br/>
+-140<br/>
+-90<br/>
+-61<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            30&nbsp;30&nbsp;30.00&nbsp;0.00<br/>30&nbsp;-16&nbsp;7.00&nbsp;23.00<br/>30&nbsp;-16&nbsp;8.00&nbsp;18.83<br/>30&nbsp;-450&nbsp;-106.50&nbsp;198.99<br/>450&nbsp;-450&nbsp;4.80&nbsp;285.01<br/>450&nbsp;-450&nbsp;0.00&nbsp;260.39<br/>700&nbsp;-450&nbsp;100.00&nbsp;343.68<br/>700&nbsp;-450&nbsp;70.00&nbsp;331.14<br/>700&nbsp;-450&nbsp;52.22&nbsp;316.23<br/>700&nbsp;-450&nbsp;40.90&nbsp;301.91<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase2"></a>
+        <div style="border: 1px solid #CB9800">
+            <table class="tableError tableCommon" style="width: 100%; border: 3px solid #FFBF00;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #FFBF00; color: black;">Testni primer 2</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            -73504<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -73504&nbsp;-73504&nbsp;-73504.00&nbsp;NaN<br/><br/>
+                        </td>
+                    </tr>
+                    <td>Referenčni izhod</td>
+                        <td class="texttt">
+                            -73504&nbsp;-73504&nbsp;-73504.00&nbsp;0.00<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase3"></a>
+        <div style="border: 1px solid #CB9800">
+            <table class="tableError tableCommon" style="width: 100%; border: 3px solid #FFBF00;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #FFBF00; color: black;">Testni primer 3</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            192166<br/>
+399256<br/>
+-418848<br/>
+373655<br/>
+628925<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            192166&nbsp;192166&nbsp;192166.00&nbsp;NaN<br/>399256&nbsp;192166&nbsp;295711.00&nbsp;NaN<br/>399256&nbsp;-418848&nbsp;57524.67&nbsp;NaN<br/>399256&nbsp;-418848&nbsp;136557.25&nbsp;NaN<br/>628925&nbsp;-418848&nbsp;235030.80&nbsp;NaN<br/><br/>
+                        </td>
+                    </tr>
+                    <td>Referenčni izhod</td>
+                        <td class="texttt">
+                            192166&nbsp;192166&nbsp;192166.00&nbsp;0.00<br/>399256&nbsp;192166&nbsp;295711.00&nbsp;103545.00<br/>399256&nbsp;-418848&nbsp;57524.67&nbsp;347294.07<br/>399256&nbsp;-418848&nbsp;136557.25&nbsp;330451.70<br/>628925&nbsp;-418848&nbsp;235030.80&nbsp;355171.54<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase4"></a>
+        <div style="border: 1px solid #CB9800">
+            <table class="tableError tableCommon" style="width: 100%; border: 3px solid #FFBF00;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #FFBF00; color: black;">Testni primer 4</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            993871<br/>
+519782<br/>
+338464<br/>
+-609723<br/>
+-114430<br/>
+663515<br/>
+-302537<br/>
+-912094<br/>
+565612<br/>
+548605<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            993871&nbsp;993871&nbsp;993871.00&nbsp;NaN<br/>993871&nbsp;519782&nbsp;756826.50&nbsp;NaN<br/>993871&nbsp;338464&nbsp;617372.33&nbsp;NaN<br/>993871&nbsp;-609723&nbsp;310598.50&nbsp;NaN<br/>993871&nbsp;-609723&nbsp;225592.80&nbsp;NaN<br/>993871&nbsp;-609723&nbsp;298579.83&nbsp;NaN<br/>993871&nbsp;-609723&nbsp;212706.00&nbsp;NaN<br/>993871&nbsp;-912094&nbsp;72106.00&nbsp;NaN<br/>993871&nbsp;-912094&nbsp;126940.00&nbsp;NaN<br/>993871&nbsp;-912094&nbsp;169106.50&nbsp;NaN<br/><br/>
+                        </td>
+                    </tr>
+                    <td>Referenčni izhod</td>
+                        <td class="texttt">
+                            993871&nbsp;993871&nbsp;993871.00&nbsp;0.00<br/>993871&nbsp;519782&nbsp;756826.50&nbsp;237044.50<br/>993871&nbsp;338464&nbsp;617372.33&nbsp;276324.07<br/>993871&nbsp;-609723&nbsp;310598.50&nbsp;582749.34<br/>993871&nbsp;-609723&nbsp;225592.80&nbsp;548252.97<br/>993871&nbsp;-609723&nbsp;298579.83&nbsp;526421.85<br/>993871&nbsp;-609723&nbsp;212706.00&nbsp;530826.99<br/>993871&nbsp;-912094&nbsp;72106.00&nbsp;620430.21<br/>993871&nbsp;-912094&nbsp;126940.00&nbsp;605158.97<br/>993871&nbsp;-912094&nbsp;169106.50&nbsp;587875.64<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase5"></a>
+        <div style="border: 1px solid #CB9800">
+            <table class="tableError tableCommon" style="width: 100%; border: 3px solid #FFBF00;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #FFBF00; color: black;">Testni primer 5</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            -963457<br/>
+-896034<br/>
+-708822<br/>
+16125<br/>
+-546273<br/>
+96449<br/>
+-377131<br/>
+-792033<br/>
+-87728<br/>
+-374777<br/>
+551295<br/>
+-646270<br/>
+588884<br/>
+-986103<br/>
+-898653<br/>
+327689<br/>
+298066<br/>
+-557627<br/>
+934549<br/>
+278486<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -963457&nbsp;-963457&nbsp;-963457.00&nbsp;NaN<br/>-896034&nbsp;-963457&nbsp;-929745.50&nbsp;NaN<br/>-708822&nbsp;-963457&nbsp;-856104.33&nbsp;NaN<br/>16125&nbsp;-963457&nbsp;-638047.00&nbsp;NaN<br/>16125&nbsp;-963457&nbsp;-619692.20&nbsp;NaN<br/>96449&nbsp;-963457&nbsp;-500335.33&nbsp;NaN<br/>96449&nbsp;-963457&nbsp;-482734.71&nbsp;NaN<br/>96449&nbsp;-963457&nbsp;-521397.00&nbsp;NaN<br/>96449&nbsp;-963457&nbsp;-473211.56&nbsp;NaN<br/>96449&nbsp;-963457&nbsp;-463368.10&nbsp;NaN<br/>551295&nbsp;-963457&nbsp;-371126.00&nbsp;NaN<br/>551295&nbsp;-963457&nbsp;-394054.67&nbsp;NaN<br/>588884&nbsp;-963457&nbsp;-318444.00&nbsp;NaN<br/>588884&nbsp;-986103&nbsp;-366133.93&nbsp;NaN<br/>588884&nbsp;-986103&nbsp;-401635.20&nbsp;NaN<br/>588884&nbsp;-986103&nbsp;-356052.44&nbsp;NaN<br/>588884&nbsp;-986103&nbsp;-317574.88&nbsp;NaN<br/>588884&nbsp;-986103&nbsp;-330911.11&nbsp;NaN<br/>934549&nbsp;-986103&nbsp;-264307.95&nbsp;NaN<br/>934549&nbsp;-986103&nbsp;-237168.25&nbsp;NaN<br/><br/>
+                        </td>
+                    </tr>
+                    <td>Referenčni izhod</td>
+                        <td class="texttt">
+                            -963457&nbsp;-963457&nbsp;-963457.00&nbsp;0.00<br/>-896034&nbsp;-963457&nbsp;-929745.50&nbsp;33711.50<br/>-708822&nbsp;-963457&nbsp;-856104.33&nbsp;107720.41<br/>16125&nbsp;-963457&nbsp;-638047.00&nbsp;389036.97<br/>16125&nbsp;-963457&nbsp;-619692.20&nbsp;349896.28<br/>96449&nbsp;-963457&nbsp;-500335.33&nbsp;416236.89<br/>96449&nbsp;-963457&nbsp;-482734.71&nbsp;387764.61<br/>96449&nbsp;-963457&nbsp;-521397.00&nbsp;376868.18<br/>96449&nbsp;-963457&nbsp;-473211.56&nbsp;380556.50<br/>96449&nbsp;-963457&nbsp;-463368.10&nbsp;362233.30<br/>551295&nbsp;-963457&nbsp;-371126.00&nbsp;452073.63<br/>551295&nbsp;-963457&nbsp;-394054.67&nbsp;439457.22<br/>588884&nbsp;-963457&nbsp;-318444.00&nbsp;496860.88<br/>588884&nbsp;-986103&nbsp;-366133.93&nbsp;508727.23<br/>588884&nbsp;-986103&nbsp;-401635.20&nbsp;509111.57<br/>588884&nbsp;-986103&nbsp;-356052.44&nbsp;523604.58<br/>588884&nbsp;-986103&nbsp;-317574.88&nbsp;530775.80<br/>588884&nbsp;-986103&nbsp;-330911.11&nbsp;518743.88<br/>934549&nbsp;-986103&nbsp;-264307.95&nbsp;578601.74<br/>934549&nbsp;-986103&nbsp;-237168.25&nbsp;576225.37<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase6"></a>
+        <div style="border: 1px solid #CB9800">
+            <table class="tableError tableCommon" style="width: 100%; border: 3px solid #FFBF00;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #FFBF00; color: black;">Testni primer 6</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            528692<br/>
+545280<br/>
+-148728<br/>
+176722<br/>
+-23169<br/>
+-996562<br/>
+252689<br/>
+-554254<br/>
+-75773<br/>
+892797<br/>
+-397245<br/>
+627029<br/>
+480260<br/>
+-294101<br/>
+610943<br/>
+569375<br/>
+682783<br/>
+-442063<br/>
+310259<br/>
+-223593<br/>
+932076<br/>
+-670915<br/>
+-318733<br/>
+-589381<br/>
+973667<br/>
+653801<br/>
+-502504<br/>
+-671188<br/>
+-734936<br/>
+-10929<br/>
+-609905<br/>
+-774897<br/>
+833551<br/>
+-850741<br/>
+568626<br/>
+-256762<br/>
+753535<br/>
+-248463<br/>
+-498597<br/>
+-370446<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            528692&nbsp;528692&nbsp;528692.00&nbsp;NaN<br/>545280&nbsp;528692&nbsp;536986.00&nbsp;NaN<br/>545280&nbsp;-148728&nbsp;308414.67&nbsp;NaN<br/>545280&nbsp;-148728&nbsp;275491.50&nbsp;NaN<br/>545280&nbsp;-148728&nbsp;215759.40&nbsp;NaN<br/>545280&nbsp;-996562&nbsp;13705.83&nbsp;NaN<br/>545280&nbsp;-996562&nbsp;47846.29&nbsp;NaN<br/>545280&nbsp;-996562&nbsp;-27416.25&nbsp;NaN<br/>545280&nbsp;-996562&nbsp;-32789.22&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;59769.40&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;18222.64&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;68956.50&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;100595.23&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;72402.64&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;108305.33&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;137122.19&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;169219.88&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;135259.72&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;144470.21&nbsp;NaN<br/>892797&nbsp;-996562&nbsp;126067.05&nbsp;NaN<br/>932076&nbsp;-996562&nbsp;164448.43&nbsp;NaN<br/>932076&nbsp;-996562&nbsp;126477.36&nbsp;NaN<br/>932076&nbsp;-996562&nbsp;107120.39&nbsp;NaN<br/>932076&nbsp;-996562&nbsp;78099.50&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;113922.20&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;134686.77&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;111087.11&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;83148.71&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;54938.90&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;52743.30&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;31367.55&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;6171.78&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;31243.88&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;5303.15&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;21398.09&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;13671.42&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;33667.73&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;26243.24&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;12785.79&nbsp;NaN<br/>973667&nbsp;-996562&nbsp;3205.00&nbsp;NaN<br/><br/>
+                        </td>
+                    </tr>
+                    <td>Referenčni izhod</td>
+                        <td class="texttt">
+                            528692&nbsp;528692&nbsp;528692.00&nbsp;0.00<br/>545280&nbsp;528692&nbsp;536986.00&nbsp;8294.00<br/>545280&nbsp;-148728&nbsp;308414.67&nbsp;323319.61<br/>545280&nbsp;-148728&nbsp;275491.50&nbsp;285750.73<br/>545280&nbsp;-148728&nbsp;215759.40&nbsp;282124.94<br/>545280&nbsp;-996562&nbsp;13705.83&nbsp;520054.76<br/>545280&nbsp;-996562&nbsp;47846.29&nbsp;488685.65<br/>545280&nbsp;-996562&nbsp;-27416.25&nbsp;498611.18<br/>545280&nbsp;-996562&nbsp;-32789.22&nbsp;470340.70<br/>892797&nbsp;-996562&nbsp;59769.40&nbsp;525549.45<br/>892797&nbsp;-996562&nbsp;18222.64&nbsp;518029.22<br/>892797&nbsp;-996562&nbsp;68956.50&nbsp;523740.95<br/>892797&nbsp;-996562&nbsp;100595.23&nbsp;514991.60<br/>892797&nbsp;-996562&nbsp;72402.64&nbsp;506561.95<br/>892797&nbsp;-996562&nbsp;108305.33&nbsp;507487.98<br/>892797&nbsp;-996562&nbsp;137122.19&nbsp;503888.59<br/>892797&nbsp;-996562&nbsp;169219.88&nbsp;505422.99<br/>892797&nbsp;-996562&nbsp;135259.72&nbsp;510750.98<br/>892797&nbsp;-996562&nbsp;144470.21&nbsp;498661.95<br/>892797&nbsp;-996562&nbsp;126067.05&nbsp;492610.81<br/>932076&nbsp;-996562&nbsp;164448.43&nbsp;510463.04<br/>932076&nbsp;-996562&nbsp;126477.36&nbsp;528210.32<br/>932076&nbsp;-996562&nbsp;107120.39&nbsp;524517.57<br/>932076&nbsp;-996562&nbsp;78099.50&nbsp;532002.14<br/>973667&nbsp;-996562&nbsp;113922.20&nbsp;550003.28<br/>973667&nbsp;-996562&nbsp;134686.77&nbsp;549224.94<br/>973667&nbsp;-996562&nbsp;111087.11&nbsp;552228.60<br/>973667&nbsp;-996562&nbsp;83148.71&nbsp;561373.39<br/>973667&nbsp;-996562&nbsp;54938.90&nbsp;571450.27<br/>973667&nbsp;-996562&nbsp;52743.30&nbsp;561969.78<br/>973667&nbsp;-996562&nbsp;31367.55&nbsp;565093.17<br/>973667&nbsp;-996562&nbsp;6171.78&nbsp;573612.11<br/>973667&nbsp;-996562&nbsp;31243.88&nbsp;582387.96<br/>973667&nbsp;-996562&nbsp;5303.15&nbsp;592795.41<br/>973667&nbsp;-996562&nbsp;21398.09&nbsp;591754.86<br/>973667&nbsp;-996562&nbsp;13671.42&nbsp;585266.02<br/>973667&nbsp;-996562&nbsp;33667.73&nbsp;589638.25<br/>973667&nbsp;-996562&nbsp;26243.24&nbsp;583578.20<br/>973667&nbsp;-996562&nbsp;12785.79&nbsp;581990.57<br/>973667&nbsp;-996562&nbsp;3205.00&nbsp;577775.97<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase7"></a>
+        <div style="border: 1px solid #CB9800">
+            <table class="tableError tableCommon" style="width: 100%; border: 3px solid #FFBF00;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #FFBF00; color: black;">Testni primer 7</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            -495059<br/>
+749313<br/>
+459354<br/>
+1812<br/>
+561785<br/>
+708606<br/>
+-173974<br/>
+285577<br/>
+-874559<br/>
+817060<br/>
+-974274<br/>
+718857<br/>
+438649<br/>
+-614032<br/>
+-692543<br/>
+767246<br/>
+38861<br/>
+-404389<br/>
+-395062<br/>
+-920071<br/>
+-250632<br/>
+731879<br/>
+-726398<br/>
+-412134<br/>
+-735539<br/>
+560520<br/>
+-270151<br/>
+-418835<br/>
+-805390<br/>
+831224<br/>
+362208<br/>
+-196817<br/>
+426826<br/>
+-636442<br/>
+-671007<br/>
+-154820<br/>
+-406052<br/>
+-914764<br/>
+-179476<br/>
+251882<br/>
+948093<br/>
+-267151<br/>
+-750774<br/>
+908820<br/>
+-350663<br/>
+-927821<br/>
+742530<br/>
+-796157<br/>
+951082<br/>
+-49247<br/>
+854161<br/>
+-72011<br/>
+-699549<br/>
+-936849<br/>
+863206<br/>
+-18503<br/>
+656414<br/>
+-700751<br/>
+259413<br/>
+-842598<br/>
+207788<br/>
+-46063<br/>
+753449<br/>
+123369<br/>
+850648<br/>
+-465944<br/>
+-876955<br/>
+-149824<br/>
+270928<br/>
+-282553<br/>
+-706678<br/>
+-224460<br/>
+-730665<br/>
+664937<br/>
+-603737<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -495059&nbsp;-495059&nbsp;-495059.00&nbsp;NaN<br/>749313&nbsp;-495059&nbsp;127127.00&nbsp;NaN<br/>749313&nbsp;-495059&nbsp;237869.33&nbsp;NaN<br/>749313&nbsp;-495059&nbsp;178855.00&nbsp;NaN<br/>749313&nbsp;-495059&nbsp;255441.00&nbsp;NaN<br/>749313&nbsp;-495059&nbsp;330968.50&nbsp;NaN<br/>749313&nbsp;-495059&nbsp;258833.86&nbsp;NaN<br/>749313&nbsp;-495059&nbsp;262176.75&nbsp;NaN<br/>749313&nbsp;-874559&nbsp;135872.78&nbsp;NaN<br/>817060&nbsp;-874559&nbsp;203991.50&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;96876.45&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;148708.17&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;171011.31&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;114936.79&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;61104.80&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;105238.63&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;101334.06&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;73238.33&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;48590.95&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;157.85&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;-11784.52&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;22018.36&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;-10521.48&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;-27255.33&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;-55586.68&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;-31890.27&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;-40714.74&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;-54219.04&nbsp;NaN<br/>817060&nbsp;-974274&nbsp;-80121.48&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-49743.30&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-36454.55&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-41465.88&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-27275.21&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-45191.88&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-63072.31&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-65620.86&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-74821.70&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-96925.45&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-99042.13&nbsp;NaN<br/>831224&nbsp;-974274&nbsp;-90269.03&nbsp;NaN<br/>948093&nbsp;-974274&nbsp;-64943.12&nbsp;NaN<br/>948093&nbsp;-974274&nbsp;-69757.60&nbsp;NaN<br/>948093&nbsp;-974274&nbsp;-85595.19&nbsp;NaN<br/>948093&nbsp;-974274&nbsp;-62994.84&nbsp;NaN<br/>948093&nbsp;-974274&nbsp;-69387.47&nbsp;NaN<br/>948093&nbsp;-974274&nbsp;-88049.07&nbsp;NaN<br/>948093&nbsp;-974274&nbsp;-70377.17&nbsp;NaN<br/>948093&nbsp;-974274&nbsp;-85497.58&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-64342.90&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-64040.98&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-46037.02&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-46536.52&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-58857.51&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-75116.61&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-58056.20&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-57349.89&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-44827.72&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-56136.74&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-50788.44&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-63985.27&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-59529.97&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-59312.76&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-46411.78&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-43758.95&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-29998.85&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-36604.08&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-49146.63&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-50627.18&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-45966.96&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-49346.76&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-58604.94&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-60908.49&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-70083.23&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-60150.53&nbsp;NaN<br/>951082&nbsp;-974274&nbsp;-67398.35&nbsp;NaN<br/><br/>
+                        </td>
+                    </tr>
+                    <td>Referenčni izhod</td>
+                        <td class="texttt">
+                            -495059&nbsp;-495059&nbsp;-495059.00&nbsp;0.00<br/>749313&nbsp;-495059&nbsp;127127.00&nbsp;622186.00<br/>749313&nbsp;-495059&nbsp;237869.33&nbsp;531605.75<br/>749313&nbsp;-495059&nbsp;178855.00&nbsp;471594.72<br/>749313&nbsp;-495059&nbsp;255441.00&nbsp;448757.09<br/>749313&nbsp;-495059&nbsp;330968.50&nbsp;443103.96<br/>749313&nbsp;-495059&nbsp;258833.86&nbsp;446668.59<br/>749313&nbsp;-495059&nbsp;262176.75&nbsp;417913.81<br/>749313&nbsp;-874559&nbsp;135872.78&nbsp;531853.11<br/>817060&nbsp;-874559&nbsp;203991.50&nbsp;544373.40<br/>817060&nbsp;-974274&nbsp;96876.45&nbsp;619789.08<br/>817060&nbsp;-974274&nbsp;148708.17&nbsp;617801.55<br/>817060&nbsp;-974274&nbsp;171011.31&nbsp;598571.64<br/>817060&nbsp;-974274&nbsp;114936.79&nbsp;611205.85<br/>817060&nbsp;-974274&nbsp;61104.80&nbsp;623889.50<br/>817060&nbsp;-974274&nbsp;105238.63&nbsp;627795.86<br/>817060&nbsp;-974274&nbsp;101334.06&nbsp;609251.67<br/>817060&nbsp;-974274&nbsp;73238.33&nbsp;603311.98<br/>817060&nbsp;-974274&nbsp;48590.95&nbsp;596458.81<br/>817060&nbsp;-974274&nbsp;157.85&nbsp;618501.81<br/>817060&nbsp;-974274&nbsp;-11784.52&nbsp;605954.20<br/>817060&nbsp;-974274&nbsp;22018.36&nbsp;611952.45<br/>817060&nbsp;-974274&nbsp;-10521.48&nbsp;617655.51<br/>817060&nbsp;-974274&nbsp;-27255.33&nbsp;609953.33<br/>817060&nbsp;-974274&nbsp;-55586.68&nbsp;613535.09<br/>817060&nbsp;-974274&nbsp;-31890.27&nbsp;613176.49<br/>817060&nbsp;-974274&nbsp;-40714.74&nbsp;603394.29<br/>817060&nbsp;-974274&nbsp;-54219.04&nbsp;596661.99<br/>817060&nbsp;-974274&nbsp;-80121.48&nbsp;602092.77<br/>831224&nbsp;-974274&nbsp;-49743.30&nbsp;614161.25<br/>831224&nbsp;-974274&nbsp;-36454.55&nbsp;608542.70<br/>831224&nbsp;-974274&nbsp;-41465.88&nbsp;599608.29<br/>831224&nbsp;-974274&nbsp;-27275.21&nbsp;595885.26<br/>831224&nbsp;-974274&nbsp;-45191.88&nbsp;596010.88<br/>831224&nbsp;-974274&nbsp;-63072.31&nbsp;596615.21<br/>831224&nbsp;-974274&nbsp;-65620.86&nbsp;588463.71<br/>831224&nbsp;-974274&nbsp;-74821.70&nbsp;583076.29<br/>831224&nbsp;-974274&nbsp;-96925.45&nbsp;590854.02<br/>831224&nbsp;-974274&nbsp;-99042.13&nbsp;583375.71<br/>831224&nbsp;-974274&nbsp;-90269.03&nbsp;578636.99<br/>948093&nbsp;-974274&nbsp;-64943.12&nbsp;593557.46<br/>948093&nbsp;-974274&nbsp;-69757.60&nbsp;587258.43<br/>948093&nbsp;-974274&nbsp;-85595.19&nbsp;589395.46<br/>948093&nbsp;-974274&nbsp;-62994.84&nbsp;601211.44<br/>948093&nbsp;-974274&nbsp;-69387.47&nbsp;596004.15<br/>948093&nbsp;-974274&nbsp;-88049.07&nbsp;602636.08<br/>948093&nbsp;-974274&nbsp;-70377.17&nbsp;608119.09<br/>948093&nbsp;-974274&nbsp;-85497.58&nbsp;610614.39<br/>951082&nbsp;-974274&nbsp;-64342.90&nbsp;621869.56<br/>951082&nbsp;-974274&nbsp;-64040.98&nbsp;615623.08<br/>951082&nbsp;-974274&nbsp;-46037.02&nbsp;622709.96<br/>951082&nbsp;-974274&nbsp;-46536.52&nbsp;616703.62<br/>951082&nbsp;-974274&nbsp;-58857.51&nbsp;617285.50<br/>951082&nbsp;-974274&nbsp;-75116.61&nbsp;622893.30<br/>951082&nbsp;-974274&nbsp;-58056.20&nbsp;629808.47<br/>951082&nbsp;-974274&nbsp;-57349.89&nbsp;624181.82<br/>951082&nbsp;-974274&nbsp;-44827.72&nbsp;625738.67<br/>951082&nbsp;-974274&nbsp;-56136.74&nbsp;626169.30<br/>951082&nbsp;-974274&nbsp;-50788.44&nbsp;622174.80<br/>951082&nbsp;-974274&nbsp;-63985.27&nbsp;625239.96<br/>951082&nbsp;-974274&nbsp;-59529.97&nbsp;621053.45<br/>951082&nbsp;-974274&nbsp;-59312.76&nbsp;616026.93<br/>951082&nbsp;-974274&nbsp;-46411.78&nbsp;619503.45<br/>951082&nbsp;-974274&nbsp;-43758.95&nbsp;615005.09<br/>951082&nbsp;-974274&nbsp;-29998.85&nbsp;620104.92<br/>951082&nbsp;-974274&nbsp;-36604.08&nbsp;617689.07<br/>951082&nbsp;-974274&nbsp;-49146.63&nbsp;621472.44<br/>951082&nbsp;-974274&nbsp;-50627.18&nbsp;617004.89<br/>951082&nbsp;-974274&nbsp;-45966.96&nbsp;613721.85<br/>951082&nbsp;-974274&nbsp;-49346.76&nbsp;609968.79<br/>951082&nbsp;-974274&nbsp;-58604.94&nbsp;610591.19<br/>951082&nbsp;-974274&nbsp;-60908.49&nbsp;606646.74<br/>951082&nbsp;-974274&nbsp;-70083.23&nbsp;607486.27<br/>951082&nbsp;-974274&nbsp;-60150.53&nbsp;609306.67<br/>951082&nbsp;-974274&nbsp;-67398.35&nbsp;608433.93<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase8"></a>
+        <div style="border: 1px solid #CB9800">
+            <table class="tableError tableCommon" style="width: 100%; border: 3px solid #FFBF00;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #FFBF00; color: black;">Testni primer 8</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            -376261<br/>
+-637800<br/>
+-77688<br/>
+-724116<br/>
+733637<br/>
+91879<br/>
+85523<br/>
+74323<br/>
+605973<br/>
+-230213<br/>
+866502<br/>
+-59525<br/>
+-905185<br/>
+-257307<br/>
+238810<br/>
+-344979<br/>
+-685276<br/>
+-161087<br/>
+869367<br/>
+-340762<br/>
+167162<br/>
+946458<br/>
+-626958<br/>
+-635325<br/>
+-381229<br/>
+380003<br/>
+-508747<br/>
+241117<br/>
+361232<br/>
+-340117<br/>
+628752<br/>
+765087<br/>
+99382<br/>
+990729<br/>
+-31317<br/>
+-354972<br/>
+-813322<br/>
+-180660<br/>
+-668297<br/>
+-169370<br/>
+-623274<br/>
+998853<br/>
+402886<br/>
+947099<br/>
+601759<br/>
+-241067<br/>
+-510325<br/>
+592908<br/>
+-803492<br/>
+-67675<br/>
+500573<br/>
+-908533<br/>
+794156<br/>
+719723<br/>
+-639784<br/>
+887048<br/>
+-280842<br/>
+-13946<br/>
+-652689<br/>
+898975<br/>
+-797998<br/>
+49571<br/>
+261851<br/>
+210839<br/>
+144150<br/>
+-130089<br/>
+-798893<br/>
+-769902<br/>
+-706099<br/>
+189451<br/>
+832750<br/>
+-621756<br/>
+304628<br/>
+-763551<br/>
+-531432<br/>
+816408<br/>
+662113<br/>
+-973207<br/>
+-951232<br/>
+712170<br/>
+-236256<br/>
+-74540<br/>
+-931786<br/>
+986183<br/>
+-545751<br/>
+660161<br/>
+309099<br/>
+511812<br/>
+-974511<br/>
+494899<br/>
+-306605<br/>
+742379<br/>
+-387213<br/>
+-915860<br/>
+-278272<br/>
+-26783<br/>
+148623<br/>
+958601<br/>
+314810<br/>
+-509894<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -376261&nbsp;-376261&nbsp;-376261.00&nbsp;NaN<br/>-376261&nbsp;-637800&nbsp;-507030.50&nbsp;NaN<br/>-77688&nbsp;-637800&nbsp;-363916.33&nbsp;NaN<br/>-77688&nbsp;-724116&nbsp;-453966.25&nbsp;NaN<br/>733637&nbsp;-724116&nbsp;-216445.60&nbsp;NaN<br/>733637&nbsp;-724116&nbsp;-165058.17&nbsp;NaN<br/>733637&nbsp;-724116&nbsp;-129260.86&nbsp;NaN<br/>733637&nbsp;-724116&nbsp;-103812.88&nbsp;NaN<br/>733637&nbsp;-724116&nbsp;-24947.78&nbsp;NaN<br/>733637&nbsp;-724116&nbsp;-45474.30&nbsp;NaN<br/>866502&nbsp;-724116&nbsp;37432.64&nbsp;NaN<br/>866502&nbsp;-724116&nbsp;29352.83&nbsp;NaN<br/>866502&nbsp;-905185&nbsp;-42534.69&nbsp;NaN<br/>866502&nbsp;-905185&nbsp;-57875.57&nbsp;NaN<br/>866502&nbsp;-905185&nbsp;-38096.53&nbsp;NaN<br/>866502&nbsp;-905185&nbsp;-57276.69&nbsp;NaN<br/>866502&nbsp;-905185&nbsp;-94217.82&nbsp;NaN<br/>866502&nbsp;-905185&nbsp;-97932.78&nbsp;NaN<br/>869367&nbsp;-905185&nbsp;-47022.26&nbsp;NaN<br/>869367&nbsp;-905185&nbsp;-61709.25&nbsp;NaN<br/>869367&nbsp;-905185&nbsp;-50810.62&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-5480.23&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-32501.00&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-57618.67&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-70563.08&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-53233.62&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-70104.48&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-58989.43&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-44499.03&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-54352.97&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-32317.32&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-7398.44&nbsp;NaN<br/>946458&nbsp;-905185&nbsp;-4162.67&nbsp;NaN<br/>990729&nbsp;-905185&nbsp;25098.85&nbsp;NaN<br/>990729&nbsp;-905185&nbsp;23486.97&nbsp;NaN<br/>990729&nbsp;-905185&nbsp;12974.22&nbsp;NaN<br/>990729&nbsp;-905185&nbsp;-9358.11&nbsp;NaN<br/>990729&nbsp;-905185&nbsp;-13866.05&nbsp;NaN<br/>990729&nbsp;-905185&nbsp;-30646.33&nbsp;NaN<br/>990729&nbsp;-905185&nbsp;-34114.42&nbsp;NaN<br/>990729&nbsp;-905185&nbsp;-48484.17&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;-23547.57&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;-13630.51&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;8204.25&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;21394.36&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;15688.67&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;4496.89&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;16755.46&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;15.71&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;-1338.10&nbsp;NaN<br/>998853&nbsp;-905185&nbsp;8503.29&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-9132.02&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;6024.36&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;19241.00&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;7258.73&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;22969.25&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;17639.23&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;17094.66&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;5742.39&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;20629.60&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;7209.48&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;7892.73&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;11923.81&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;15031.86&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;17018.29&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;14789.39&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;2644.88&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-8716.10&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-18823.10&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-15847.76&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-3895.68&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-12477.07&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-8133.16&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-18341.51&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-25182.72&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-14109.16&nbsp;NaN<br/>998853&nbsp;-908533&nbsp;-5327.05&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-17735.77&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-29552.18&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-20280.65&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-22947.01&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-23576.20&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-34518.48&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-22367.27&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-28524.73&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-20516.76&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-16728.07&nbsp;NaN<br/>998853&nbsp;-973207&nbsp;-10721.93&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-21551.02&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-15812.69&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-19008.21&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-10732.26&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-14780.44&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-24366.39&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-27039.08&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-27036.42&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-25225.49&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-15186.45&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-11853.15&nbsp;NaN<br/>998853&nbsp;-974511&nbsp;-16833.56&nbsp;NaN<br/><br/>
+                        </td>
+                    </tr>
+                    <td>Referenčni izhod</td>
+                        <td class="texttt">
+                            -376261&nbsp;-376261&nbsp;-376261.00&nbsp;0.00<br/>-376261&nbsp;-637800&nbsp;-507030.50&nbsp;130769.50<br/>-77688&nbsp;-637800&nbsp;-363916.33&nbsp;228831.32<br/>-77688&nbsp;-724116&nbsp;-453966.25&nbsp;252189.99<br/>733637&nbsp;-724116&nbsp;-216445.60&nbsp;525874.58<br/>733637&nbsp;-724116&nbsp;-165058.17&nbsp;493615.98<br/>733637&nbsp;-724116&nbsp;-129260.86&nbsp;465335.70<br/>733637&nbsp;-724116&nbsp;-103812.88&nbsp;440458.11<br/>733637&nbsp;-724116&nbsp;-24947.78&nbsp;471386.30<br/>733637&nbsp;-724116&nbsp;-45474.30&nbsp;451416.20<br/>866502&nbsp;-724116&nbsp;37432.64&nbsp;503971.27<br/>866502&nbsp;-724116&nbsp;29352.83&nbsp;483259.32<br/>866502&nbsp;-905185&nbsp;-42534.69&nbsp;526866.95<br/>866502&nbsp;-905185&nbsp;-57875.57&nbsp;510705.85<br/>866502&nbsp;-905185&nbsp;-38096.53&nbsp;498908.19<br/>866502&nbsp;-905185&nbsp;-57276.69&nbsp;488744.02<br/>866502&nbsp;-905185&nbsp;-94217.82&nbsp;496642.59<br/>866502&nbsp;-905185&nbsp;-97932.78&nbsp;482892.83<br/>869367&nbsp;-905185&nbsp;-47022.26&nbsp;517268.22<br/>869367&nbsp;-905185&nbsp;-61709.25&nbsp;508218.98<br/>869367&nbsp;-905185&nbsp;-50810.62&nbsp;498360.09<br/>946458&nbsp;-905185&nbsp;-5480.23&nbsp;529363.10<br/>946458&nbsp;-905185&nbsp;-32501.00&nbsp;533014.33<br/>946458&nbsp;-905185&nbsp;-57618.67&nbsp;535515.86<br/>946458&nbsp;-905185&nbsp;-70563.08&nbsp;528514.46<br/>946458&nbsp;-905185&nbsp;-53233.62&nbsp;525444.50<br/>946458&nbsp;-905185&nbsp;-70104.48&nbsp;522749.06<br/>946458&nbsp;-905185&nbsp;-58989.43&nbsp;516568.25<br/>946458&nbsp;-905185&nbsp;-44499.03&nbsp;513342.46<br/>946458&nbsp;-905185&nbsp;-54352.97&nbsp;507496.17<br/>946458&nbsp;-905185&nbsp;-32317.32&nbsp;513625.65<br/>946458&nbsp;-905185&nbsp;-7398.44&nbsp;524229.61<br/>946458&nbsp;-905185&nbsp;-4162.67&nbsp;516550.05<br/>990729&nbsp;-905185&nbsp;25098.85&nbsp;535940.29<br/>990729&nbsp;-905185&nbsp;23486.97&nbsp;528312.13<br/>990729&nbsp;-905185&nbsp;12974.22&nbsp;524622.41<br/>990729&nbsp;-905185&nbsp;-9358.11&nbsp;534550.70<br/>990729&nbsp;-905185&nbsp;-13866.05&nbsp;528182.50<br/>990729&nbsp;-905185&nbsp;-30646.33&nbsp;531529.36<br/>990729&nbsp;-905185&nbsp;-34114.43&nbsp;525289.88<br/>990729&nbsp;-905185&nbsp;-48484.17&nbsp;526743.82<br/>998853&nbsp;-905185&nbsp;-23547.57&nbsp;544378.61<br/>998853&nbsp;-905185&nbsp;-13630.51&nbsp;541836.58<br/>998853&nbsp;-905185&nbsp;8204.25&nbsp;554450.17<br/>998853&nbsp;-905185&nbsp;21394.36&nbsp;555192.42<br/>998853&nbsp;-905185&nbsp;15688.67&nbsp;550456.85<br/>998853&nbsp;-905185&nbsp;4496.89&nbsp;549834.21<br/>998853&nbsp;-905185&nbsp;16755.46&nbsp;550528.99<br/>998853&nbsp;-905185&nbsp;15.71&nbsp;557088.27<br/>998853&nbsp;-905185&nbsp;-1338.10&nbsp;551570.66<br/>998853&nbsp;-905185&nbsp;8503.29&nbsp;550552.04<br/>998853&nbsp;-908533&nbsp;-9132.02&nbsp;559588.94<br/>998853&nbsp;-908533&nbsp;6024.36&nbsp;564957.26<br/>998853&nbsp;-908533&nbsp;19241.00&nbsp;567912.00<br/>998853&nbsp;-908533&nbsp;7258.73&nbsp;569572.65<br/>998853&nbsp;-908533&nbsp;22969.25&nbsp;576363.64<br/>998853&nbsp;-908533&nbsp;17639.23&nbsp;572676.15<br/>998853&nbsp;-908533&nbsp;17094.66&nbsp;567732.71<br/>998853&nbsp;-908533&nbsp;5742.39&nbsp;569501.59<br/>998853&nbsp;-908533&nbsp;20629.60&nbsp;576196.70<br/>998853&nbsp;-908533&nbsp;7209.48&nbsp;580832.13<br/>998853&nbsp;-908533&nbsp;7892.73&nbsp;576153.67<br/>998853&nbsp;-908533&nbsp;11923.81&nbsp;572443.39<br/>998853&nbsp;-908533&nbsp;15031.86&nbsp;568489.08<br/>998853&nbsp;-908533&nbsp;17018.29&nbsp;564322.93<br/>998853&nbsp;-908533&nbsp;14789.39&nbsp;560319.67<br/>998853&nbsp;-908533&nbsp;2644.88&nbsp;564806.59<br/>998853&nbsp;-908533&nbsp;-8716.10&nbsp;568298.36<br/>998853&nbsp;-908533&nbsp;-18823.10&nbsp;570288.26<br/>998853&nbsp;-908533&nbsp;-15847.76&nbsp;566739.28<br/>998853&nbsp;-908533&nbsp;-3895.68&nbsp;571549.84<br/>998853&nbsp;-908533&nbsp;-12477.07&nbsp;572154.36<br/>998853&nbsp;-908533&nbsp;-8133.16&nbsp;569416.21<br/>998853&nbsp;-908533&nbsp;-18341.51&nbsp;572241.76<br/>998853&nbsp;-908533&nbsp;-25182.72&nbsp;571452.40<br/>998853&nbsp;-908533&nbsp;-14109.16&nbsp;575723.73<br/>998853&nbsp;-908533&nbsp;-5327.05&nbsp;577074.25<br/>998853&nbsp;-973207&nbsp;-17735.77&nbsp;583610.70<br/>998853&nbsp;-973207&nbsp;-29552.18&nbsp;589220.65<br/>998853&nbsp;-973207&nbsp;-20280.65&nbsp;591297.01<br/>998853&nbsp;-973207&nbsp;-22947.01&nbsp;588119.43<br/>998853&nbsp;-973207&nbsp;-23576.20&nbsp;584549.77<br/>998853&nbsp;-973207&nbsp;-34518.48&nbsp;589406.26<br/>998853&nbsp;-973207&nbsp;-22367.27&nbsp;596254.25<br/>998853&nbsp;-973207&nbsp;-28524.73&nbsp;595416.96<br/>998853&nbsp;-973207&nbsp;-20516.76&nbsp;596531.52<br/>998853&nbsp;-973207&nbsp;-16728.07&nbsp;594133.06<br/>998853&nbsp;-973207&nbsp;-10721.93&nbsp;593398.01<br/>998853&nbsp;-974511&nbsp;-21551.02&nbsp;598735.73<br/>998853&nbsp;-974511&nbsp;-15812.69&nbsp;597856.13<br/>998853&nbsp;-974511&nbsp;-19008.21&nbsp;595334.48<br/>998853&nbsp;-974511&nbsp;-10732.26&nbsp;597330.25<br/>998853&nbsp;-974511&nbsp;-14780.44&nbsp;595377.62<br/>998853&nbsp;-974511&nbsp;-24366.39&nbsp;599374.10<br/>998853&nbsp;-974511&nbsp;-27039.08&nbsp;596774.01<br/>998853&nbsp;-974511&nbsp;-27036.42&nbsp;593657.67<br/>998853&nbsp;-974511&nbsp;-25225.49&nbsp;590856.13<br/>998853&nbsp;-974511&nbsp;-15186.45&nbsp;596091.02<br/>998853&nbsp;-974511&nbsp;-11853.15&nbsp;593990.09<br/>998853&nbsp;-974511&nbsp;-16833.56&nbsp;593086.53<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase9"></a>
+        <div style="border: 1px solid #CB9800">
+            <table class="tableError tableCommon" style="width: 100%; border: 3px solid #FFBF00;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #FFBF00; color: black;">Testni primer 9</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            624548<br/>
+-200862<br/>
+229750<br/>
+921804<br/>
+487347<br/>
+-369495<br/>
+-135475<br/>
+-909982<br/>
+-44642<br/>
+-731794<br/>
+-627216<br/>
+95298<br/>
+162877<br/>
+-207464<br/>
+-595768<br/>
+-190911<br/>
+-320358<br/>
+913979<br/>
+520382<br/>
+-825709<br/>
+501796<br/>
+62753<br/>
+606532<br/>
+153172<br/>
+-377174<br/>
+308586<br/>
+874450<br/>
+169432<br/>
+-415511<br/>
+-332077<br/>
+857642<br/>
+-803348<br/>
+-664327<br/>
+44925<br/>
+591037<br/>
+118003<br/>
+506799<br/>
+394191<br/>
+733609<br/>
+-700394<br/>
+27026<br/>
+-625430<br/>
+-801316<br/>
+798233<br/>
+-309136<br/>
+-860515<br/>
+-383914<br/>
+451330<br/>
+-296474<br/>
+-691210<br/>
+263376<br/>
+801305<br/>
+96018<br/>
+-736157<br/>
+200651<br/>
+364746<br/>
+173111<br/>
+389208<br/>
+724658<br/>
+309755<br/>
+966226<br/>
+627028<br/>
+-731105<br/>
+-188976<br/>
+288232<br/>
+-368017<br/>
+475959<br/>
+559515<br/>
+-581498<br/>
+-750265<br/>
+-795155<br/>
+-795424<br/>
+-64696<br/>
+419634<br/>
+-53377<br/>
+-693268<br/>
+-520952<br/>
+-351277<br/>
+-587191<br/>
+-964606<br/>
+851337<br/>
+-290302<br/>
+-169791<br/>
+239099<br/>
+-497314<br/>
+633702<br/>
+371626<br/>
+646069<br/>
+-194105<br/>
+407801<br/>
+-519305<br/>
+231859<br/>
+-392208<br/>
+527534<br/>
+534821<br/>
+664212<br/>
+-329113<br/>
+-228819<br/>
+-483355<br/>
+669284<br/>
+-330139<br/>
+209286<br/>
+277234<br/>
+967555<br/>
+364714<br/>
+-247522<br/>
+421012<br/>
+-206638<br/>
+528325<br/>
+-550717<br/>
+586820<br/>
+689100<br/>
+278619<br/>
+-743280<br/>
+-500541<br/>
+809885<br/>
+-20641<br/>
+117661<br/>
+-662980<br/>
+976719<br/>
+-564028<br/>
+-381036<br/>
+-169196<br/>
+-803633<br/>
+-486125<br/>
+615879<br/>
+634670<br/>
+282864<br/>
+-9641<br/>
+-738999<br/>
+-420626<br/>
+-160315<br/>
+-334124<br/>
+481300<br/>
+-996784<br/>
+203668<br/>
+-925252<br/>
+334630<br/>
+-131112<br/>
+358547<br/>
+-516826<br/>
+746304<br/>
+689898<br/>
+738309<br/>
+-211927<br/>
+-770290<br/>
+-912746<br/>
+-827216<br/>
+-332771<br/>
+-363489<br/>
+11583<br/>
+496665<br/>
+18487<br/>
+-132775<br/>
+-290218<br/>
+-91720<br/>
+748590<br/>
+-946054<br/>
+738133<br/>
+-897378<br/>
+940454<br/>
+-893150<br/>
+414427<br/>
+985565<br/>
+-852874<br/>
+803672<br/>
+-298341<br/>
+794939<br/>
+-939843<br/>
+352337<br/>
+-27823<br/>
+911043<br/>
+845008<br/>
+781858<br/>
+608488<br/>
+-233124<br/>
+139899<br/>
+441027<br/>
+432946<br/>
+506278<br/>
+524986<br/>
+-567333<br/>
+223331<br/>
+8775<br/>
+682879<br/>
+-487324<br/>
+-739001<br/>
+-75182<br/>
+641111<br/>
+-348042<br/>
+919448<br/>
+572863<br/>
+761310<br/>
+485910<br/>
+443844<br/>
+-625468<br/>
+352421<br/>
+-150124<br/>
+42444<br/>
+560378<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            624548&nbsp;624548&nbsp;624548.00&nbsp;NaN<br/>624548&nbsp;-200862&nbsp;211843.00&nbsp;NaN<br/>624548&nbsp;-200862&nbsp;217812.00&nbsp;NaN<br/>921804&nbsp;-200862&nbsp;393810.00&nbsp;NaN<br/>921804&nbsp;-200862&nbsp;412517.40&nbsp;NaN<br/>921804&nbsp;-369495&nbsp;282182.00&nbsp;NaN<br/>921804&nbsp;-369495&nbsp;222516.71&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;80954.38&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;66999.22&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-12880.10&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-68728.82&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-55059.92&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-38295.54&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-50379.00&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-86738.27&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-93249.06&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-106608.41&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-49909.11&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-19893.79&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-60184.55&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-33423.57&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-29051.91&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-1417.83&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;5023.42&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-10264.48&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;1999.00&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;34312.00&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;39137.71&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;23460.17&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;11608.93&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;38900.32&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;12580.06&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-7932.27&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-6377.65&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;10691.34&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;13672.22&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;26999.97&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;36662.89&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;54533.31&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;35660.13&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;35449.54&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;19714.31&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;620.58&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;18748.14&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;11461.82&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-7494.20&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-15503.13&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-5777.44&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-11710.02&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-25300.02&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-19639.71&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-3852.31&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-1967.96&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-15564.06&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-11632.87&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-4911.82&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;-1788.61&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;4952.71&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;17151.10&nbsp;NaN<br/>921804&nbsp;-909982&nbsp;22027.83&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;37506.49&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;47014.90&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;34663.79&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;31169.42&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;35124.23&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;29016.03&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;35686.82&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;43390.18&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;34333.83&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;23125.27&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;11600.20&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;391.53&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;-500.08&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;5177.41&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;4396.68&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;-4783.12&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;-11486.61&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;-15842.90&nbsp;NaN<br/>966226&nbsp;-909982&nbsp;-23075.15&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-34844.29&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-23903.78&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-27152.54&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-28871.07&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-25680.95&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-31229.58&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-23497.81&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-18956.16&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-11399.06&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-13451.93&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-8771.34&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-14381.60&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-11705.08&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-15796.51&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-10016.39&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-4281.26&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;2682.21&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-738.36&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-3065.71&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-7917.12&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-1145.11&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-4402.48&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;-2307.49&nbsp;NaN<br/>966226&nbsp;-964606&nbsp;406.50&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;9706.01&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;13087.04&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;10628.46&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;14463.82&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;12416.58&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;17149.69&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;11987.26&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;17165.94&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;23165.35&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;25426.00&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;18682.96&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;14167.97&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;21027.60&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;20671.46&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;21493.41&nbsp;NaN<br/>967555&nbsp;-964606&nbsp;15741.53&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;23749.68&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;18892.01&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;15613.91&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;14111.39&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;7516.68&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;3567.54&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;8427.16&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;13358.20&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;15463.72&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;15269.11&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;9467.05&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;6183.89&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;4922.54&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;2373.32&nbsp;NaN<br/>976719&nbsp;-964606&nbsp;5947.40&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-1480.24&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;28.20&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-6725.67&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-4252.08&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-5164.74&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-2566.80&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-6214.03&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-914.61&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;3916.25&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;9016.20&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;7492.46&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;2165.18&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-4058.71&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-9620.58&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-11789.38&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-14134.04&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-13963.73&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-10604.33&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-10414.19&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-11208.74&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-13008.80&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-13513.36&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-8659.20&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-14592.08&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-9857.96&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-15404.96&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-9467.94&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-14922.77&nbsp;NaN<br/>976719&nbsp;-996784&nbsp;-12288.72&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;-6204.25&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;-11335.58&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;-6425.90&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;-8173.89&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;-3393.46&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;-8934.58&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;-6809.45&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;-6932.34&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;-1595.27&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;3298.39&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;7772.87&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;11205.53&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;9817.29&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;10552.21&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;12970.61&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;15316.84&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;18044.41&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;20845.19&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;17613.44&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;18737.58&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;18683.43&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;22273.68&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;19533.91&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;15477.57&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;14995.34&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;18308.12&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;16379.96&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;21108.07&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;23981.79&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;27802.15&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;30163.53&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;32284.96&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;28929.08&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;30571.17&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;29658.57&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;29722.82&nbsp;NaN<br/>985565&nbsp;-996784&nbsp;32376.10&nbsp;NaN<br/><br/>
+                        </td>
+                    </tr>
+                    <td>Referenčni izhod</td>
+                        <td class="texttt">
+                            624548&nbsp;624548&nbsp;624548.00&nbsp;0.00<br/>624548&nbsp;-200862&nbsp;211843.00&nbsp;412705.00<br/>624548&nbsp;-200862&nbsp;217812.00&nbsp;337077.94<br/>921804&nbsp;-200862&nbsp;393810.00&nbsp;422068.76<br/>921804&nbsp;-200862&nbsp;412517.40&nbsp;379359.33<br/>921804&nbsp;-369495&nbsp;282182.00&nbsp;452619.60<br/>921804&nbsp;-369495&nbsp;222516.71&nbsp;443799.30<br/>921804&nbsp;-909982&nbsp;80954.38&nbsp;559121.96<br/>921804&nbsp;-909982&nbsp;66999.22&nbsp;528620.91<br/>921804&nbsp;-909982&nbsp;-12880.10&nbsp;555807.90<br/>921804&nbsp;-909982&nbsp;-68728.82&nbsp;558595.88<br/>921804&nbsp;-909982&nbsp;-55059.92&nbsp;536732.84<br/>921804&nbsp;-909982&nbsp;-38295.54&nbsp;518935.94<br/>921804&nbsp;-909982&nbsp;-50379.00&nbsp;501953.50<br/>921804&nbsp;-909982&nbsp;-86738.27&nbsp;503654.75<br/>921804&nbsp;-909982&nbsp;-93249.06&nbsp;488313.12<br/>921804&nbsp;-909982&nbsp;-106608.41&nbsp;476737.67<br/>921804&nbsp;-909982&nbsp;-49909.11&nbsp;518945.08<br/>921804&nbsp;-909982&nbsp;-19893.79&nbsp;520909.44<br/>921804&nbsp;-909982&nbsp;-60184.55&nbsp;537236.33<br/>921804&nbsp;-909982&nbsp;-33423.57&nbsp;537774.98<br/>921804&nbsp;-909982&nbsp;-29051.91&nbsp;525792.48<br/>921804&nbsp;-909982&nbsp;-1417.83&nbsp;530318.74<br/>921804&nbsp;-909982&nbsp;5023.42&nbsp;520071.13<br/>921804&nbsp;-909982&nbsp;-10264.48&nbsp;515038.15<br/>921804&nbsp;-909982&nbsp;1999.00&nbsp;508745.16<br/>921804&nbsp;-909982&nbsp;34312.00&nbsp;525721.44<br/>921804&nbsp;-909982&nbsp;39137.71&nbsp;516856.82<br/>921804&nbsp;-909982&nbsp;23460.17&nbsp;514598.10<br/>921804&nbsp;-909982&nbsp;11608.93&nbsp;509958.11<br/>921804&nbsp;-909982&nbsp;38900.32&nbsp;523462.44<br/>921804&nbsp;-909982&nbsp;12580.06&nbsp;535654.23<br/>921804&nbsp;-909982&nbsp;-7932.27&nbsp;540087.90<br/>921804&nbsp;-909982&nbsp;-6377.65&nbsp;532161.09<br/>921804&nbsp;-909982&nbsp;10691.34&nbsp;533863.32<br/>921804&nbsp;-909982&nbsp;13672.22&nbsp;526691.65<br/>921804&nbsp;-909982&nbsp;26999.97&nbsp;525643.73<br/>921804&nbsp;-909982&nbsp;36662.89&nbsp;522000.97<br/>921804&nbsp;-909982&nbsp;54533.31&nbsp;526909.46<br/>921804&nbsp;-909982&nbsp;35660.13&nbsp;533464.55<br/>921804&nbsp;-909982&nbsp;35449.54&nbsp;526920.41<br/>921804&nbsp;-909982&nbsp;19714.31&nbsp;530269.75<br/>921804&nbsp;-909982&nbsp;620.58&nbsp;538478.19<br/>921804&nbsp;-909982&nbsp;18748.14&nbsp;545434.63<br/>921804&nbsp;-909982&nbsp;11461.82&nbsp;541501.46<br/>921804&nbsp;-909982&nbsp;-7494.20&nbsp;550471.87<br/>921804&nbsp;-909982&nbsp;-15503.13&nbsp;547286.61<br/>921804&nbsp;-909982&nbsp;-5777.44&nbsp;545644.82<br/>921804&nbsp;-909982&nbsp;-11710.02&nbsp;541610.16<br/>921804&nbsp;-909982&nbsp;-25300.02&nbsp;544540.59<br/>921804&nbsp;-909982&nbsp;-19639.71&nbsp;540659.04<br/>921804&nbsp;-909982&nbsp;-3852.31&nbsp;547176.53<br/>921804&nbsp;-909982&nbsp;-1967.96&nbsp;542160.21<br/>921804&nbsp;-909982&nbsp;-15564.06&nbsp;546160.83<br/>921804&nbsp;-909982&nbsp;-11632.87&nbsp;541943.44<br/>921804&nbsp;-909982&nbsp;-4911.82&nbsp;539390.85<br/>921804&nbsp;-909982&nbsp;-1788.61&nbsp;535149.03<br/>921804&nbsp;-909982&nbsp;4952.71&nbsp;532951.42<br/>921804&nbsp;-909982&nbsp;17151.10&nbsp;536519.78<br/>921804&nbsp;-909982&nbsp;22027.83&nbsp;533347.05<br/>966226&nbsp;-909982&nbsp;37506.49&nbsp;542375.47<br/>966226&nbsp;-909982&nbsp;47014.90&nbsp;543085.13<br/>966226&nbsp;-909982&nbsp;34663.79&nbsp;547465.01<br/>966226&nbsp;-909982&nbsp;31169.42&nbsp;543878.77<br/>966226&nbsp;-909982&nbsp;35124.23&nbsp;540605.47<br/>966226&nbsp;-909982&nbsp;29016.03&nbsp;538749.79<br/>966226&nbsp;-909982&nbsp;35686.82&nbsp;537453.43<br/>966226&nbsp;-909982&nbsp;43390.18&nbsp;537200.34<br/>966226&nbsp;-909982&nbsp;34333.83&nbsp;538496.99<br/>966226&nbsp;-909982&nbsp;23125.27&nbsp;542683.19<br/>966226&nbsp;-909982&nbsp;11600.20&nbsp;547407.52<br/>966226&nbsp;-909982&nbsp;391.53&nbsp;551736.49<br/>966226&nbsp;-909982&nbsp;-500.08&nbsp;547996.67<br/>966226&nbsp;-909982&nbsp;5177.41&nbsp;546438.75<br/>966226&nbsp;-909982&nbsp;4396.68&nbsp;542825.15<br/>966226&nbsp;-909982&nbsp;-4783.12&nbsp;545070.82<br/>966226&nbsp;-909982&nbsp;-11486.61&nbsp;544664.05<br/>966226&nbsp;-909982&nbsp;-15842.90&nbsp;542509.77<br/>966226&nbsp;-909982&nbsp;-23075.15&nbsp;542836.21<br/>966226&nbsp;-964606&nbsp;-34844.29&nbsp;549481.81<br/>966226&nbsp;-964606&nbsp;-23903.78&nbsp;554777.71<br/>966226&nbsp;-964606&nbsp;-27152.54&nbsp;552159.23<br/>966226&nbsp;-964606&nbsp;-28871.07&nbsp;549043.48<br/>966226&nbsp;-964606&nbsp;-25680.95&nbsp;546538.88<br/>966226&nbsp;-964606&nbsp;-31229.58&nbsp;545689.20<br/>966226&nbsp;-964606&nbsp;-23497.81&nbsp;547170.44<br/>966226&nbsp;-964606&nbsp;-18956.16&nbsp;545644.62<br/>966226&nbsp;-964606&nbsp;-11399.06&nbsp;547095.36<br/>966226&nbsp;-964606&nbsp;-13451.93&nbsp;544353.86<br/>966226&nbsp;-964606&nbsp;-8771.34&nbsp;543119.20<br/>966226&nbsp;-964606&nbsp;-14381.60&nbsp;542742.76<br/>966226&nbsp;-964606&nbsp;-11705.08&nbsp;540388.53<br/>966226&nbsp;-964606&nbsp;-15796.51&nbsp;538906.14<br/>966226&nbsp;-964606&nbsp;-10016.39&nbsp;538922.40<br/>966226&nbsp;-964606&nbsp;-4281.26&nbsp;538954.49<br/>966226&nbsp;-964606&nbsp;2682.21&nbsp;540419.04<br/>966226&nbsp;-964606&nbsp;-738.36&nbsp;538669.76<br/>966226&nbsp;-964606&nbsp;-3065.71&nbsp;536404.37<br/>966226&nbsp;-964606&nbsp;-7917.12&nbsp;535844.97<br/>966226&nbsp;-964606&nbsp;-1145.11&nbsp;537399.93<br/>966226&nbsp;-964606&nbsp;-4402.48&nbsp;535724.12<br/>966226&nbsp;-964606&nbsp;-2307.49&nbsp;533507.16<br/>966226&nbsp;-964606&nbsp;406.50&nbsp;531618.10<br/>967555&nbsp;-964606&nbsp;9706.01&nbsp;537408.45<br/>967555&nbsp;-964606&nbsp;13087.04&nbsp;535953.50<br/>967555&nbsp;-964606&nbsp;10628.46&nbsp;534014.02<br/>967555&nbsp;-964606&nbsp;14463.82&nbsp;532977.56<br/>967555&nbsp;-964606&nbsp;12416.58&nbsp;530926.84<br/>967555&nbsp;-964606&nbsp;17149.69&nbsp;530769.88<br/>967555&nbsp;-964606&nbsp;11987.26&nbsp;531093.70<br/>967555&nbsp;-964606&nbsp;17165.94&nbsp;531478.59<br/>967555&nbsp;-964606&nbsp;23165.35&nbsp;532862.70<br/>967555&nbsp;-964606&nbsp;25426.00&nbsp;531038.86<br/>967555&nbsp;-964606&nbsp;18682.96&nbsp;533541.48<br/>967555&nbsp;-964606&nbsp;14167.97&nbsp;533399.53<br/>967555&nbsp;-964606&nbsp;21027.60&nbsp;536165.65<br/>967555&nbsp;-964606&nbsp;20671.46&nbsp;533883.21<br/>967555&nbsp;-964606&nbsp;21493.41&nbsp;531690.52<br/>967555&nbsp;-964606&nbsp;15741.53&nbsp;533125.82<br/>976719&nbsp;-964606&nbsp;23749.68&nbsp;538039.16<br/>976719&nbsp;-964606&nbsp;18892.01&nbsp;538447.14<br/>976719&nbsp;-964606&nbsp;15613.91&nbsp;537446.87<br/>976719&nbsp;-964606&nbsp;14111.39&nbsp;535514.89<br/>976719&nbsp;-964606&nbsp;7516.68&nbsp;538342.63<br/>976719&nbsp;-964606&nbsp;3567.54&nbsp;537985.26<br/>976719&nbsp;-964606&nbsp;8427.16&nbsp;538593.61<br/>976719&nbsp;-964606&nbsp;13358.20&nbsp;539316.86<br/>976719&nbsp;-964606&nbsp;15463.72&nbsp;537729.79<br/>976719&nbsp;-964606&nbsp;15269.11&nbsp;535646.03<br/>976719&nbsp;-964606&nbsp;9467.05&nbsp;537635.81<br/>976719&nbsp;-964606&nbsp;6183.89&nbsp;536886.44<br/>976719&nbsp;-964606&nbsp;4922.54&nbsp;535043.72<br/>976719&nbsp;-964606&nbsp;2373.32&nbsp;533832.53<br/>976719&nbsp;-964606&nbsp;5947.40&nbsp;533431.74<br/>976719&nbsp;-996784&nbsp;-1480.24&nbsp;538362.71<br/>976719&nbsp;-996784&nbsp;28.20&nbsp;536666.05<br/>976719&nbsp;-996784&nbsp;-6725.67&nbsp;540473.67<br/>976719&nbsp;-996784&nbsp;-4252.08&nbsp;539289.62<br/>976719&nbsp;-996784&nbsp;-5164.74&nbsp;537453.17<br/>976719&nbsp;-996784&nbsp;-2566.80&nbsp;536405.45<br/>976719&nbsp;-996784&nbsp;-6214.03&nbsp;536239.20<br/>976719&nbsp;-996784&nbsp;-914.61&nbsp;538040.23<br/>976719&nbsp;-996784&nbsp;3916.25&nbsp;539237.23<br/>976719&nbsp;-996784&nbsp;9016.20&nbsp;540811.30<br/>976719&nbsp;-996784&nbsp;7492.46&nbsp;539253.30<br/>976719&nbsp;-996784&nbsp;2165.18&nbsp;541218.50<br/>976719&nbsp;-996784&nbsp;-4058.71&nbsp;544591.95<br/>976719&nbsp;-996784&nbsp;-9620.58&nbsp;546922.14<br/>976719&nbsp;-996784&nbsp;-11789.38&nbsp;545721.94<br/>976719&nbsp;-996784&nbsp;-14134.04&nbsp;544652.31<br/>976719&nbsp;-996784&nbsp;-13963.73&nbsp;542849.83<br/>976719&nbsp;-996784&nbsp;-10604.33&nbsp;542633.71<br/>976719&nbsp;-996784&nbsp;-10414.19&nbsp;540862.57<br/>976719&nbsp;-996784&nbsp;-11208.74&nbsp;539193.24<br/>976719&nbsp;-996784&nbsp;-13008.80&nbsp;537915.11<br/>976719&nbsp;-996784&nbsp;-13513.36&nbsp;536225.05<br/>976719&nbsp;-996784&nbsp;-8659.20&nbsp;537942.06<br/>976719&nbsp;-996784&nbsp;-14592.08&nbsp;541365.30<br/>976719&nbsp;-996784&nbsp;-9857.96&nbsp;542931.13<br/>976719&nbsp;-996784&nbsp;-15404.96&nbsp;545732.70<br/>976719&nbsp;-996784&nbsp;-9467.94&nbsp;549193.99<br/>976719&nbsp;-996784&nbsp;-14922.77&nbsp;551853.97<br/>976719&nbsp;-996784&nbsp;-12288.72&nbsp;551179.13<br/>985565&nbsp;-996784&nbsp;-6204.25&nbsp;554959.81<br/>985565&nbsp;-996784&nbsp;-11335.58&nbsp;557164.30<br/>985565&nbsp;-996784&nbsp;-6425.90&nbsp;559052.16<br/>985565&nbsp;-996784&nbsp;-8173.89&nbsp;557830.65<br/>985565&nbsp;-996784&nbsp;-3393.46&nbsp;559588.40<br/>985565&nbsp;-996784&nbsp;-8934.58&nbsp;562534.05<br/>985565&nbsp;-996784&nbsp;-6809.45&nbsp;561557.08<br/>985565&nbsp;-996784&nbsp;-6932.34&nbsp;559914.98<br/>985565&nbsp;-996784&nbsp;-1595.27&nbsp;562630.34<br/>985565&nbsp;-996784&nbsp;3298.39&nbsp;564661.09<br/>985565&nbsp;-996784&nbsp;7772.87&nbsp;566103.66<br/>985565&nbsp;-996784&nbsp;11205.53&nbsp;566297.04<br/>985565&nbsp;-996784&nbsp;9817.29&nbsp;564984.50<br/>985565&nbsp;-996784&nbsp;10552.21&nbsp;563470.60<br/>985565&nbsp;-996784&nbsp;12970.61&nbsp;562806.03<br/>985565&nbsp;-996784&nbsp;15316.84&nbsp;562104.01<br/>985565&nbsp;-996784&nbsp;18044.41&nbsp;561727.04<br/>985565&nbsp;-996784&nbsp;20845.19&nbsp;561432.06<br/>985565&nbsp;-996784&nbsp;17613.44&nbsp;561573.20<br/>985565&nbsp;-996784&nbsp;18737.58&nbsp;560242.04<br/>985565&nbsp;-996784&nbsp;18683.43&nbsp;558718.05<br/>985565&nbsp;-996784&nbsp;22273.68&nbsp;559330.15<br/>985565&nbsp;-996784&nbsp;19533.91&nbsp;559067.88<br/>985565&nbsp;-996784&nbsp;15477.57&nbsp;560308.75<br/>985565&nbsp;-996784&nbsp;14995.34&nbsp;558855.48<br/>985565&nbsp;-996784&nbsp;18308.12&nbsp;559222.83<br/>985565&nbsp;-996784&nbsp;16379.96&nbsp;558378.81<br/>985565&nbsp;-996784&nbsp;21108.07&nbsp;560715.57<br/>985565&nbsp;-996784&nbsp;23981.79&nbsp;560661.90<br/>985565&nbsp;-996784&nbsp;27802.15&nbsp;561707.50<br/>985565&nbsp;-996784&nbsp;30163.53&nbsp;561217.55<br/>985565&nbsp;-996784&nbsp;32284.96&nbsp;560556.00<br/>985565&nbsp;-996784&nbsp;28929.08&nbsp;561084.60<br/>985565&nbsp;-996784&nbsp;30571.17&nbsp;560130.69<br/>985565&nbsp;-996784&nbsp;29658.57&nbsp;558861.23<br/>985565&nbsp;-996784&nbsp;29722.82&nbsp;557456.02<br/>985565&nbsp;-996784&nbsp;32376.10&nbsp;557318.91<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase10"></a>
+        <div style="border: 1px solid #CB9800">
+            <table class="tableError tableCommon" style="width: 100%; border: 3px solid #FFBF00;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #FFBF00; color: black;">Testni primer 10</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            -910620<br/>
+-529943<br/>
+808544<br/>
+444183<br/>
+-846738<br/>
+899649<br/>
+851635<br/>
+-253781<br/>
+-171967<br/>
+348349<br/>
+231569<br/>
+717247<br/>
+-532501<br/>
+241365<br/>
+-523755<br/>
+-753298<br/>
+-712251<br/>
+-457246<br/>
+26581<br/>
+251727<br/>
+10411<br/>
+-562729<br/>
+-607278<br/>
+145049<br/>
+519955<br/>
+-993096<br/>
+25346<br/>
+195124<br/>
+895230<br/>
+78411<br/>
+24367<br/>
+-605078<br/>
+68484<br/>
+242795<br/>
+-530140<br/>
+26953<br/>
+-510914<br/>
+-610973<br/>
+-660817<br/>
+349104<br/>
+-380767<br/>
+178152<br/>
+425459<br/>
+-129540<br/>
+848755<br/>
+-171388<br/>
+717957<br/>
+-816836<br/>
+489677<br/>
+427706<br/>
+-915849<br/>
+51159<br/>
+662316<br/>
+828388<br/>
+-705693<br/>
+-957253<br/>
+529762<br/>
+-765675<br/>
+316630<br/>
+879677<br/>
+295335<br/>
+-580645<br/>
+438492<br/>
+348558<br/>
+362496<br/>
+538195<br/>
+-757673<br/>
+977394<br/>
+798643<br/>
+-744309<br/>
+99687<br/>
+199930<br/>
+-575959<br/>
+-190817<br/>
+850199<br/>
+-531584<br/>
+-100176<br/>
+-978842<br/>
+804706<br/>
+830617<br/>
+421465<br/>
+-116393<br/>
+-366756<br/>
+-186060<br/>
+666092<br/>
+-771796<br/>
+-249843<br/>
+767750<br/>
+762297<br/>
+-333346<br/>
+-810386<br/>
+-618507<br/>
+-920827<br/>
+191893<br/>
+548112<br/>
+914043<br/>
+151919<br/>
+-677458<br/>
+-41658<br/>
+-725673<br/>
+830289<br/>
+487746<br/>
+768774<br/>
+703235<br/>
+-747579<br/>
+587392<br/>
+288725<br/>
+-104732<br/>
+281904<br/>
+-91333<br/>
+-527052<br/>
+271661<br/>
+-155680<br/>
+650689<br/>
+-733315<br/>
+-594223<br/>
+413509<br/>
+40112<br/>
+-803208<br/>
+259472<br/>
+-400387<br/>
+-436659<br/>
+953021<br/>
+185925<br/>
+62779<br/>
+862624<br/>
+-733579<br/>
+964285<br/>
+-892101<br/>
+-218243<br/>
+528066<br/>
+-410553<br/>
+-504890<br/>
+746679<br/>
+-414100<br/>
+228026<br/>
+-145296<br/>
+-450210<br/>
+620596<br/>
+-343543<br/>
+769069<br/>
+-101321<br/>
+-330155<br/>
+-872253<br/>
+906023<br/>
+-199179<br/>
+250362<br/>
+-761890<br/>
+-364282<br/>
+-516068<br/>
+-268876<br/>
+-164582<br/>
+-422251<br/>
+97520<br/>
+-799534<br/>
+-91108<br/>
+-553851<br/>
+-822945<br/>
+889502<br/>
+503512<br/>
+-777853<br/>
+-555186<br/>
+-247624<br/>
+-164663<br/>
+-595591<br/>
+973552<br/>
+584809<br/>
+638440<br/>
+-320500<br/>
+438367<br/>
+-74214<br/>
+774714<br/>
+260994<br/>
+-649934<br/>
+334823<br/>
+-161885<br/>
+-69917<br/>
+-313028<br/>
+-766765<br/>
+-385558<br/>
+-821598<br/>
+-314892<br/>
+449184<br/>
+762390<br/>
+122237<br/>
+691463<br/>
+-539553<br/>
+935547<br/>
+118221<br/>
+612384<br/>
+738545<br/>
+-423315<br/>
+-100791<br/>
+-330159<br/>
+90727<br/>
+-914390<br/>
+189001<br/>
+993417<br/>
+300291<br/>
+16150<br/>
+562531<br/>
+594585<br/>
+-106702<br/>
+-346111<br/>
+-182392<br/>
+-788087<br/>
+850143<br/>
+953753<br/>
+-194822<br/>
+327832<br/>
+-131673<br/>
+-459672<br/>
+-776965<br/>
+389654<br/>
+-865657<br/>
+-260738<br/>
+-716934<br/>
+38921<br/>
+693261<br/>
+642261<br/>
+-611464<br/>
+791677<br/>
+99488<br/>
+577567<br/>
+121225<br/>
+-960174<br/>
+993368<br/>
+705038<br/>
+390673<br/>
+-550734<br/>
+-424016<br/>
+697834<br/>
+143156<br/>
+-107116<br/>
+971641<br/>
+712161<br/>
+-926408<br/>
+-265692<br/>
+-914750<br/>
+-931201<br/>
+968260<br/>
+-736300<br/>
+877688<br/>
+-178503<br/>
+713087<br/>
+-318768<br/>
+302774<br/>
+-401765<br/>
+-935859<br/>
+-295563<br/>
+884338<br/>
+384939<br/>
+241780<br/>
+594866<br/>
+-771213<br/>
+490376<br/>
+877369<br/>
+-930182<br/>
+-906989<br/>
+-823312<br/>
+-747338<br/>
+-554825<br/>
+-696347<br/>
+357074<br/>
+956512<br/>
+-340702<br/>
+60613<br/>
+-524030<br/>
+-151181<br/>
+-383905<br/>
+154471<br/>
+-991122<br/>
+359868<br/>
+-507035<br/>
+590647<br/>
+-806154<br/>
+-964344<br/>
+585067<br/>
+-906689<br/>
+-189148<br/>
+-948676<br/>
+746925<br/>
+120595<br/>
+-397503<br/>
+119886<br/>
+561845<br/>
+-883655<br/>
+-929803<br/>
+927486<br/>
+-499093<br/>
+-926306<br/>
+-350771<br/>
+312482<br/>
+-348802<br/>
+-766236<br/>
+505747<br/>
+401098<br/>
+-353163<br/>
+-454694<br/>
+433689<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            -910620&nbsp;-910620&nbsp;-910620.00&nbsp;NaN<br/>-529943&nbsp;-910620&nbsp;-720281.50&nbsp;NaN<br/>808544&nbsp;-910620&nbsp;-210673.00&nbsp;NaN<br/>808544&nbsp;-910620&nbsp;-46959.00&nbsp;NaN<br/>808544&nbsp;-910620&nbsp;-206914.80&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-22487.50&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;102387.14&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;57866.13&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;32329.11&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;63931.10&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;79170.91&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;132343.92&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;81202.00&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;92642.21&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;51549.07&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;1246.13&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-40724.29&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-63864.39&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-59104.11&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-43562.55&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-40992.38&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-64707.68&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-88297.70&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-78574.92&nbsp;NaN<br/>899649&nbsp;-910620&nbsp;-54633.72&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-90728.42&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-86429.37&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-76373.89&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-42870.31&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-38827.60&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-36789.06&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-54548.09&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-50819.85&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-42184.12&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-56125.71&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-53817.97&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-66171.92&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-80508.79&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-95388.49&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-84276.17&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-91507.66&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-85087.19&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-73214.02&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-74494.16&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-53977.51&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-56529.91&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-40051.47&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-56234.48&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-45093.43&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-35637.44&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-52896.49&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-50895.42&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-37438.60&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-21404.78&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-33846.38&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-50335.79&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-40158.63&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-52667.53&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-46408.25&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-30973.50&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-25624.18&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-34576.13&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-27067.11&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-21197.97&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-15294.98&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-6908.77&nbsp;NaN<br/>899649&nbsp;-993096&nbsp;-18114.21&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-3474.38&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8150.51&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-2598.91&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-1158.27&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;1634.63&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-6277.62&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-8771.39&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;2681.55&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-4348.26&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-5592.78&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-18070.33&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-7655.44&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;2822.96&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;7991.38&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;6474.50&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;1977.75&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-260.80&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;7578.65&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-1483.85&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-4338.55&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;4435.18&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;12950.48&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;9102.74&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;97.37&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-6626.59&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-16456.70&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-14240.21&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-8320.72&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;1287.24&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;2840.14&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-4101.67&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-4481.03&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-11692.95&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-3356.50&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;1458.24&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8907.90&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;15584.13&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8315.90&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;13778.89&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;16348.48&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;15227.36&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;17673.94&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;16682.96&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;11784.45&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;14104.78&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;12602.26&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;18199.51&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;11664.60&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;6441.43&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;9920.64&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;10176.50&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;3341.34&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;5475.76&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;2121.52&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-1475.04&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;6285.09&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;7733.80&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8174.16&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;14955.51&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;9061.54&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;16524.22&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;9480.61&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;7728.89&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;11700.93&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8502.04&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;4641.95&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;10179.54&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;7036.73&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8661.65&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;7537.87&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;4220.86&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8655.21&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;6139.51&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;11550.35&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;10755.49&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8371.50&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;2256.05&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8488.92&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;7066.54&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;8721.61&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;3514.78&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;1046.34&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-2401.09&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-4165.82&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-5221.19&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-7946.88&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-7262.03&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-12373.46&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-12878.17&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-16323.85&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-21429.05&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-15699.92&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-12454.85&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-17208.88&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-20529.72&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-21922.94&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-22793.30&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-26264.81&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-20241.81&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-16618.75&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-12719.60&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-14540.78&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-11876.62&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-12241.16&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-7665.84&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-6112.90&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-9813.02&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-7843.67&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-8718.90&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-9064.66&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-10772.31&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-14995.74&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-17054.42&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-21499.41&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-23111.46&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-20530.61&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-16275.60&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-15526.89&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-11725.87&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-14548.47&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-9494.77&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-8819.03&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-5549.54&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-1653.75&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-3849.91&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-4352.19&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-6031.61&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-5535.41&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-10172.42&nbsp;NaN<br/>977394&nbsp;-993096&nbsp;-9161.39&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-4097.86&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-2568.27&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-2474.68&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;336.29&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;3278.12&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;2736.34&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;1026.31&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;131.59&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-3694.72&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;430.10&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;5013.38&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;4057.23&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;5599.02&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;4948.44&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;2756.83&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-903.83&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;921.21&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-3109.39&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-4302.12&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-7586.13&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-7372.80&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-4173.56&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-1235.22&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-3996.43&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-412.32&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;35.66&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;2613.93&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;3141.09&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-1121.37&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;3259.64&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;6337.62&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;8015.94&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;5586.59&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;3726.84&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;6718.68&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;7304.25&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;6815.27&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;10920.91&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;13892.27&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;9924.76&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;8766.71&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;4902.62&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;1002.19&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;5015.71&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;1952.42&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;5556.27&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;4801.93&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;7692.89&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;6365.81&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;7565.84&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;5915.31&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;2133.09&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;942.30&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;4461.81&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;5971.64&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;6903.69&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;9218.50&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;6157.98&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;8049.46&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;11432.03&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;7782.36&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;4250.42&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;1067.49&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-1799.96&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-3910.74&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-6543.58&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-5166.24&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-1537.27&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-2812.32&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-2574.78&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-4520.50&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-5065.71&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-6468.82&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-5874.94&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-9497.18&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-8144.19&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-9964.96&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-7780.92&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-10673.57&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-14116.43&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-11961.09&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-15168.00&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-15789.36&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-19109.24&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-16392.80&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-15908.75&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-17252.39&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-16771.20&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-14748.07&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-17775.62&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-20942.38&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-17660.62&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-19320.73&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-22437.52&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-23561.95&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-22415.04&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-23525.20&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-26042.87&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-24246.28&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-22814.14&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-23922.70&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-25363.40&nbsp;NaN<br/>993417&nbsp;-993096&nbsp;-23833.23&nbsp;NaN<br/><br/>
+                        </td>
+                    </tr>
+                    <td>Referenčni izhod</td>
+                        <td class="texttt">
+                            -910620&nbsp;-910620&nbsp;-910620.00&nbsp;0.00<br/>-529943&nbsp;-910620&nbsp;-720281.50&nbsp;190338.50<br/>808544&nbsp;-910620&nbsp;-210673.00&nbsp;737261.24<br/>808544&nbsp;-910620&nbsp;-46959.00&nbsp;698621.81<br/>808544&nbsp;-910620&nbsp;-206914.80&nbsp;701998.13<br/>899649&nbsp;-910620&nbsp;-22487.50&nbsp;762059.68<br/>899649&nbsp;-910620&nbsp;102387.14&nbsp;768983.02<br/>899649&nbsp;-910620&nbsp;57866.13&nbsp;728898.39<br/>899649&nbsp;-910620&nbsp;32329.11&nbsp;690997.42<br/>899649&nbsp;-910620&nbsp;63931.10&nbsp;662357.81<br/>899649&nbsp;-910620&nbsp;79170.91&nbsp;633369.51<br/>899649&nbsp;-910620&nbsp;132343.92&nbsp;631528.50<br/>899649&nbsp;-910620&nbsp;81202.00&nbsp;632087.89<br/>899649&nbsp;-910620&nbsp;92642.21&nbsp;610490.21<br/>899649&nbsp;-910620&nbsp;51549.07&nbsp;609502.10<br/>899649&nbsp;-910620&nbsp;1246.13&nbsp;621474.29<br/>899649&nbsp;-910620&nbsp;-40724.29&nbsp;625855.51<br/>899649&nbsp;-910620&nbsp;-63864.39&nbsp;615659.95<br/>899649&nbsp;-910620&nbsp;-59104.11&nbsp;599579.63<br/>899649&nbsp;-910620&nbsp;-43562.55&nbsp;588311.31<br/>899649&nbsp;-910620&nbsp;-40992.38&nbsp;574248.10<br/>899649&nbsp;-910620&nbsp;-64707.68&nbsp;571473.95<br/>899649&nbsp;-910620&nbsp;-88297.70&nbsp;569759.59<br/>899649&nbsp;-910620&nbsp;-78574.92&nbsp;559708.99<br/>899649&nbsp;-910620&nbsp;-54633.72&nbsp;560802.57<br/>899649&nbsp;-993096&nbsp;-90728.42&nbsp;578769.45<br/>899649&nbsp;-993096&nbsp;-86429.37&nbsp;568373.26<br/>899649&nbsp;-993096&nbsp;-76373.89&nbsp;560571.82<br/>899649&nbsp;-993096&nbsp;-42870.31&nbsp;578648.94<br/>899649&nbsp;-993096&nbsp;-38827.60&nbsp;569339.45<br/>899649&nbsp;-993096&nbsp;-36789.06&nbsp;560192.57<br/>899649&nbsp;-993096&nbsp;-54548.09&nbsp;560165.91<br/>899649&nbsp;-993096&nbsp;-50819.85&nbsp;552016.28<br/>899649&nbsp;-993096&nbsp;-42184.12&nbsp;546095.75<br/>899649&nbsp;-993096&nbsp;-56125.71&nbsp;544342.26<br/>899649&nbsp;-993096&nbsp;-53817.97&nbsp;536902.32<br/>899649&nbsp;-993096&nbsp;-66171.92&nbsp;534759.29<br/>899649&nbsp;-993096&nbsp;-80508.79&nbsp;534833.84<br/>899649&nbsp;-993096&nbsp;-95388.49&nbsp;535841.49<br/>899649&nbsp;-993096&nbsp;-84276.18&nbsp;533632.65<br/>899649&nbsp;-993096&nbsp;-91507.66&nbsp;529065.33<br/>899649&nbsp;-993096&nbsp;-85087.19&nbsp;524343.12<br/>899649&nbsp;-993096&nbsp;-73214.02&nbsp;523891.86<br/>899649&nbsp;-993096&nbsp;-74494.16&nbsp;517972.36<br/>899649&nbsp;-993096&nbsp;-53977.51&nbsp;529956.87<br/>899649&nbsp;-993096&nbsp;-56529.91&nbsp;524444.40<br/>899649&nbsp;-993096&nbsp;-40051.47&nbsp;530736.06<br/>899649&nbsp;-993096&nbsp;-56234.48&nbsp;536769.26<br/>899649&nbsp;-993096&nbsp;-45093.43&nbsp;536841.80<br/>899649&nbsp;-993096&nbsp;-35637.44&nbsp;535552.53<br/>899649&nbsp;-993096&nbsp;-52896.49&nbsp;544138.22<br/>899649&nbsp;-993096&nbsp;-50895.42&nbsp;539070.17<br/>899649&nbsp;-993096&nbsp;-37438.60&nbsp;542706.33<br/>899649&nbsp;-993096&nbsp;-21404.78&nbsp;550183.00<br/>899649&nbsp;-993096&nbsp;-33846.38&nbsp;552771.67<br/>899649&nbsp;-993096&nbsp;-50335.79&nbsp;561297.32<br/>899649&nbsp;-993096&nbsp;-40158.63&nbsp;561540.36<br/>899649&nbsp;-993096&nbsp;-52667.53&nbsp;564632.47<br/>899649&nbsp;-993096&nbsp;-46408.25&nbsp;561852.86<br/>899649&nbsp;-993096&nbsp;-30973.50&nbsp;569625.31<br/>899649&nbsp;-993096&nbsp;-25624.18&nbsp;566454.47<br/>899649&nbsp;-993096&nbsp;-34576.13&nbsp;566201.13<br/>899649&nbsp;-993096&nbsp;-27067.11&nbsp;564792.87<br/>899649&nbsp;-993096&nbsp;-21197.97&nbsp;562296.09<br/>899649&nbsp;-993096&nbsp;-15294.98&nbsp;559948.86<br/>899649&nbsp;-993096&nbsp;-6908.77&nbsp;559788.75<br/>899649&nbsp;-993096&nbsp;-18114.21&nbsp;563003.95<br/>977394&nbsp;-993096&nbsp;-3474.38&nbsp;571552.12<br/>977394&nbsp;-993096&nbsp;8150.51&nbsp;575436.21<br/>977394&nbsp;-993096&nbsp;-2598.91&nbsp;578246.84<br/>977394&nbsp;-993096&nbsp;-1158.27&nbsp;574286.74<br/>977394&nbsp;-993096&nbsp;1634.63&nbsp;570770.05<br/>977394&nbsp;-993096&nbsp;-6277.62&nbsp;570809.24<br/>977394&nbsp;-993096&nbsp;-8771.39&nbsp;567339.54<br/>977394&nbsp;-993096&nbsp;2681.55&nbsp;572091.83<br/>977394&nbsp;-993096&nbsp;-4348.26&nbsp;571567.14<br/>977394&nbsp;-993096&nbsp;-5592.78&nbsp;567947.17<br/>977394&nbsp;-993096&nbsp;-18070.33&nbsp;574818.78<br/>977394&nbsp;-993096&nbsp;-7655.44&nbsp;578528.13<br/>977394&nbsp;-993096&nbsp;2822.96&nbsp;582395.98<br/>977394&nbsp;-993096&nbsp;7991.38&nbsp;580632.94<br/>977394&nbsp;-993096&nbsp;6474.50&nbsp;577243.09<br/>977394&nbsp;-993096&nbsp;1977.75&nbsp;575198.33<br/>977394&nbsp;-993096&nbsp;-260.80&nbsp;572127.88<br/>977394&nbsp;-993096&nbsp;7578.65&nbsp;573272.84<br/>977394&nbsp;-993096&nbsp;-1483.85&nbsp;576021.95<br/>977394&nbsp;-993096&nbsp;-4338.55&nbsp;573313.45<br/>977394&nbsp;-993096&nbsp;4435.18&nbsp;575890.91<br/>977394&nbsp;-993096&nbsp;12950.48&nbsp;578191.01<br/>977394&nbsp;-993096&nbsp;9102.74&nbsp;576114.57<br/>977394&nbsp;-993096&nbsp;97.37&nbsp;579274.86<br/>977394&nbsp;-993096&nbsp;-6626.59&nbsp;579677.70<br/>977394&nbsp;-993096&nbsp;-16456.70&nbsp;584211.53<br/>977394&nbsp;-993096&nbsp;-14240.21&nbsp;581488.71<br/>977394&nbsp;-993096&nbsp;-8320.72&nbsp;581260.42<br/>977394&nbsp;-993096&nbsp;1287.24&nbsp;585759.31<br/>977394&nbsp;-993096&nbsp;2840.14&nbsp;582930.72<br/>977394&nbsp;-993096&nbsp;-4101.67&nbsp;583964.99<br/>977394&nbsp;-993096&nbsp;-4481.03&nbsp;581020.32<br/>977394&nbsp;-993096&nbsp;-11692.95&nbsp;582544.36<br/>977394&nbsp;-993096&nbsp;-3356.50&nbsp;585617.28<br/>977394&nbsp;-993096&nbsp;1458.24&nbsp;584745.00<br/>977394&nbsp;-993096&nbsp;8907.90&nbsp;586743.38<br/>977394&nbsp;-993096&nbsp;15584.13&nbsp;587833.68<br/>977394&nbsp;-993096&nbsp;8315.90&nbsp;589704.59<br/>977394&nbsp;-993096&nbsp;13778.89&nbsp;589579.91<br/>977394&nbsp;-993096&nbsp;16348.48&nbsp;587414.44<br/>977394&nbsp;-993096&nbsp;15227.36&nbsp;584803.60<br/>977394&nbsp;-993096&nbsp;17673.94&nbsp;582669.84<br/>977394&nbsp;-993096&nbsp;16682.96&nbsp;580107.56<br/>977394&nbsp;-993096&nbsp;11784.45&nbsp;579769.37<br/>977394&nbsp;-993096&nbsp;14104.78&nbsp;577692.79<br/>977394&nbsp;-993096&nbsp;12602.26&nbsp;575350.72<br/>977394&nbsp;-993096&nbsp;18199.51&nbsp;575903.54<br/>977394&nbsp;-993096&nbsp;11664.60&nbsp;577623.77<br/>977394&nbsp;-993096&nbsp;6441.43&nbsp;577849.73<br/>977394&nbsp;-993096&nbsp;9920.64&nbsp;576593.92<br/>977394&nbsp;-993096&nbsp;10176.50&nbsp;574152.19<br/>977394&nbsp;-993096&nbsp;3341.34&nbsp;576535.74<br/>977394&nbsp;-993096&nbsp;5475.76&nbsp;574600.43<br/>977394&nbsp;-993096&nbsp;2121.52&nbsp;573399.62<br/>977394&nbsp;-993096&nbsp;-1475.04&nbsp;572413.58<br/>977394&nbsp;-993096&nbsp;6285.09&nbsp;576489.57<br/>977394&nbsp;-993096&nbsp;7733.80&nbsp;574385.07<br/>977394&nbsp;-993096&nbsp;8174.16&nbsp;572103.93<br/>977394&nbsp;-993096&nbsp;14955.51&nbsp;574850.94<br/>977394&nbsp;-993096&nbsp;9061.54&nbsp;576392.84<br/>977394&nbsp;-993096&nbsp;16524.22&nbsp;580263.74<br/>977394&nbsp;-993096&nbsp;9480.61&nbsp;583477.74<br/>977394&nbsp;-993096&nbsp;7728.89&nbsp;581569.68<br/>977394&nbsp;-993096&nbsp;11700.93&nbsp;581113.12<br/>977394&nbsp;-993096&nbsp;8502.04&nbsp;580064.39<br/>977394&nbsp;-993096&nbsp;4641.95&nbsp;579578.85<br/>977394&nbsp;-993096&nbsp;10179.54&nbsp;580933.11<br/>977394&nbsp;-993096&nbsp;7036.73&nbsp;579919.78<br/>977394&nbsp;-993096&nbsp;8661.65&nbsp;578092.17<br/>977394&nbsp;-993096&nbsp;7537.87&nbsp;576127.56<br/>977394&nbsp;-993096&nbsp;4220.86&nbsp;575347.79<br/>977394&nbsp;-993096&nbsp;8655.21&nbsp;575636.31<br/>977394&nbsp;-993096&nbsp;6139.51&nbsp;574343.12<br/>977394&nbsp;-993096&nbsp;11550.35&nbsp;575872.67<br/>977394&nbsp;-993096&nbsp;10755.49&nbsp;573918.99<br/>977394&nbsp;-993096&nbsp;8371.50&nbsp;572613.89<br/>977394&nbsp;-993096&nbsp;2256.05&nbsp;575289.23<br/>977394&nbsp;-993096&nbsp;8488.92&nbsp;578160.40<br/>977394&nbsp;-993096&nbsp;7066.54&nbsp;576431.51<br/>977394&nbsp;-993096&nbsp;8721.61&nbsp;574815.50<br/>977394&nbsp;-993096&nbsp;3514.78&nbsp;576338.16<br/>977394&nbsp;-993096&nbsp;1046.34&nbsp;575185.33<br/>977394&nbsp;-993096&nbsp;-2401.09&nbsp;574807.28<br/>977394&nbsp;-993096&nbsp;-4165.82&nbsp;573308.34<br/>977394&nbsp;-993096&nbsp;-5221.19&nbsp;571566.49<br/>977394&nbsp;-993096&nbsp;-7946.88&nbsp;570685.81<br/>977394&nbsp;-993096&nbsp;-7262.03&nbsp;568892.99<br/>977394&nbsp;-993096&nbsp;-12373.46&nbsp;570591.59<br/>977394&nbsp;-993096&nbsp;-12878.17&nbsp;568794.54<br/>977394&nbsp;-993096&nbsp;-16323.85&nbsp;568611.19<br/>977394&nbsp;-993096&nbsp;-21429.05&nbsp;570407.11<br/>977394&nbsp;-993096&nbsp;-15699.92&nbsp;573152.66<br/>977394&nbsp;-993096&nbsp;-12454.85&nbsp;572822.11<br/>977394&nbsp;-993096&nbsp;-17208.88&nbsp;574197.91<br/>977394&nbsp;-993096&nbsp;-20529.72&nbsp;573971.73<br/>977394&nbsp;-993096&nbsp;-21922.94&nbsp;572483.08<br/>977394&nbsp;-993096&nbsp;-22793.30&nbsp;570843.20<br/>977394&nbsp;-993096&nbsp;-26264.81&nbsp;570844.51<br/>977394&nbsp;-993096&nbsp;-20241.81&nbsp;574357.06<br/>977394&nbsp;-993096&nbsp;-16618.75&nbsp;574534.31<br/>977394&nbsp;-993096&nbsp;-12719.60&nbsp;575033.77<br/>977394&nbsp;-993096&nbsp;-14540.78&nbsp;573815.69<br/>977394&nbsp;-993096&nbsp;-11876.62&nbsp;573172.86<br/>977394&nbsp;-993096&nbsp;-12241.16&nbsp;571514.22<br/>977394&nbsp;-993096&nbsp;-7665.84&nbsp;572982.67<br/>977394&nbsp;-993096&nbsp;-6112.90&nbsp;571687.15<br/>977394&nbsp;-993096&nbsp;-9813.02&nbsp;572115.74<br/>977394&nbsp;-993096&nbsp;-7843.67&nbsp;571069.93<br/>977394&nbsp;-993096&nbsp;-8718.90&nbsp;569562.96<br/>977394&nbsp;-993096&nbsp;-9064.66&nbsp;567970.27<br/>977394&nbsp;-993096&nbsp;-10772.31&nbsp;566828.08<br/>977394&nbsp;-993096&nbsp;-14995.74&nbsp;568044.16<br/>977394&nbsp;-993096&nbsp;-17054.42&nbsp;567133.29<br/>977394&nbsp;-993096&nbsp;-21499.41&nbsp;568699.90<br/>977394&nbsp;-993096&nbsp;-23111.46&nbsp;567549.92<br/>977394&nbsp;-993096&nbsp;-20530.61&nbsp;567067.01<br/>977394&nbsp;-993096&nbsp;-16275.60&nbsp;568445.76<br/>977394&nbsp;-993096&nbsp;-15526.89&nbsp;566998.31<br/>977394&nbsp;-993096&nbsp;-11725.87&nbsp;567830.51<br/>977394&nbsp;-993096&nbsp;-14548.47&nbsp;567617.07<br/>977394&nbsp;-993096&nbsp;-9494.77&nbsp;570308.09<br/>977394&nbsp;-993096&nbsp;-8819.03&nbsp;568872.80<br/>977394&nbsp;-993096&nbsp;-5549.54&nbsp;569151.43<br/>977394&nbsp;-993096&nbsp;-1653.75&nbsp;570193.84<br/>977394&nbsp;-993096&nbsp;-3849.91&nbsp;569516.36<br/>977394&nbsp;-993096&nbsp;-4352.19&nbsp;568081.65<br/>977394&nbsp;-993096&nbsp;-6031.61&nbsp;567095.77<br/>977394&nbsp;-993096&nbsp;-5535.41&nbsp;565682.03<br/>977394&nbsp;-993096&nbsp;-10172.42&nbsp;567940.49<br/>977394&nbsp;-993096&nbsp;-9161.39&nbsp;566673.98<br/>993417&nbsp;-993096&nbsp;-4097.86&nbsp;569691.61<br/>993417&nbsp;-993096&nbsp;-2568.27&nbsp;568665.88<br/>993417&nbsp;-993096&nbsp;-2474.68&nbsp;567243.97<br/>993417&nbsp;-993096&nbsp;336.29&nbsp;567225.90<br/>993417&nbsp;-993096&nbsp;3278.12&nbsp;567355.21<br/>993417&nbsp;-993096&nbsp;2736.34&nbsp;566008.44<br/>993417&nbsp;-993096&nbsp;1026.31&nbsp;565144.90<br/>993417&nbsp;-993096&nbsp;131.59&nbsp;563909.63<br/>993417&nbsp;-993096&nbsp;-3694.72&nbsp;565200.61<br/>993417&nbsp;-993096&nbsp;430.10&nbsp;566933.33<br/>993417&nbsp;-993096&nbsp;5013.38&nbsp;569400.11<br/>993417&nbsp;-993096&nbsp;4057.23&nbsp;568203.63<br/>993417&nbsp;-993096&nbsp;5599.02&nbsp;567287.21<br/>993417&nbsp;-993096&nbsp;4948.44&nbsp;566019.85<br/>993417&nbsp;-993096&nbsp;2756.83&nbsp;565579.98<br/>993417&nbsp;-993096&nbsp;-903.83&nbsp;566762.58<br/>993417&nbsp;-993096&nbsp;921.21&nbsp;566063.82<br/>993417&nbsp;-993096&nbsp;-3109.39&nbsp;567815.52<br/>993417&nbsp;-993096&nbsp;-4302.12&nbsp;566769.50<br/>993417&nbsp;-993096&nbsp;-7586.13&nbsp;567518.16<br/>993417&nbsp;-993096&nbsp;-7372.80&nbsp;566223.74<br/>993417&nbsp;-993096&nbsp;-4173.56&nbsp;566900.89<br/>993417&nbsp;-993096&nbsp;-1235.22&nbsp;567280.02<br/>993417&nbsp;-993096&nbsp;-3996.43&nbsp;567474.96<br/>993417&nbsp;-993096&nbsp;-412.32&nbsp;568696.93<br/>993417&nbsp;-993096&nbsp;35.66&nbsp;567459.65<br/>993417&nbsp;-993096&nbsp;2613.93&nbsp;567499.15<br/>993417&nbsp;-993096&nbsp;3141.09&nbsp;566291.60<br/>993417&nbsp;-993096&nbsp;-1121.37&nbsp;568643.24<br/>993417&nbsp;-993096&nbsp;3259.64&nbsp;571199.03<br/>993417&nbsp;-993096&nbsp;6337.62&nbsp;571828.57<br/>993417&nbsp;-993096&nbsp;8015.94&nbsp;571141.18<br/>993417&nbsp;-993096&nbsp;5586.59&nbsp;571082.72<br/>993417&nbsp;-993096&nbsp;3726.84&nbsp;570542.83<br/>993417&nbsp;-993096&nbsp;6718.68&nbsp;571124.97<br/>993417&nbsp;-993096&nbsp;7304.25&nbsp;569967.85<br/>993417&nbsp;-993096&nbsp;6815.27&nbsp;568797.64<br/>993417&nbsp;-993096&nbsp;10920.91&nbsp;571050.26<br/>993417&nbsp;-993096&nbsp;13892.27&nbsp;571656.74<br/>993417&nbsp;-993096&nbsp;9924.76&nbsp;573696.33<br/>993417&nbsp;-993096&nbsp;8766.71&nbsp;572767.34<br/>993417&nbsp;-993096&nbsp;4902.62&nbsp;574668.08<br/>993417&nbsp;-993096&nbsp;1002.19&nbsp;576631.06<br/>993417&nbsp;-993096&nbsp;5015.71&nbsp;578782.94<br/>993417&nbsp;-993096&nbsp;1952.42&nbsp;579540.27<br/>993417&nbsp;-993096&nbsp;5556.27&nbsp;581057.47<br/>993417&nbsp;-993096&nbsp;4801.93&nbsp;579984.77<br/>993417&nbsp;-993096&nbsp;7692.89&nbsp;580558.88<br/>993417&nbsp;-993096&nbsp;6365.81&nbsp;579749.92<br/>993417&nbsp;-993096&nbsp;7565.84&nbsp;578881.22<br/>993417&nbsp;-993096&nbsp;5915.31&nbsp;578295.02<br/>993417&nbsp;-993096&nbsp;2133.09&nbsp;580198.03<br/>993417&nbsp;-993096&nbsp;942.30&nbsp;579341.27<br/>993417&nbsp;-993096&nbsp;4461.81&nbsp;580857.85<br/>993417&nbsp;-993096&nbsp;5971.64&nbsp;580197.51<br/>993417&nbsp;-993096&nbsp;6903.69&nbsp;579238.73<br/>993417&nbsp;-993096&nbsp;9218.50&nbsp;579268.71<br/>993417&nbsp;-993096&nbsp;6157.98&nbsp;580185.75<br/>993417&nbsp;-993096&nbsp;8049.46&nbsp;579838.69<br/>993417&nbsp;-993096&nbsp;11432.03&nbsp;581234.70<br/>993417&nbsp;-993096&nbsp;7782.36&nbsp;583050.26<br/>993417&nbsp;-993096&nbsp;4250.42&nbsp;584682.40<br/>993417&nbsp;-993096&nbsp;1067.49&nbsp;585800.84<br/>993417&nbsp;-993096&nbsp;-1799.96&nbsp;586502.88<br/>993417&nbsp;-993096&nbsp;-3910.74&nbsp;586374.93<br/>993417&nbsp;-993096&nbsp;-6543.58&nbsp;586808.61<br/>993417&nbsp;-993096&nbsp;-5166.24&nbsp;586121.95<br/>993417&nbsp;-993096&nbsp;-1537.27&nbsp;587978.99<br/>993417&nbsp;-993096&nbsp;-2812.32&nbsp;587239.67<br/>993417&nbsp;-993096&nbsp;-2574.78&nbsp;586151.74<br/>993417&nbsp;-993096&nbsp;-4520.50&nbsp;585920.38<br/>993417&nbsp;-993096&nbsp;-5065.71&nbsp;584898.40<br/>993417&nbsp;-993096&nbsp;-6468.82&nbsp;584267.63<br/>993417&nbsp;-993096&nbsp;-5874.94&nbsp;583270.29<br/>993417&nbsp;-993096&nbsp;-9497.18&nbsp;585242.81<br/>993417&nbsp;-993096&nbsp;-8144.19&nbsp;584595.97<br/>993417&nbsp;-993096&nbsp;-9964.96&nbsp;584303.20<br/>993417&nbsp;-993096&nbsp;-7780.92&nbsp;584359.25<br/>993417&nbsp;-993096&nbsp;-10673.57&nbsp;585268.79<br/>993417&nbsp;-993096&nbsp;-14116.43&nbsp;587004.64<br/>993417&nbsp;-993096&nbsp;-11961.09&nbsp;587044.94<br/>993417&nbsp;-993096&nbsp;-15168.00&nbsp;588426.36<br/>993417&nbsp;-993096&nbsp;-15789.36&nbsp;587466.35<br/>993417&nbsp;-993096&nbsp;-19109.24&nbsp;589045.49<br/>993417&nbsp;-993096&nbsp;-16392.80&nbsp;589760.70<br/>993417&nbsp;-993096&nbsp;-15908.75&nbsp;588773.92<br/>993417&nbsp;-993096&nbsp;-17252.39&nbsp;588170.92<br/>993417&nbsp;-993096&nbsp;-16771.20&nbsp;587194.13<br/>993417&nbsp;-993096&nbsp;-14748.07&nbsp;587160.87<br/>993417&nbsp;-993096&nbsp;-17775.62&nbsp;588369.04<br/>993417&nbsp;-993096&nbsp;-20942.38&nbsp;589791.72<br/>993417&nbsp;-993096&nbsp;-17660.62&nbsp;591398.65<br/>993417&nbsp;-993096&nbsp;-19320.73&nbsp;591052.28<br/>993417&nbsp;-993096&nbsp;-22437.52&nbsp;592418.33<br/>993417&nbsp;-993096&nbsp;-23561.95&nbsp;591714.02<br/>993417&nbsp;-993096&nbsp;-22415.04&nbsp;591028.43<br/>993417&nbsp;-993096&nbsp;-23525.20&nbsp;590328.36<br/>993417&nbsp;-993096&nbsp;-26042.87&nbsp;590905.93<br/>993417&nbsp;-993096&nbsp;-24246.28&nbsp;590713.44<br/>993417&nbsp;-993096&nbsp;-22814.14&nbsp;590232.65<br/>993417&nbsp;-993096&nbsp;-23922.70&nbsp;589551.11<br/>993417&nbsp;-993096&nbsp;-25363.40&nbsp;589089.65<br/>993417&nbsp;-993096&nbsp;-23833.23&nbsp;588701.92<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+
+        <div style="height: 30px"></div>
+
+        <table id="grad1" class="tableLegend tableSummary"
+          <tbody>
+            <tr>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #9F9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">ok</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FFBF00; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FF9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka med izvajanjem</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #C00000; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">se ne prevede</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #B9F; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">timeout (1000 ms)</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #D0E0F0; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">rezultat izrisa</td>
+                </tr>
+              </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <a name="bottom"></a>
+        </div>
+    </body>
+    <!-- java class tester version "1.40.2" -->
+    <!-- 27.10.2016 10:14.27 -->
+    <!-- ENVY13, fe80::7587:8035:ec52:387a%11 -->
+</html>

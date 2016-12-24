@@ -1,0 +1,27 @@
+ff[1].izpustiDesno()
+[0, 0, 0]
+----------
+ff[0].primiDesno()
+[1, 0, 0]
+----------
+ff[1].izpustiDesno()
+[1, 0, 0]
+----------
+ff[1].primiLevo()
+[1, 0, 0]
+----------
+ff[1].izpustiDesno()
+[1, 0, 0]
+----------
+ff[2].primiDesno()
+[1, 0, 1]
+----------
+ff[1].primiLevo()
+[1, 0, 1]
+----------
+ff[2].izpustiDesno()
+[1, 0, 0]
+----------
+ff[2].primiLevo()
+[1, 0, 1]
+----------
