@@ -1,0 +1,1743 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+          "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>Prikaz rezultatov testiranja</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+            .tableBase { border-collapse: collapse; }
+            .tableBase > tbody > tr > td { border: 1px solid black; padding: 7px;}
+            .tableResults { table-layout: fixed; border-spacing: 0px; border-collapse: separate; }
+            table#nasredini { margin-left:auto; margin-right:auto; }
+            table tbody td.hoverOk {background-color:#9F9; border: 1px solid #63B563; width: 15px; color: black; text-align: center; }
+            .hoverOk:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #63B563; }
+            .hoverOk:hover td { background: transparent; }
+            .hoverOk > a:link, .hoverOk > a:visited, .hoverOk > a:hover, .hoverOk > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverErr {background-color:#FFBF00; border: 1px solid #CB9800; width: 15px; color: black; text-align: center; }
+            .hoverErr:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #CB9800; }
+            .hoverErr:hover td { background: transparent; }
+            .hoverErr > a:link, .hoverErr > a:visited, .hoverErr > a:hover, .hoverErr > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverRuntime {background-color:#FF9; border: 1px solid #D8D87E; width: 15px; color: black; text-align: center; }
+            .hoverRuntime:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #D8D87E; }
+            .hoverRuntime:hover td { background: transparent; }
+            .hoverRuntime > a:link, .hoverRuntime > a:visited, .hoverRuntime > a:hover, .hoverRuntime > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverCompile {background-color:#C00000; border: 1px solid #710B0B; width: 15px; color: black; text-align: center; }
+            .hoverCompile:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #710B0B; }
+            .hoverCompile:hover td { background: transparent; }
+            .hoverCompile > a:link, .hoverCompile > a:visited, .hoverCompile > a:hover, .hoverCompile > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverMissing {background-color:#F0F0F0; border: 1px solid #ABABAB; width: 15px; color: black; text-align: center; }
+            .hoverMissing:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #ABABAB; }
+            .hoverMissing:hover td { background: transparent; }
+            .hoverMissing > a:link, .hoverMissing > a:visited, .hoverMissing > a:hover, .hoverMissing > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverTimeout {background-color:#B9F; border: 1px solid #9070CE; width: 15px; color: black; text-align: center; }
+            .hoverTimeout:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #9070CE; }
+            .hoverTimeout:hover td { background: transparent; }
+            .hoverTimeout > a:link, .hoverTimeout > a:visited, .hoverTimeout > a:hover, .hoverTimeout > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverImage {background-color:#D0E0F0; border: 1px solid #a6b3c0; width: 15px; color: black; text-align: center; }
+            .hoverImage:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #a6b3c0; }
+            .hoverImage:hover td { background: transparent; }
+            .hoverImage > a:link, .hoverImage > a:visited, .hoverImage > a:hover, .hoverImage > a:active { color: black; font-size: 0.9em; }
+            .tableCommon { border-collapse: collapse; }
+            .tableOK > tbody > tr > td { border: 1px solid #63B563; padding: 7px;}
+            .tableError > tbody > tr > td { border: 1px solid #CB9800; padding: 7px;}
+            .tableRuntime > tbody > tr > td { border: 1px solid #D8D87E; padding: 7px;}
+            .tableCompiler > tbody > tr > td { border: 1px solid #710B0B; padding: 7px;}
+            .tableMissing > tbody > tr > td { border: 1px solid #ABABAB; padding: 7px;}
+            .tableTimeout > tbody > tr > td { border: 1px solid #9070CE; padding: 7px;}
+            .tableImage > tbody > tr > td { border: 1px solid #a6b3c0; padding: 7px;}
+            .tableSummary { table-layout: fixed; }
+            .texttt { font-family: DejaVu Sans Mono, monospace; font-size: 0.8em; }
+            table.diff > tbody > tr > td { border: none; font-family: DejaVu Sans Mono, monospace}
+            .diff_add { color: green; font-family: DejaVu Sans Mono, monospace; }
+            .diff_sub { color: blue; font-family: DejaVu Sans Mono, monospace; }
+            .diff_chg { color: red; font-family: DejaVu Sans Mono, monospace; }
+            a { color: blue; text-decoration: none; height: 100%; width: 100%; vertical-align: middle; }
+            a:link { color: blue; text-decoration: none; }
+            a:link { color: blue; text-decoration: none; }
+            a:hover { color: blue; text-decoration: underline; }
+            body, td { font: normal normal 100%/1.0 DejaVu Sans, sans-serif; }
+            h1 { font-weight: bold; font-size: 150%; }
+            h2 { font-weight: normal; font-size: 125%; border-top: 1px solid black; border-bottom: 1px solid black; background: #DEF; padding: 5px; margin-top: 36px; margin-bottom: 36px}
+            .container{ margin: 0px auto; width: 70%; min-width: 700px; margin-top: 1.8cm; margin-bottom: 1.8cm; }
+            .rwordb{ color: blue; font-weight: bold; }
+            .rwordv{ color:#8000ff; font-weight: bold; }
+            .vcomment{ color: green; }
+            .bcomment{ color: green; }
+            .niz{ color:#a31515; }
+            .stevilo{ color:#ff8000; }
+            tab { padding-left: 4em; }
+            #grad1 {
+                background: -webkit-linear-gradient(left, #E0E0E0 , white);
+                background: -o-linear-gradient(right, #E0E0E0, white);
+                background: -moz-linear-gradient(right, #E0E0E0, white);
+                background: linear-gradient(to right, #E0E0E0 , white);
+            }
+            #grad2 {
+                background: -webkit-linear-gradient(left, #9F9 , white);
+                background: -o-linear-gradient(right, #9F9, white);
+                background: -moz-linear-gradient(right, #9F9, white);
+                background: linear-gradient(to right, #9F9 , white);
+            }
+            .capSlika { display:block; height: 25px; margin:0 auto; font-size: 1.0em; text-align: left; }
+            .dborder { padding: 0px; border: 1px solid #CACACA; }
+            .capText { display: block; margin:0 auto; font-size: 0.9em; text-align: left; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <a name="top"></a>
+        <h1 id="grad2" style="padding: 10px; border: 0px solid black; color: #000000;">Rezultati preverjanja <span style="color: #700000;">DN02_63160303.java</span> (50/50)</h1>
+        <div style="height: 20px"></div>
+        <a name="summary"></a>
+        <h2>Povzetek rezultatov</h2>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase1">1</a></td>
+                <td class="hoverOk"><a href="#testcase2">2</a></td>
+                <td class="hoverOk"><a href="#testcase3">3</a></td>
+                <td class="hoverOk"><a href="#testcase4">4</a></td>
+                <td class="hoverOk"><a href="#testcase5">5</a></td>
+                <td class="hoverOk"><a href="#testcase6">6</a></td>
+                <td class="hoverOk"><a href="#testcase7">7</a></td>
+                <td class="hoverOk"><a href="#testcase8">8</a></td>
+                <td class="hoverOk"><a href="#testcase9">9</a></td>
+                <td class="hoverOk"><a href="#testcase10">10</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase11">11</a></td>
+                <td class="hoverOk"><a href="#testcase12">12</a></td>
+                <td class="hoverOk"><a href="#testcase13">13</a></td>
+                <td class="hoverOk"><a href="#testcase14">14</a></td>
+                <td class="hoverOk"><a href="#testcase15">15</a></td>
+                <td class="hoverOk"><a href="#testcase16">16</a></td>
+                <td class="hoverOk"><a href="#testcase17">17</a></td>
+                <td class="hoverOk"><a href="#testcase18">18</a></td>
+                <td class="hoverOk"><a href="#testcase19">19</a></td>
+                <td class="hoverOk"><a href="#testcase20">20</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase21">21</a></td>
+                <td class="hoverOk"><a href="#testcase22">22</a></td>
+                <td class="hoverOk"><a href="#testcase23">23</a></td>
+                <td class="hoverOk"><a href="#testcase24">24</a></td>
+                <td class="hoverOk"><a href="#testcase25">25</a></td>
+                <td class="hoverOk"><a href="#testcase26">26</a></td>
+                <td class="hoverOk"><a href="#testcase27">27</a></td>
+                <td class="hoverOk"><a href="#testcase28">28</a></td>
+                <td class="hoverOk"><a href="#testcase29">29</a></td>
+                <td class="hoverOk"><a href="#testcase30">30</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase31">31</a></td>
+                <td class="hoverOk"><a href="#testcase32">32</a></td>
+                <td class="hoverOk"><a href="#testcase33">33</a></td>
+                <td class="hoverOk"><a href="#testcase34">34</a></td>
+                <td class="hoverOk"><a href="#testcase35">35</a></td>
+                <td class="hoverOk"><a href="#testcase36">36</a></td>
+                <td class="hoverOk"><a href="#testcase37">37</a></td>
+                <td class="hoverOk"><a href="#testcase38">38</a></td>
+                <td class="hoverOk"><a href="#testcase39">39</a></td>
+                <td class="hoverOk"><a href="#testcase40">40</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase41">41</a></td>
+                <td class="hoverOk"><a href="#testcase42">42</a></td>
+                <td class="hoverOk"><a href="#testcase43">43</a></td>
+                <td class="hoverOk"><a href="#testcase44">44</a></td>
+                <td class="hoverOk"><a href="#testcase45">45</a></td>
+                <td class="hoverOk"><a href="#testcase46">46</a></td>
+                <td class="hoverOk"><a href="#testcase47">47</a></td>
+                <td class="hoverOk"><a href="#testcase48">48</a></td>
+                <td class="hoverOk"><a href="#testcase49">49</a></td>
+                <td class="hoverOk"><a href="#testcase50">50</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <div style="height: 20px"></div>
+        <h2>Rezultati</h2>
+        <a name="testcase1"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 1</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+1<br/>
+2<br/>
+0&nbsp;0<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            0<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase2"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 2</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+2<br/>
+2<br/>
+1&nbsp;1<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            0<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase3"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 3</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+3<br/>
+2<br/>
+2&nbsp;2<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            0<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase4"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 4</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+50<br/>
+2<br/>
+32&nbsp;14<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            18<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase5"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 5</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+73<br/>
+2<br/>
+23&nbsp;42<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            19<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase6"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 6</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+612<br/>
+2<br/>
+315&nbsp;90<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            225<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase7"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 7</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+7771<br/>
+2<br/>
+1815&nbsp;2120<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            305<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase8"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 8</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+5<br/>
+2<br/>
+1&nbsp;0<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            1<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase9"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 9</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+6<br/>
+2<br/>
+5&nbsp;1<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            4<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase10"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 10</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+6<br/>
+2<br/>
+0&nbsp;2<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            2<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase11"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 11</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+39<br/>
+972<br/>
+37&nbsp;8&nbsp;23&nbsp;1&nbsp;16&nbsp;33&nbsp;4&nbsp;8&nbsp;32&nbsp;17&nbsp;30&nbsp;10&nbsp;33&nbsp;21&nbsp;9&nbsp;22&nbsp;5&nbsp;12&nbsp;31&nbsp;3&nbsp;16&nbsp;25&nbsp;27&nbsp;30&nbsp;38&nbsp;33&nbsp;10&nbsp;34&nbsp;1&nbsp;24&nbsp;8&nbsp;19&nbsp;33&nbsp;21&nbsp;6&nbsp;36&nbsp;38&nbsp;10&nbsp;27&nbsp;38&nbsp;14&nbsp;11&nbsp;11&nbsp;2&nbsp;12&nbsp;17&nbsp;34&nbsp;7&nbsp;9&nbsp;0&nbsp;4&nbsp;15&nbsp;32&nbsp;31&nbsp;5&nbsp;26&nbsp;36&nbsp;26&nbsp;33&nbsp;12&nbsp;3&nbsp;18&nbsp;7&nbsp;33&nbsp;11&nbsp;22&nbsp;31&nbsp;37&nbsp;19&nbsp;37&nbsp;15&nbsp;12&nbsp;36&nbsp;33&nbsp;27&nbsp;16&nbsp;37&nbsp;27&nbsp;1&nbsp;17&nbsp;34&nbsp;2&nbsp;9&nbsp;9&nbsp;2&nbsp;5&nbsp;28&nbsp;1&nbsp;13&nbsp;38&nbsp;35&nbsp;17&nbsp;27&nbsp;11&nbsp;26&nbsp;34&nbsp;19&nbsp;31&nbsp;32&nbsp;10&nbsp;22&nbsp;12&nbsp;0&nbsp;11&nbsp;31&nbsp;30&nbsp;17&nbsp;4&nbsp;3&nbsp;18&nbsp;23&nbsp;0&nbsp;10&nbsp;24&nbsp;22&nbsp;29&nbsp;14&nbsp;36&nbsp;37&nbsp;6&nbsp;15&nbsp;30&nbsp;18&nbsp;26&nbsp;28&nbsp;6&nbsp;27&nbsp;0&nbsp;7&nbsp;14&nbsp;37&nbsp;25&nbsp;13&nbsp;10&nbsp;11&nbsp;1&nbsp;9&nbsp;37&nbsp;23&nbsp;2&nbsp;16&nbsp;26&nbsp;32&nbsp;24&nbsp;20&nbsp;3&nbsp;6&nbsp;19&nbsp;7&nbsp;21&nbsp;0&nbsp;36&nbsp;21&nbsp;28&nbsp;22&nbsp;1&nbsp;9&nbsp;0&nbsp;13&nbsp;29&nbsp;23&nbsp;11&nbsp;12&nbsp;16&nbsp;32&nbsp;14&nbsp;16&nbsp;26&nbsp;11&nbsp;31&nbsp;22&nbsp;36&nbsp;38&nbsp;23&nbsp;17&nbsp;6&nbsp;21&nbsp;37&nbsp;28&nbsp;34&nbsp;21&nbsp;18&nbsp;35&nbsp;10&nbsp;9&nbsp;12&nbsp;5&nbsp;22&nbsp;10&nbsp;20&nbsp;10&nbsp;3&nbsp;6&nbsp;4&nbsp;0&nbsp;9&nbsp;20&nbsp;20&nbsp;0&nbsp;22&nbsp;14&nbsp;33&nbsp;21&nbsp;15&nbsp;10&nbsp;3&nbsp;31&nbsp;16&nbsp;4&nbsp;25&nbsp;6&nbsp;36&nbsp;32&nbsp;9&nbsp;4&nbsp;14&nbsp;17&nbsp;25&nbsp;23&nbsp;6&nbsp;31&nbsp;9&nbsp;31&nbsp;38&nbsp;19&nbsp;33&nbsp;37&nbsp;17&nbsp;19&nbsp;3&nbsp;28&nbsp;38&nbsp;20&nbsp;5&nbsp;11&nbsp;24&nbsp;3&nbsp;37&nbsp;3&nbsp;18&nbsp;14&nbsp;1&nbsp;8&nbsp;12&nbsp;34&nbsp;21&nbsp;15&nbsp;18&nbsp;2&nbsp;12&nbsp;37&nbsp;8&nbsp;20&nbsp;9&nbsp;18&nbsp;19&nbsp;18&nbsp;14&nbsp;37&nbsp;1&nbsp;34&nbsp;38&nbsp;36&nbsp;0&nbsp;35&nbsp;27&nbsp;19&nbsp;4&nbsp;26&nbsp;19&nbsp;24&nbsp;3&nbsp;14&nbsp;24&nbsp;13&nbsp;6&nbsp;23&nbsp;21&nbsp;11&nbsp;25&nbsp;19&nbsp;10&nbsp;20&nbsp;15&nbsp;2&nbsp;35&nbsp;15&nbsp;17&nbsp;31&nbsp;35&nbsp;33&nbsp;28&nbsp;18&nbsp;31&nbsp;29&nbsp;20&nbsp;4&nbsp;25&nbsp;5&nbsp;3&nbsp;23&nbsp;11&nbsp;9&nbsp;15&nbsp;14&nbsp;28&nbsp;10&nbsp;36&nbsp;19&nbsp;22&nbsp;33&nbsp;34&nbsp;14&nbsp;27&nbsp;11&nbsp;10&nbsp;30&nbsp;27&nbsp;37&nbsp;21&nbsp;22&nbsp;17&nbsp;38&nbsp;29&nbsp;10&nbsp;34&nbsp;23&nbsp;3&nbsp;12&nbsp;31&nbsp;15&nbsp;5&nbsp;14&nbsp;10&nbsp;38&nbsp;34&nbsp;36&nbsp;6&nbsp;3&nbsp;31&nbsp;24&nbsp;3&nbsp;22&nbsp;14&nbsp;29&nbsp;28&nbsp;6&nbsp;19&nbsp;23&nbsp;33&nbsp;2&nbsp;13&nbsp;9&nbsp;36&nbsp;26&nbsp;11&nbsp;33&nbsp;0&nbsp;13&nbsp;6&nbsp;17&nbsp;6&nbsp;9&nbsp;23&nbsp;33&nbsp;8&nbsp;25&nbsp;28&nbsp;33&nbsp;16&nbsp;3&nbsp;20&nbsp;8&nbsp;35&nbsp;33&nbsp;10&nbsp;31&nbsp;14&nbsp;28&nbsp;16&nbsp;19&nbsp;19&nbsp;31&nbsp;27&nbsp;6&nbsp;26&nbsp;12&nbsp;10&nbsp;5&nbsp;1&nbsp;11&nbsp;38&nbsp;20&nbsp;23&nbsp;18&nbsp;16&nbsp;37&nbsp;31&nbsp;23&nbsp;5&nbsp;6&nbsp;7&nbsp;23&nbsp;4&nbsp;17&nbsp;10&nbsp;20&nbsp;33&nbsp;31&nbsp;0&nbsp;35&nbsp;15&nbsp;17&nbsp;21&nbsp;24&nbsp;6&nbsp;15&nbsp;26&nbsp;34&nbsp;0&nbsp;3&nbsp;14&nbsp;35&nbsp;35&nbsp;33&nbsp;1&nbsp;38&nbsp;7&nbsp;7&nbsp;12&nbsp;18&nbsp;17&nbsp;26&nbsp;10&nbsp;16&nbsp;4&nbsp;38&nbsp;23&nbsp;30&nbsp;9&nbsp;16&nbsp;33&nbsp;3&nbsp;8&nbsp;17&nbsp;15&nbsp;33&nbsp;15&nbsp;7&nbsp;1&nbsp;14&nbsp;4&nbsp;11&nbsp;6&nbsp;24&nbsp;5&nbsp;17&nbsp;22&nbsp;20&nbsp;6&nbsp;22&nbsp;13&nbsp;23&nbsp;21&nbsp;3&nbsp;7&nbsp;25&nbsp;9&nbsp;19&nbsp;4&nbsp;21&nbsp;1&nbsp;33&nbsp;1&nbsp;30&nbsp;8&nbsp;16&nbsp;23&nbsp;13&nbsp;35&nbsp;25&nbsp;23&nbsp;25&nbsp;15&nbsp;18&nbsp;9&nbsp;1&nbsp;21&nbsp;10&nbsp;18&nbsp;7&nbsp;0&nbsp;16&nbsp;13&nbsp;18&nbsp;12&nbsp;5&nbsp;37&nbsp;37&nbsp;19&nbsp;26&nbsp;37&nbsp;36&nbsp;1&nbsp;14&nbsp;28&nbsp;22&nbsp;6&nbsp;30&nbsp;16&nbsp;16&nbsp;4&nbsp;36&nbsp;30&nbsp;37&nbsp;7&nbsp;22&nbsp;20&nbsp;25&nbsp;25&nbsp;11&nbsp;38&nbsp;22&nbsp;8&nbsp;21&nbsp;2&nbsp;10&nbsp;32&nbsp;25&nbsp;12&nbsp;33&nbsp;24&nbsp;30&nbsp;32&nbsp;11&nbsp;37&nbsp;27&nbsp;32&nbsp;26&nbsp;22&nbsp;5&nbsp;3&nbsp;11&nbsp;35&nbsp;29&nbsp;31&nbsp;35&nbsp;35&nbsp;17&nbsp;0&nbsp;32&nbsp;11&nbsp;4&nbsp;36&nbsp;35&nbsp;14&nbsp;17&nbsp;37&nbsp;6&nbsp;6&nbsp;24&nbsp;31&nbsp;1&nbsp;34&nbsp;2&nbsp;37&nbsp;32&nbsp;0&nbsp;30&nbsp;21&nbsp;23&nbsp;0&nbsp;22&nbsp;18&nbsp;23&nbsp;12&nbsp;14&nbsp;26&nbsp;6&nbsp;26&nbsp;0&nbsp;28&nbsp;23&nbsp;17&nbsp;17&nbsp;4&nbsp;35&nbsp;19&nbsp;23&nbsp;4&nbsp;6&nbsp;34&nbsp;22&nbsp;37&nbsp;16&nbsp;19&nbsp;34&nbsp;33&nbsp;8&nbsp;36&nbsp;33&nbsp;30&nbsp;33&nbsp;26&nbsp;30&nbsp;7&nbsp;27&nbsp;9&nbsp;15&nbsp;28&nbsp;23&nbsp;32&nbsp;29&nbsp;16&nbsp;16&nbsp;2&nbsp;36&nbsp;23&nbsp;38&nbsp;4&nbsp;19&nbsp;13&nbsp;33&nbsp;32&nbsp;36&nbsp;28&nbsp;35&nbsp;33&nbsp;25&nbsp;0&nbsp;30&nbsp;17&nbsp;7&nbsp;36&nbsp;37&nbsp;14&nbsp;35&nbsp;4&nbsp;17&nbsp;14&nbsp;31&nbsp;16&nbsp;37&nbsp;3&nbsp;6&nbsp;30&nbsp;35&nbsp;3&nbsp;12&nbsp;30&nbsp;14&nbsp;1&nbsp;22&nbsp;32&nbsp;37&nbsp;5&nbsp;18&nbsp;24&nbsp;21&nbsp;15&nbsp;4&nbsp;22&nbsp;24&nbsp;15&nbsp;23&nbsp;15&nbsp;4&nbsp;12&nbsp;19&nbsp;7&nbsp;26&nbsp;11&nbsp;10&nbsp;13&nbsp;37&nbsp;14&nbsp;3&nbsp;33&nbsp;20&nbsp;6&nbsp;9&nbsp;1&nbsp;18&nbsp;16&nbsp;11&nbsp;15&nbsp;0&nbsp;32&nbsp;22&nbsp;16&nbsp;24&nbsp;8&nbsp;33&nbsp;10&nbsp;12&nbsp;28&nbsp;15&nbsp;9&nbsp;34&nbsp;6&nbsp;5&nbsp;32&nbsp;24&nbsp;11&nbsp;18&nbsp;12&nbsp;9&nbsp;12&nbsp;21&nbsp;11&nbsp;36&nbsp;15&nbsp;2&nbsp;12&nbsp;24&nbsp;1&nbsp;14&nbsp;21&nbsp;20&nbsp;22&nbsp;1&nbsp;14&nbsp;26&nbsp;22&nbsp;5&nbsp;34&nbsp;13&nbsp;1&nbsp;9&nbsp;28&nbsp;10&nbsp;8&nbsp;28&nbsp;4&nbsp;1&nbsp;25&nbsp;23&nbsp;21&nbsp;10&nbsp;13&nbsp;12&nbsp;18&nbsp;0&nbsp;0&nbsp;12&nbsp;0&nbsp;38&nbsp;26&nbsp;18&nbsp;9&nbsp;0&nbsp;7&nbsp;9&nbsp;4&nbsp;36&nbsp;18&nbsp;10&nbsp;1&nbsp;33&nbsp;1&nbsp;7&nbsp;13&nbsp;31&nbsp;5&nbsp;37&nbsp;1&nbsp;4&nbsp;20&nbsp;3&nbsp;26&nbsp;5&nbsp;10&nbsp;26&nbsp;31&nbsp;3&nbsp;31&nbsp;23&nbsp;15&nbsp;18&nbsp;14&nbsp;32&nbsp;24&nbsp;7&nbsp;4&nbsp;20&nbsp;15&nbsp;17&nbsp;37&nbsp;22&nbsp;16&nbsp;11&nbsp;15&nbsp;15&nbsp;32&nbsp;3&nbsp;22&nbsp;31&nbsp;20&nbsp;38&nbsp;15&nbsp;17&nbsp;25&nbsp;10&nbsp;4&nbsp;32&nbsp;25&nbsp;29&nbsp;19&nbsp;22&nbsp;11&nbsp;23&nbsp;13&nbsp;7&nbsp;30&nbsp;30&nbsp;30&nbsp;33&nbsp;33&nbsp;4&nbsp;4&nbsp;28&nbsp;8&nbsp;25&nbsp;2&nbsp;1&nbsp;22&nbsp;2&nbsp;9&nbsp;36&nbsp;33&nbsp;8&nbsp;29&nbsp;16&nbsp;23&nbsp;17&nbsp;17&nbsp;27&nbsp;6&nbsp;16&nbsp;26&nbsp;20&nbsp;14&nbsp;8&nbsp;25&nbsp;33&nbsp;10&nbsp;32&nbsp;2&nbsp;10&nbsp;9&nbsp;31&nbsp;14&nbsp;36&nbsp;11&nbsp;29&nbsp;37&nbsp;6&nbsp;31&nbsp;15&nbsp;11&nbsp;31&nbsp;1&nbsp;27&nbsp;10&nbsp;36&nbsp;25&nbsp;20&nbsp;38&nbsp;8&nbsp;16&nbsp;33&nbsp;33&nbsp;13&nbsp;15&nbsp;23&nbsp;23&nbsp;8&nbsp;21&nbsp;32&nbsp;18&nbsp;3&nbsp;4&nbsp;21&nbsp;13&nbsp;13&nbsp;29&nbsp;6&nbsp;23&nbsp;21&nbsp;4&nbsp;27&nbsp;29&nbsp;14&nbsp;8&nbsp;17&nbsp;1&nbsp;22&nbsp;24&nbsp;10&nbsp;31&nbsp;20&nbsp;2&nbsp;17&nbsp;37&nbsp;10&nbsp;3&nbsp;20&nbsp;8&nbsp;3&nbsp;16&nbsp;15&nbsp;25&nbsp;4&nbsp;0&nbsp;14&nbsp;7&nbsp;12&nbsp;9&nbsp;14&nbsp;19&nbsp;28&nbsp;15&nbsp;25&nbsp;26&nbsp;38&nbsp;32&nbsp;16&nbsp;36&nbsp;7&nbsp;2&nbsp;3&nbsp;22&nbsp;26&nbsp;14&nbsp;10&nbsp;25&nbsp;25&nbsp;26&nbsp;17&nbsp;8&nbsp;35&nbsp;15&nbsp;4&nbsp;36&nbsp;34&nbsp;15&nbsp;8&nbsp;5&nbsp;31&nbsp;5&nbsp;20&nbsp;8&nbsp;36&nbsp;24&nbsp;6&nbsp;12&nbsp;29&nbsp;22&nbsp;9&nbsp;37&nbsp;32&nbsp;8&nbsp;12&nbsp;20&nbsp;10&nbsp;1&nbsp;16&nbsp;28&nbsp;9&nbsp;5&nbsp;16&nbsp;26<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            12695<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase12"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 12</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+2<br/>
+9<br/>
+0&nbsp;1&nbsp;1&nbsp;0&nbsp;1&nbsp;1&nbsp;0&nbsp;0&nbsp;0<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            4<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase13"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 13</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+129<br/>
+14<br/>
+0&nbsp;65&nbsp;26&nbsp;55&nbsp;54&nbsp;66&nbsp;38&nbsp;1&nbsp;116&nbsp;79&nbsp;21&nbsp;58&nbsp;48&nbsp;118<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            538<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase14"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 14</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+7334<br/>
+155<br/>
+1171&nbsp;1090&nbsp;655&nbsp;5584&nbsp;342&nbsp;7229&nbsp;5809&nbsp;6371&nbsp;1518&nbsp;7209&nbsp;1072&nbsp;5891&nbsp;5990&nbsp;185&nbsp;6007&nbsp;4485&nbsp;4161&nbsp;2163&nbsp;3107&nbsp;4099&nbsp;1594&nbsp;6839&nbsp;7194&nbsp;3226&nbsp;1170&nbsp;2123&nbsp;6245&nbsp;2475&nbsp;7237&nbsp;4460&nbsp;6301&nbsp;2176&nbsp;4781&nbsp;2859&nbsp;4933&nbsp;4919&nbsp;5845&nbsp;5410&nbsp;7188&nbsp;3439&nbsp;3762&nbsp;4033&nbsp;6800&nbsp;5018&nbsp;4520&nbsp;148&nbsp;2843&nbsp;1295&nbsp;6665&nbsp;5935&nbsp;283&nbsp;4778&nbsp;5312&nbsp;1580&nbsp;6787&nbsp;1827&nbsp;2304&nbsp;4908&nbsp;3409&nbsp;1457&nbsp;5015&nbsp;4696&nbsp;3613&nbsp;4788&nbsp;7112&nbsp;5864&nbsp;5015&nbsp;2169&nbsp;4864&nbsp;1090&nbsp;5948&nbsp;2978&nbsp;2910&nbsp;3807&nbsp;5790&nbsp;3915&nbsp;3421&nbsp;86&nbsp;284&nbsp;152&nbsp;3001&nbsp;4608&nbsp;2105&nbsp;4037&nbsp;304&nbsp;710&nbsp;441&nbsp;3697&nbsp;6108&nbsp;3231&nbsp;4065&nbsp;2166&nbsp;4036&nbsp;309&nbsp;1837&nbsp;1999&nbsp;3993&nbsp;3810&nbsp;1857&nbsp;4585&nbsp;5966&nbsp;792&nbsp;6228&nbsp;6049&nbsp;4537&nbsp;1820&nbsp;4281&nbsp;4019&nbsp;4411&nbsp;5489&nbsp;4788&nbsp;4779&nbsp;5783&nbsp;488&nbsp;3968&nbsp;3394&nbsp;1930&nbsp;5447&nbsp;6531&nbsp;1605&nbsp;1859&nbsp;5209&nbsp;5924&nbsp;614&nbsp;5989&nbsp;2626&nbsp;4371&nbsp;5842&nbsp;5324&nbsp;2532&nbsp;5280&nbsp;925&nbsp;2643&nbsp;5129&nbsp;183&nbsp;4941&nbsp;4483&nbsp;5485&nbsp;370&nbsp;6490&nbsp;4852&nbsp;2365&nbsp;3239&nbsp;5790&nbsp;3597&nbsp;999&nbsp;4647&nbsp;4299&nbsp;5226&nbsp;5003&nbsp;2649&nbsp;6317&nbsp;7132&nbsp;1084&nbsp;5406<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            371353<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase15"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 15</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+10<br/>
+6<br/>
+3&nbsp;6&nbsp;5&nbsp;4&nbsp;4&nbsp;5<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            6<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase16"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 16</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+2<br/>
+76<br/>
+0&nbsp;0&nbsp;1&nbsp;0&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;0&nbsp;0&nbsp;0&nbsp;1&nbsp;0&nbsp;0&nbsp;0&nbsp;1&nbsp;0&nbsp;0&nbsp;0&nbsp;1&nbsp;0&nbsp;1&nbsp;0&nbsp;0&nbsp;1&nbsp;0&nbsp;1&nbsp;0&nbsp;1&nbsp;1&nbsp;0&nbsp;1&nbsp;0&nbsp;1&nbsp;1&nbsp;0&nbsp;0&nbsp;0&nbsp;1&nbsp;0&nbsp;0&nbsp;0&nbsp;1&nbsp;0&nbsp;1&nbsp;0&nbsp;0&nbsp;0&nbsp;1&nbsp;1&nbsp;0&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;0&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;0<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            36<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase17"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 17</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+5<br/>
+729<br/>
+2&nbsp;1&nbsp;3&nbsp;1&nbsp;3&nbsp;4&nbsp;3&nbsp;0&nbsp;2&nbsp;0&nbsp;4&nbsp;2&nbsp;0&nbsp;1&nbsp;4&nbsp;1&nbsp;2&nbsp;3&nbsp;4&nbsp;4&nbsp;3&nbsp;0&nbsp;1&nbsp;3&nbsp;1&nbsp;3&nbsp;4&nbsp;4&nbsp;0&nbsp;4&nbsp;1&nbsp;0&nbsp;0&nbsp;1&nbsp;2&nbsp;4&nbsp;3&nbsp;4&nbsp;0&nbsp;3&nbsp;4&nbsp;1&nbsp;4&nbsp;4&nbsp;4&nbsp;1&nbsp;0&nbsp;2&nbsp;1&nbsp;1&nbsp;0&nbsp;4&nbsp;0&nbsp;3&nbsp;3&nbsp;2&nbsp;4&nbsp;3&nbsp;3&nbsp;2&nbsp;4&nbsp;1&nbsp;3&nbsp;3&nbsp;4&nbsp;1&nbsp;2&nbsp;4&nbsp;1&nbsp;3&nbsp;1&nbsp;1&nbsp;4&nbsp;1&nbsp;1&nbsp;1&nbsp;4&nbsp;0&nbsp;2&nbsp;3&nbsp;4&nbsp;3&nbsp;2&nbsp;3&nbsp;3&nbsp;3&nbsp;1&nbsp;2&nbsp;4&nbsp;3&nbsp;4&nbsp;0&nbsp;2&nbsp;4&nbsp;1&nbsp;4&nbsp;4&nbsp;1&nbsp;4&nbsp;1&nbsp;0&nbsp;1&nbsp;1&nbsp;1&nbsp;3&nbsp;3&nbsp;3&nbsp;4&nbsp;2&nbsp;4&nbsp;4&nbsp;1&nbsp;2&nbsp;0&nbsp;4&nbsp;1&nbsp;1&nbsp;2&nbsp;1&nbsp;2&nbsp;0&nbsp;4&nbsp;0&nbsp;0&nbsp;2&nbsp;2&nbsp;2&nbsp;1&nbsp;1&nbsp;0&nbsp;4&nbsp;4&nbsp;2&nbsp;3&nbsp;0&nbsp;4&nbsp;3&nbsp;4&nbsp;0&nbsp;4&nbsp;4&nbsp;4&nbsp;1&nbsp;4&nbsp;0&nbsp;4&nbsp;0&nbsp;2&nbsp;1&nbsp;3&nbsp;0&nbsp;0&nbsp;0&nbsp;4&nbsp;4&nbsp;0&nbsp;3&nbsp;0&nbsp;3&nbsp;4&nbsp;3&nbsp;2&nbsp;0&nbsp;3&nbsp;3&nbsp;3&nbsp;4&nbsp;0&nbsp;3&nbsp;0&nbsp;4&nbsp;3&nbsp;4&nbsp;2&nbsp;2&nbsp;4&nbsp;2&nbsp;2&nbsp;1&nbsp;4&nbsp;0&nbsp;4&nbsp;1&nbsp;1&nbsp;2&nbsp;4&nbsp;0&nbsp;0&nbsp;2&nbsp;2&nbsp;3&nbsp;0&nbsp;0&nbsp;0&nbsp;4&nbsp;2&nbsp;4&nbsp;2&nbsp;4&nbsp;4&nbsp;1&nbsp;3&nbsp;4&nbsp;1&nbsp;3&nbsp;1&nbsp;3&nbsp;2&nbsp;1&nbsp;4&nbsp;0&nbsp;0&nbsp;0&nbsp;3&nbsp;3&nbsp;4&nbsp;2&nbsp;1&nbsp;4&nbsp;4&nbsp;0&nbsp;1&nbsp;2&nbsp;4&nbsp;2&nbsp;4&nbsp;2&nbsp;2&nbsp;2&nbsp;4&nbsp;3&nbsp;4&nbsp;2&nbsp;0&nbsp;4&nbsp;3&nbsp;2&nbsp;0&nbsp;1&nbsp;4&nbsp;4&nbsp;2&nbsp;1&nbsp;3&nbsp;0&nbsp;4&nbsp;0&nbsp;4&nbsp;2&nbsp;3&nbsp;0&nbsp;1&nbsp;1&nbsp;1&nbsp;2&nbsp;3&nbsp;1&nbsp;0&nbsp;1&nbsp;2&nbsp;0&nbsp;3&nbsp;2&nbsp;4&nbsp;1&nbsp;2&nbsp;1&nbsp;0&nbsp;1&nbsp;2&nbsp;4&nbsp;2&nbsp;1&nbsp;1&nbsp;1&nbsp;2&nbsp;3&nbsp;2&nbsp;1&nbsp;4&nbsp;1&nbsp;2&nbsp;2&nbsp;4&nbsp;4&nbsp;3&nbsp;2&nbsp;2&nbsp;4&nbsp;2&nbsp;2&nbsp;2&nbsp;2&nbsp;0&nbsp;0&nbsp;2&nbsp;3&nbsp;0&nbsp;2&nbsp;4&nbsp;3&nbsp;0&nbsp;0&nbsp;2&nbsp;0&nbsp;1&nbsp;2&nbsp;3&nbsp;2&nbsp;1&nbsp;1&nbsp;3&nbsp;4&nbsp;4&nbsp;0&nbsp;4&nbsp;2&nbsp;2&nbsp;3&nbsp;1&nbsp;4&nbsp;2&nbsp;2&nbsp;4&nbsp;4&nbsp;3&nbsp;4&nbsp;2&nbsp;3&nbsp;2&nbsp;4&nbsp;3&nbsp;1&nbsp;2&nbsp;1&nbsp;3&nbsp;0&nbsp;1&nbsp;3&nbsp;4&nbsp;0&nbsp;4&nbsp;1&nbsp;2&nbsp;3&nbsp;4&nbsp;4&nbsp;3&nbsp;3&nbsp;0&nbsp;3&nbsp;0&nbsp;1&nbsp;1&nbsp;0&nbsp;1&nbsp;0&nbsp;4&nbsp;2&nbsp;3&nbsp;2&nbsp;4&nbsp;2&nbsp;4&nbsp;3&nbsp;3&nbsp;0&nbsp;2&nbsp;3&nbsp;2&nbsp;1&nbsp;0&nbsp;0&nbsp;1&nbsp;1&nbsp;4&nbsp;4&nbsp;4&nbsp;2&nbsp;2&nbsp;3&nbsp;4&nbsp;1&nbsp;3&nbsp;1&nbsp;1&nbsp;2&nbsp;0&nbsp;4&nbsp;4&nbsp;3&nbsp;0&nbsp;4&nbsp;0&nbsp;4&nbsp;4&nbsp;0&nbsp;4&nbsp;2&nbsp;1&nbsp;3&nbsp;0&nbsp;3&nbsp;4&nbsp;1&nbsp;0&nbsp;3&nbsp;2&nbsp;4&nbsp;3&nbsp;1&nbsp;2&nbsp;3&nbsp;2&nbsp;3&nbsp;2&nbsp;1&nbsp;4&nbsp;1&nbsp;3&nbsp;2&nbsp;2&nbsp;1&nbsp;4&nbsp;0&nbsp;2&nbsp;2&nbsp;4&nbsp;1&nbsp;2&nbsp;4&nbsp;4&nbsp;4&nbsp;0&nbsp;2&nbsp;4&nbsp;3&nbsp;2&nbsp;4&nbsp;3&nbsp;2&nbsp;0&nbsp;4&nbsp;2&nbsp;4&nbsp;3&nbsp;0&nbsp;0&nbsp;2&nbsp;1&nbsp;2&nbsp;2&nbsp;2&nbsp;3&nbsp;3&nbsp;2&nbsp;0&nbsp;4&nbsp;1&nbsp;3&nbsp;3&nbsp;0&nbsp;1&nbsp;0&nbsp;4&nbsp;2&nbsp;2&nbsp;0&nbsp;0&nbsp;3&nbsp;4&nbsp;1&nbsp;1&nbsp;1&nbsp;2&nbsp;4&nbsp;2&nbsp;0&nbsp;0&nbsp;2&nbsp;0&nbsp;1&nbsp;3&nbsp;3&nbsp;1&nbsp;2&nbsp;4&nbsp;1&nbsp;2&nbsp;4&nbsp;4&nbsp;1&nbsp;0&nbsp;3&nbsp;0&nbsp;1&nbsp;4&nbsp;4&nbsp;2&nbsp;1&nbsp;4&nbsp;0&nbsp;4&nbsp;4&nbsp;4&nbsp;4&nbsp;1&nbsp;2&nbsp;1&nbsp;3&nbsp;2&nbsp;1&nbsp;2&nbsp;1&nbsp;3&nbsp;2&nbsp;3&nbsp;0&nbsp;2&nbsp;1&nbsp;3&nbsp;4&nbsp;0&nbsp;0&nbsp;2&nbsp;4&nbsp;1&nbsp;1&nbsp;0&nbsp;1&nbsp;4&nbsp;1&nbsp;0&nbsp;3&nbsp;3&nbsp;0&nbsp;1&nbsp;1&nbsp;3&nbsp;4&nbsp;2&nbsp;3&nbsp;0&nbsp;0&nbsp;2&nbsp;0&nbsp;2&nbsp;0&nbsp;0&nbsp;4&nbsp;3&nbsp;0&nbsp;2&nbsp;4&nbsp;3&nbsp;4&nbsp;0&nbsp;1&nbsp;1&nbsp;4&nbsp;1&nbsp;2&nbsp;0&nbsp;2&nbsp;4&nbsp;3&nbsp;0&nbsp;0&nbsp;2&nbsp;4&nbsp;2&nbsp;2&nbsp;0&nbsp;0&nbsp;3&nbsp;0&nbsp;1&nbsp;4&nbsp;4&nbsp;3&nbsp;3&nbsp;1&nbsp;2&nbsp;0&nbsp;4&nbsp;1&nbsp;2&nbsp;0&nbsp;0&nbsp;1&nbsp;4&nbsp;2&nbsp;3&nbsp;2&nbsp;4&nbsp;3&nbsp;1&nbsp;4&nbsp;4&nbsp;2&nbsp;0&nbsp;0&nbsp;2&nbsp;4&nbsp;4&nbsp;4&nbsp;0&nbsp;1&nbsp;0&nbsp;1&nbsp;4&nbsp;3&nbsp;0&nbsp;4&nbsp;4&nbsp;2&nbsp;1&nbsp;1&nbsp;4&nbsp;2&nbsp;1&nbsp;2&nbsp;3&nbsp;0&nbsp;4&nbsp;3&nbsp;2&nbsp;3&nbsp;2&nbsp;3&nbsp;4&nbsp;4&nbsp;1&nbsp;4&nbsp;3&nbsp;1&nbsp;0&nbsp;4&nbsp;1&nbsp;0&nbsp;2&nbsp;1&nbsp;4&nbsp;1&nbsp;4&nbsp;4&nbsp;4&nbsp;4&nbsp;1&nbsp;4&nbsp;2&nbsp;2&nbsp;2&nbsp;2&nbsp;1&nbsp;3&nbsp;2&nbsp;3&nbsp;1&nbsp;4&nbsp;3&nbsp;4&nbsp;3&nbsp;4&nbsp;0&nbsp;3&nbsp;1&nbsp;2&nbsp;0&nbsp;1&nbsp;2&nbsp;0&nbsp;2&nbsp;1&nbsp;4&nbsp;3&nbsp;2&nbsp;0&nbsp;4&nbsp;1&nbsp;3&nbsp;0&nbsp;1&nbsp;1&nbsp;2&nbsp;4&nbsp;4&nbsp;3&nbsp;0&nbsp;3&nbsp;2&nbsp;1&nbsp;0&nbsp;4&nbsp;2&nbsp;1&nbsp;0&nbsp;4&nbsp;2&nbsp;0&nbsp;3&nbsp;3&nbsp;2&nbsp;1&nbsp;4&nbsp;1&nbsp;2&nbsp;2&nbsp;1&nbsp;3&nbsp;0&nbsp;0&nbsp;3&nbsp;3&nbsp;4&nbsp;1&nbsp;4&nbsp;0&nbsp;3&nbsp;0&nbsp;4&nbsp;0&nbsp;2&nbsp;0&nbsp;4&nbsp;2&nbsp;2&nbsp;3&nbsp;3<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            1217<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase18"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 18</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+68<br/>
+10<br/>
+38&nbsp;7&nbsp;15&nbsp;59&nbsp;50&nbsp;30&nbsp;66&nbsp;19&nbsp;21&nbsp;65<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            241<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase19"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 19</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+94<br/>
+24<br/>
+51&nbsp;17&nbsp;39&nbsp;22&nbsp;27&nbsp;78&nbsp;4&nbsp;36&nbsp;4&nbsp;63&nbsp;82&nbsp;79&nbsp;72&nbsp;26&nbsp;89&nbsp;17&nbsp;51&nbsp;23&nbsp;50&nbsp;84&nbsp;72&nbsp;65&nbsp;35&nbsp;47<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            720<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase20"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 20</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            1<br/>
+214<br/>
+381<br/>
+131&nbsp;35&nbsp;58&nbsp;128&nbsp;145&nbsp;151&nbsp;110&nbsp;132&nbsp;60&nbsp;135&nbsp;58&nbsp;151&nbsp;146&nbsp;108&nbsp;81&nbsp;103&nbsp;107&nbsp;134&nbsp;136&nbsp;4&nbsp;194&nbsp;16&nbsp;189&nbsp;113&nbsp;152&nbsp;2&nbsp;6&nbsp;106&nbsp;83&nbsp;67&nbsp;81&nbsp;88&nbsp;102&nbsp;164&nbsp;178&nbsp;47&nbsp;13&nbsp;169&nbsp;5&nbsp;19&nbsp;140&nbsp;128&nbsp;0&nbsp;82&nbsp;168&nbsp;138&nbsp;115&nbsp;138&nbsp;52&nbsp;34&nbsp;121&nbsp;20&nbsp;65&nbsp;191&nbsp;211&nbsp;125&nbsp;27&nbsp;24&nbsp;167&nbsp;17&nbsp;167&nbsp;197&nbsp;55&nbsp;117&nbsp;25&nbsp;23&nbsp;15&nbsp;163&nbsp;113&nbsp;88&nbsp;201&nbsp;119&nbsp;70&nbsp;206&nbsp;31&nbsp;144&nbsp;64&nbsp;40&nbsp;207&nbsp;36&nbsp;51&nbsp;33&nbsp;140&nbsp;24&nbsp;173&nbsp;145&nbsp;196&nbsp;126&nbsp;68&nbsp;197&nbsp;55&nbsp;159&nbsp;38&nbsp;134&nbsp;142&nbsp;116&nbsp;18&nbsp;70&nbsp;209&nbsp;173&nbsp;60&nbsp;150&nbsp;87&nbsp;165&nbsp;148&nbsp;93&nbsp;199&nbsp;57&nbsp;152&nbsp;66&nbsp;193&nbsp;2&nbsp;141&nbsp;188&nbsp;190&nbsp;77&nbsp;115&nbsp;118&nbsp;174&nbsp;55&nbsp;107&nbsp;49&nbsp;144&nbsp;200&nbsp;169&nbsp;189&nbsp;192&nbsp;51&nbsp;210&nbsp;164&nbsp;33&nbsp;72&nbsp;164&nbsp;83&nbsp;98&nbsp;181&nbsp;28&nbsp;24&nbsp;18&nbsp;156&nbsp;188&nbsp;184&nbsp;80&nbsp;57&nbsp;147&nbsp;97&nbsp;63&nbsp;140&nbsp;123&nbsp;26&nbsp;104&nbsp;85&nbsp;206&nbsp;182&nbsp;160&nbsp;195&nbsp;158&nbsp;92&nbsp;129&nbsp;170&nbsp;139&nbsp;129&nbsp;155&nbsp;61&nbsp;33&nbsp;161&nbsp;74&nbsp;27&nbsp;56&nbsp;198&nbsp;78&nbsp;77&nbsp;15&nbsp;129&nbsp;43&nbsp;65&nbsp;31&nbsp;33&nbsp;190&nbsp;96&nbsp;101&nbsp;53&nbsp;135&nbsp;47&nbsp;66&nbsp;40&nbsp;30&nbsp;46&nbsp;114&nbsp;76&nbsp;206&nbsp;100&nbsp;196&nbsp;24&nbsp;184&nbsp;9&nbsp;99&nbsp;1&nbsp;151&nbsp;167&nbsp;96&nbsp;70&nbsp;106&nbsp;97&nbsp;8&nbsp;20&nbsp;184&nbsp;12&nbsp;105&nbsp;7&nbsp;193&nbsp;152&nbsp;179&nbsp;83&nbsp;142&nbsp;64&nbsp;117&nbsp;127&nbsp;64&nbsp;167&nbsp;154&nbsp;193&nbsp;211&nbsp;29&nbsp;32&nbsp;198&nbsp;13&nbsp;90&nbsp;207&nbsp;51&nbsp;91&nbsp;131&nbsp;147&nbsp;205&nbsp;176&nbsp;76&nbsp;178&nbsp;118&nbsp;92&nbsp;61&nbsp;87&nbsp;41&nbsp;193&nbsp;166&nbsp;69&nbsp;177&nbsp;196&nbsp;71&nbsp;126&nbsp;191&nbsp;204&nbsp;126&nbsp;175&nbsp;78&nbsp;168&nbsp;8&nbsp;54&nbsp;15&nbsp;109&nbsp;197&nbsp;116&nbsp;168&nbsp;40&nbsp;203&nbsp;93&nbsp;126&nbsp;165&nbsp;142&nbsp;84&nbsp;191&nbsp;84&nbsp;126&nbsp;212&nbsp;65&nbsp;72&nbsp;78&nbsp;20&nbsp;93&nbsp;149&nbsp;123&nbsp;65&nbsp;112&nbsp;130&nbsp;95&nbsp;42&nbsp;159&nbsp;46&nbsp;207&nbsp;47&nbsp;22&nbsp;151&nbsp;159&nbsp;155&nbsp;158&nbsp;200&nbsp;30&nbsp;45&nbsp;69&nbsp;67&nbsp;130&nbsp;36&nbsp;101&nbsp;37&nbsp;173&nbsp;135&nbsp;51&nbsp;33&nbsp;10&nbsp;75&nbsp;64&nbsp;12&nbsp;57&nbsp;161&nbsp;187&nbsp;68&nbsp;17&nbsp;1&nbsp;187&nbsp;156&nbsp;179&nbsp;186&nbsp;192&nbsp;109&nbsp;115&nbsp;95&nbsp;61&nbsp;205&nbsp;87&nbsp;128&nbsp;86&nbsp;182&nbsp;181&nbsp;119&nbsp;52&nbsp;110&nbsp;166&nbsp;166&nbsp;199&nbsp;38&nbsp;74&nbsp;4&nbsp;8&nbsp;167&nbsp;137&nbsp;122&nbsp;4&nbsp;154&nbsp;85&nbsp;116&nbsp;172&nbsp;3&nbsp;93&nbsp;134&nbsp;140&nbsp;96&nbsp;139&nbsp;70&nbsp;87&nbsp;4&nbsp;181&nbsp;94&nbsp;97&nbsp;140&nbsp;53&nbsp;114&nbsp;129&nbsp;55&nbsp;53&nbsp;107&nbsp;9&nbsp;167&nbsp;133&nbsp;196&nbsp;111&nbsp;38&nbsp;13&nbsp;87&nbsp;186&nbsp;51&nbsp;128&nbsp;83<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            26478<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase21"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 21</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+1<br/>
+2<br/>
+0&nbsp;0<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            0<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase22"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 22</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+4<br/>
+2<br/>
+15&nbsp;5<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            4<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase23"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 23</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+8<br/>
+2<br/>
+34&nbsp;10<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            3<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase24"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 24</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+2<br/>
+2<br/>
+2&nbsp;1<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            2<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase25"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 25</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+32<br/>
+2<br/>
+657&nbsp;541<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            16<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase26"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 26</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+5<br/>
+971<br/>
+24&nbsp;6&nbsp;21&nbsp;20&nbsp;16&nbsp;8&nbsp;20&nbsp;12&nbsp;8&nbsp;11&nbsp;22&nbsp;7&nbsp;2&nbsp;1&nbsp;3&nbsp;17&nbsp;13&nbsp;18&nbsp;4&nbsp;1&nbsp;9&nbsp;3&nbsp;3&nbsp;18&nbsp;12&nbsp;22&nbsp;7&nbsp;4&nbsp;24&nbsp;6&nbsp;0&nbsp;11&nbsp;7&nbsp;2&nbsp;24&nbsp;21&nbsp;15&nbsp;9&nbsp;7&nbsp;17&nbsp;10&nbsp;10&nbsp;15&nbsp;8&nbsp;8&nbsp;6&nbsp;23&nbsp;1&nbsp;9&nbsp;19&nbsp;10&nbsp;8&nbsp;14&nbsp;6&nbsp;3&nbsp;5&nbsp;15&nbsp;18&nbsp;16&nbsp;4&nbsp;5&nbsp;10&nbsp;18&nbsp;9&nbsp;19&nbsp;9&nbsp;5&nbsp;15&nbsp;5&nbsp;4&nbsp;6&nbsp;23&nbsp;17&nbsp;19&nbsp;0&nbsp;10&nbsp;21&nbsp;3&nbsp;2&nbsp;14&nbsp;14&nbsp;15&nbsp;22&nbsp;16&nbsp;23&nbsp;6&nbsp;9&nbsp;9&nbsp;14&nbsp;2&nbsp;14&nbsp;16&nbsp;7&nbsp;13&nbsp;9&nbsp;15&nbsp;7&nbsp;18&nbsp;5&nbsp;6&nbsp;10&nbsp;17&nbsp;12&nbsp;8&nbsp;13&nbsp;4&nbsp;1&nbsp;18&nbsp;8&nbsp;5&nbsp;3&nbsp;18&nbsp;23&nbsp;6&nbsp;13&nbsp;21&nbsp;14&nbsp;5&nbsp;7&nbsp;0&nbsp;3&nbsp;23&nbsp;9&nbsp;17&nbsp;24&nbsp;17&nbsp;7&nbsp;15&nbsp;7&nbsp;18&nbsp;18&nbsp;0&nbsp;13&nbsp;8&nbsp;22&nbsp;13&nbsp;9&nbsp;3&nbsp;3&nbsp;17&nbsp;13&nbsp;21&nbsp;21&nbsp;7&nbsp;1&nbsp;5&nbsp;3&nbsp;15&nbsp;12&nbsp;13&nbsp;11&nbsp;22&nbsp;9&nbsp;16&nbsp;18&nbsp;9&nbsp;4&nbsp;15&nbsp;7&nbsp;18&nbsp;12&nbsp;9&nbsp;14&nbsp;20&nbsp;21&nbsp;18&nbsp;5&nbsp;15&nbsp;5&nbsp;20&nbsp;13&nbsp;15&nbsp;24&nbsp;20&nbsp;24&nbsp;22&nbsp;24&nbsp;19&nbsp;16&nbsp;17&nbsp;12&nbsp;21&nbsp;18&nbsp;2&nbsp;24&nbsp;4&nbsp;4&nbsp;17&nbsp;8&nbsp;9&nbsp;8&nbsp;14&nbsp;15&nbsp;17&nbsp;22&nbsp;6&nbsp;22&nbsp;4&nbsp;2&nbsp;24&nbsp;8&nbsp;4&nbsp;15&nbsp;8&nbsp;17&nbsp;16&nbsp;0&nbsp;13&nbsp;21&nbsp;14&nbsp;13&nbsp;7&nbsp;19&nbsp;8&nbsp;9&nbsp;0&nbsp;4&nbsp;0&nbsp;6&nbsp;24&nbsp;24&nbsp;0&nbsp;23&nbsp;2&nbsp;23&nbsp;5&nbsp;6&nbsp;13&nbsp;2&nbsp;24&nbsp;7&nbsp;20&nbsp;3&nbsp;20&nbsp;21&nbsp;5&nbsp;0&nbsp;20&nbsp;3&nbsp;18&nbsp;10&nbsp;10&nbsp;24&nbsp;6&nbsp;12&nbsp;11&nbsp;0&nbsp;20&nbsp;7&nbsp;9&nbsp;17&nbsp;23&nbsp;24&nbsp;1&nbsp;3&nbsp;10&nbsp;0&nbsp;12&nbsp;6&nbsp;24&nbsp;21&nbsp;9&nbsp;5&nbsp;10&nbsp;4&nbsp;11&nbsp;15&nbsp;11&nbsp;1&nbsp;9&nbsp;9&nbsp;4&nbsp;13&nbsp;11&nbsp;5&nbsp;23&nbsp;4&nbsp;13&nbsp;17&nbsp;19&nbsp;1&nbsp;22&nbsp;20&nbsp;22&nbsp;11&nbsp;16&nbsp;20&nbsp;11&nbsp;0&nbsp;0&nbsp;14&nbsp;21&nbsp;5&nbsp;2&nbsp;24&nbsp;13&nbsp;6&nbsp;9&nbsp;24&nbsp;0&nbsp;10&nbsp;16&nbsp;23&nbsp;22&nbsp;21&nbsp;18&nbsp;7&nbsp;4&nbsp;23&nbsp;23&nbsp;7&nbsp;6&nbsp;1&nbsp;2&nbsp;15&nbsp;9&nbsp;9&nbsp;1&nbsp;4&nbsp;5&nbsp;9&nbsp;21&nbsp;20&nbsp;18&nbsp;20&nbsp;15&nbsp;13&nbsp;11&nbsp;5&nbsp;8&nbsp;21&nbsp;12&nbsp;0&nbsp;18&nbsp;4&nbsp;24&nbsp;3&nbsp;3&nbsp;21&nbsp;13&nbsp;4&nbsp;4&nbsp;1&nbsp;4&nbsp;12&nbsp;19&nbsp;22&nbsp;8&nbsp;14&nbsp;20&nbsp;5&nbsp;13&nbsp;3&nbsp;20&nbsp;20&nbsp;14&nbsp;22&nbsp;23&nbsp;24&nbsp;14&nbsp;0&nbsp;13&nbsp;11&nbsp;16&nbsp;20&nbsp;19&nbsp;7&nbsp;8&nbsp;6&nbsp;16&nbsp;5&nbsp;1&nbsp;14&nbsp;5&nbsp;9&nbsp;15&nbsp;0&nbsp;13&nbsp;16&nbsp;16&nbsp;15&nbsp;20&nbsp;18&nbsp;21&nbsp;8&nbsp;2&nbsp;4&nbsp;19&nbsp;24&nbsp;0&nbsp;24&nbsp;24&nbsp;21&nbsp;22&nbsp;12&nbsp;17&nbsp;22&nbsp;18&nbsp;22&nbsp;9&nbsp;17&nbsp;16&nbsp;19&nbsp;6&nbsp;19&nbsp;14&nbsp;18&nbsp;5&nbsp;2&nbsp;7&nbsp;13&nbsp;6&nbsp;3&nbsp;4&nbsp;17&nbsp;20&nbsp;13&nbsp;24&nbsp;6&nbsp;19&nbsp;10&nbsp;1&nbsp;19&nbsp;3&nbsp;20&nbsp;9&nbsp;23&nbsp;14&nbsp;1&nbsp;8&nbsp;4&nbsp;2&nbsp;1&nbsp;11&nbsp;8&nbsp;13&nbsp;21&nbsp;6&nbsp;19&nbsp;22&nbsp;21&nbsp;2&nbsp;13&nbsp;4&nbsp;1&nbsp;14&nbsp;0&nbsp;11&nbsp;24&nbsp;4&nbsp;22&nbsp;21&nbsp;16&nbsp;20&nbsp;16&nbsp;1&nbsp;1&nbsp;18&nbsp;15&nbsp;4&nbsp;18&nbsp;24&nbsp;13&nbsp;9&nbsp;3&nbsp;23&nbsp;12&nbsp;7&nbsp;7&nbsp;19&nbsp;8&nbsp;5&nbsp;2&nbsp;6&nbsp;18&nbsp;19&nbsp;22&nbsp;14&nbsp;14&nbsp;14&nbsp;19&nbsp;15&nbsp;16&nbsp;10&nbsp;22&nbsp;2&nbsp;1&nbsp;8&nbsp;23&nbsp;1&nbsp;8&nbsp;14&nbsp;2&nbsp;23&nbsp;20&nbsp;20&nbsp;4&nbsp;11&nbsp;2&nbsp;11&nbsp;21&nbsp;2&nbsp;4&nbsp;15&nbsp;18&nbsp;21&nbsp;20&nbsp;24&nbsp;1&nbsp;7&nbsp;17&nbsp;5&nbsp;13&nbsp;11&nbsp;3&nbsp;24&nbsp;0&nbsp;9&nbsp;5&nbsp;9&nbsp;5&nbsp;3&nbsp;22&nbsp;15&nbsp;1&nbsp;2&nbsp;14&nbsp;14&nbsp;6&nbsp;10&nbsp;21&nbsp;23&nbsp;3&nbsp;8&nbsp;5&nbsp;0&nbsp;5&nbsp;10&nbsp;17&nbsp;14&nbsp;5&nbsp;2&nbsp;4&nbsp;8&nbsp;13&nbsp;24&nbsp;0&nbsp;20&nbsp;14&nbsp;21&nbsp;10&nbsp;14&nbsp;5&nbsp;0&nbsp;5&nbsp;4&nbsp;24&nbsp;3&nbsp;24&nbsp;4&nbsp;1&nbsp;1&nbsp;12&nbsp;21&nbsp;23&nbsp;15&nbsp;0&nbsp;8&nbsp;13&nbsp;21&nbsp;18&nbsp;19&nbsp;20&nbsp;16&nbsp;11&nbsp;19&nbsp;4&nbsp;10&nbsp;3&nbsp;14&nbsp;0&nbsp;8&nbsp;17&nbsp;18&nbsp;0&nbsp;17&nbsp;15&nbsp;5&nbsp;3&nbsp;10&nbsp;18&nbsp;17&nbsp;16&nbsp;24&nbsp;21&nbsp;6&nbsp;19&nbsp;14&nbsp;13&nbsp;19&nbsp;5&nbsp;12&nbsp;15&nbsp;11&nbsp;13&nbsp;2&nbsp;11&nbsp;12&nbsp;16&nbsp;8&nbsp;21&nbsp;24&nbsp;15&nbsp;16&nbsp;19&nbsp;0&nbsp;0&nbsp;4&nbsp;0&nbsp;1&nbsp;19&nbsp;12&nbsp;15&nbsp;4&nbsp;13&nbsp;2&nbsp;12&nbsp;22&nbsp;10&nbsp;18&nbsp;11&nbsp;22&nbsp;22&nbsp;10&nbsp;15&nbsp;11&nbsp;15&nbsp;10&nbsp;4&nbsp;11&nbsp;24&nbsp;6&nbsp;10&nbsp;11&nbsp;11&nbsp;12&nbsp;18&nbsp;11&nbsp;9&nbsp;13&nbsp;0&nbsp;15&nbsp;13&nbsp;3&nbsp;19&nbsp;23&nbsp;16&nbsp;18&nbsp;17&nbsp;0&nbsp;19&nbsp;4&nbsp;5&nbsp;0&nbsp;2&nbsp;20&nbsp;3&nbsp;15&nbsp;17&nbsp;7&nbsp;4&nbsp;12&nbsp;9&nbsp;23&nbsp;21&nbsp;12&nbsp;6&nbsp;23&nbsp;20&nbsp;6&nbsp;9&nbsp;12&nbsp;11&nbsp;0&nbsp;3&nbsp;11&nbsp;24&nbsp;10&nbsp;15&nbsp;21&nbsp;17&nbsp;16&nbsp;12&nbsp;15&nbsp;10&nbsp;21&nbsp;20&nbsp;11&nbsp;23&nbsp;22&nbsp;22&nbsp;6&nbsp;19&nbsp;4&nbsp;24&nbsp;3&nbsp;1&nbsp;12&nbsp;14&nbsp;6&nbsp;24&nbsp;22&nbsp;2&nbsp;13&nbsp;16&nbsp;12&nbsp;12&nbsp;22&nbsp;14&nbsp;3&nbsp;11&nbsp;15&nbsp;9&nbsp;17&nbsp;22&nbsp;24&nbsp;2&nbsp;2&nbsp;15&nbsp;23&nbsp;5&nbsp;11&nbsp;15&nbsp;20&nbsp;15&nbsp;0&nbsp;4&nbsp;23&nbsp;6&nbsp;2&nbsp;7&nbsp;23&nbsp;21&nbsp;17&nbsp;21&nbsp;9&nbsp;22&nbsp;6&nbsp;21&nbsp;13&nbsp;17&nbsp;2&nbsp;20&nbsp;4&nbsp;1&nbsp;22&nbsp;2&nbsp;0&nbsp;13&nbsp;24&nbsp;21&nbsp;5&nbsp;17&nbsp;6&nbsp;5&nbsp;8&nbsp;6&nbsp;9&nbsp;13&nbsp;23&nbsp;12&nbsp;19&nbsp;14&nbsp;22&nbsp;15&nbsp;17&nbsp;24&nbsp;20&nbsp;11&nbsp;4&nbsp;9&nbsp;20&nbsp;24&nbsp;24&nbsp;23&nbsp;18&nbsp;22&nbsp;12&nbsp;14&nbsp;10&nbsp;17&nbsp;19&nbsp;21&nbsp;8&nbsp;19&nbsp;19&nbsp;7&nbsp;23&nbsp;16&nbsp;2&nbsp;16&nbsp;2&nbsp;3&nbsp;8&nbsp;4&nbsp;21&nbsp;17&nbsp;9&nbsp;14&nbsp;17&nbsp;21&nbsp;10&nbsp;16&nbsp;23&nbsp;4&nbsp;4&nbsp;23&nbsp;20&nbsp;19&nbsp;23&nbsp;20&nbsp;20&nbsp;13&nbsp;10&nbsp;21&nbsp;23&nbsp;14&nbsp;3&nbsp;0&nbsp;24&nbsp;5&nbsp;2&nbsp;24&nbsp;11&nbsp;16&nbsp;19&nbsp;19&nbsp;14&nbsp;2&nbsp;11&nbsp;19&nbsp;13&nbsp;11&nbsp;9&nbsp;13&nbsp;20&nbsp;8&nbsp;17&nbsp;20&nbsp;22&nbsp;1&nbsp;19&nbsp;16&nbsp;14&nbsp;22&nbsp;11&nbsp;11&nbsp;0&nbsp;11&nbsp;11&nbsp;14&nbsp;21&nbsp;0&nbsp;8&nbsp;5&nbsp;18&nbsp;24&nbsp;20&nbsp;24&nbsp;15&nbsp;17&nbsp;0&nbsp;3&nbsp;20&nbsp;24&nbsp;10&nbsp;11&nbsp;13&nbsp;6&nbsp;17&nbsp;8&nbsp;22&nbsp;2&nbsp;22&nbsp;10&nbsp;21&nbsp;6&nbsp;1&nbsp;1&nbsp;8&nbsp;5&nbsp;15&nbsp;21&nbsp;6&nbsp;11&nbsp;1&nbsp;12&nbsp;9&nbsp;5&nbsp;14&nbsp;18&nbsp;11&nbsp;19&nbsp;21&nbsp;13&nbsp;19&nbsp;23&nbsp;5&nbsp;9&nbsp;6&nbsp;0&nbsp;2&nbsp;8&nbsp;22&nbsp;2&nbsp;3&nbsp;19&nbsp;13&nbsp;2&nbsp;13&nbsp;14&nbsp;6&nbsp;10&nbsp;20&nbsp;4&nbsp;9&nbsp;17&nbsp;18&nbsp;7&nbsp;12&nbsp;23&nbsp;16&nbsp;4&nbsp;3&nbsp;22&nbsp;15&nbsp;11&nbsp;23&nbsp;6&nbsp;20&nbsp;20&nbsp;14&nbsp;20&nbsp;24&nbsp;21&nbsp;8&nbsp;9&nbsp;4&nbsp;3&nbsp;2&nbsp;4&nbsp;16&nbsp;3&nbsp;7&nbsp;2&nbsp;5&nbsp;19&nbsp;8&nbsp;18&nbsp;3&nbsp;10&nbsp;14&nbsp;5&nbsp;4&nbsp;16&nbsp;12&nbsp;10&nbsp;7&nbsp;6&nbsp;14&nbsp;4<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            3094<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase27"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 27</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+272<br/>
+6<br/>
+2946&nbsp;40920&nbsp;28461&nbsp;71529&nbsp;57290&nbsp;677<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            987<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase28"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 28</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+1199<br/>
+14<br/>
+359531&nbsp;575700&nbsp;109529&nbsp;862111&nbsp;503157&nbsp;1043485&nbsp;134494&nbsp;440902&nbsp;1080111&nbsp;95215&nbsp;631022&nbsp;626608&nbsp;687540&nbsp;1209358<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            10369<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase29"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 29</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+9<br/>
+285<br/>
+23&nbsp;31&nbsp;50&nbsp;27&nbsp;40&nbsp;74&nbsp;13&nbsp;45&nbsp;41&nbsp;6&nbsp;61&nbsp;4&nbsp;4&nbsp;13&nbsp;41&nbsp;53&nbsp;63&nbsp;42&nbsp;48&nbsp;61&nbsp;64&nbsp;9&nbsp;58&nbsp;22&nbsp;77&nbsp;1&nbsp;39&nbsp;3&nbsp;25&nbsp;0&nbsp;31&nbsp;45&nbsp;74&nbsp;35&nbsp;72&nbsp;57&nbsp;28&nbsp;23&nbsp;76&nbsp;54&nbsp;75&nbsp;6&nbsp;66&nbsp;38&nbsp;18&nbsp;29&nbsp;27&nbsp;71&nbsp;73&nbsp;69&nbsp;14&nbsp;80&nbsp;20&nbsp;68&nbsp;73&nbsp;5&nbsp;44&nbsp;54&nbsp;29&nbsp;6&nbsp;79&nbsp;39&nbsp;65&nbsp;12&nbsp;18&nbsp;28&nbsp;9&nbsp;54&nbsp;53&nbsp;73&nbsp;69&nbsp;55&nbsp;6&nbsp;60&nbsp;8&nbsp;9&nbsp;42&nbsp;73&nbsp;73&nbsp;59&nbsp;24&nbsp;74&nbsp;4&nbsp;31&nbsp;22&nbsp;35&nbsp;9&nbsp;46&nbsp;7&nbsp;54&nbsp;22&nbsp;79&nbsp;34&nbsp;10&nbsp;45&nbsp;36&nbsp;28&nbsp;71&nbsp;15&nbsp;79&nbsp;11&nbsp;66&nbsp;26&nbsp;41&nbsp;68&nbsp;42&nbsp;69&nbsp;3&nbsp;42&nbsp;41&nbsp;23&nbsp;3&nbsp;53&nbsp;62&nbsp;14&nbsp;70&nbsp;21&nbsp;33&nbsp;62&nbsp;27&nbsp;46&nbsp;76&nbsp;56&nbsp;27&nbsp;55&nbsp;2&nbsp;26&nbsp;78&nbsp;22&nbsp;76&nbsp;73&nbsp;55&nbsp;64&nbsp;17&nbsp;67&nbsp;38&nbsp;45&nbsp;10&nbsp;67&nbsp;49&nbsp;55&nbsp;7&nbsp;70&nbsp;34&nbsp;19&nbsp;26&nbsp;52&nbsp;77&nbsp;74&nbsp;24&nbsp;80&nbsp;66&nbsp;49&nbsp;11&nbsp;79&nbsp;22&nbsp;2&nbsp;25&nbsp;62&nbsp;45&nbsp;55&nbsp;42&nbsp;46&nbsp;14&nbsp;75&nbsp;45&nbsp;7&nbsp;74&nbsp;20&nbsp;57&nbsp;39&nbsp;8&nbsp;2&nbsp;20&nbsp;42&nbsp;42&nbsp;0&nbsp;40&nbsp;72&nbsp;38&nbsp;68&nbsp;54&nbsp;13&nbsp;73&nbsp;63&nbsp;37&nbsp;0&nbsp;72&nbsp;6&nbsp;22&nbsp;12&nbsp;74&nbsp;54&nbsp;51&nbsp;22&nbsp;74&nbsp;23&nbsp;65&nbsp;76&nbsp;61&nbsp;65&nbsp;18&nbsp;29&nbsp;45&nbsp;12&nbsp;31&nbsp;71&nbsp;52&nbsp;14&nbsp;66&nbsp;71&nbsp;32&nbsp;48&nbsp;20&nbsp;52&nbsp;47&nbsp;56&nbsp;45&nbsp;44&nbsp;78&nbsp;49&nbsp;66&nbsp;47&nbsp;75&nbsp;23&nbsp;59&nbsp;59&nbsp;12&nbsp;43&nbsp;13&nbsp;53&nbsp;1&nbsp;17&nbsp;49&nbsp;77&nbsp;67&nbsp;50&nbsp;8&nbsp;64&nbsp;60&nbsp;63&nbsp;24&nbsp;72&nbsp;56&nbsp;28&nbsp;10&nbsp;66&nbsp;65&nbsp;78&nbsp;22&nbsp;67&nbsp;3&nbsp;19&nbsp;29&nbsp;58&nbsp;18&nbsp;39&nbsp;35&nbsp;58&nbsp;65&nbsp;72&nbsp;25&nbsp;68&nbsp;7&nbsp;5&nbsp;42&nbsp;12&nbsp;3&nbsp;54&nbsp;45&nbsp;71&nbsp;69&nbsp;22&nbsp;66&nbsp;54&nbsp;18&nbsp;76&nbsp;19&nbsp;80&nbsp;49&nbsp;14&nbsp;48&nbsp;14&nbsp;10&nbsp;78<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            1791<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase30"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 30</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+9<br/>
+3<br/>
+55&nbsp;14&nbsp;79<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            18<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase31"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 31</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+3<br/>
+66<br/>
+4&nbsp;2&nbsp;6&nbsp;5&nbsp;3&nbsp;6&nbsp;2&nbsp;8&nbsp;0&nbsp;3&nbsp;2&nbsp;7&nbsp;4&nbsp;4&nbsp;8&nbsp;8&nbsp;8&nbsp;0&nbsp;6&nbsp;7&nbsp;2&nbsp;8&nbsp;2&nbsp;4&nbsp;2&nbsp;0&nbsp;2&nbsp;6&nbsp;3&nbsp;1&nbsp;4&nbsp;0&nbsp;7&nbsp;4&nbsp;1&nbsp;0&nbsp;2&nbsp;8&nbsp;1&nbsp;2&nbsp;3&nbsp;5&nbsp;8&nbsp;0&nbsp;1&nbsp;1&nbsp;0&nbsp;2&nbsp;2&nbsp;3&nbsp;8&nbsp;6&nbsp;0&nbsp;1&nbsp;8&nbsp;5&nbsp;1&nbsp;7&nbsp;4&nbsp;5&nbsp;7&nbsp;1&nbsp;5&nbsp;6&nbsp;7&nbsp;5<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            125<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase32"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 32</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+46<br/>
+674<br/>
+930&nbsp;1757&nbsp;1545&nbsp;1186&nbsp;1081&nbsp;670&nbsp;1090&nbsp;876&nbsp;1490&nbsp;2011&nbsp;1256&nbsp;517&nbsp;319&nbsp;1460&nbsp;681&nbsp;72&nbsp;1847&nbsp;519&nbsp;252&nbsp;119&nbsp;353&nbsp;1876&nbsp;1083&nbsp;2030&nbsp;2002&nbsp;9&nbsp;1257&nbsp;1505&nbsp;713&nbsp;246&nbsp;1669&nbsp;1650&nbsp;1536&nbsp;1900&nbsp;1702&nbsp;1512&nbsp;1432&nbsp;263&nbsp;638&nbsp;1531&nbsp;144&nbsp;1352&nbsp;142&nbsp;431&nbsp;94&nbsp;1658&nbsp;1182&nbsp;1131&nbsp;1644&nbsp;64&nbsp;1049&nbsp;925&nbsp;97&nbsp;1412&nbsp;423&nbsp;1552&nbsp;589&nbsp;650&nbsp;1481&nbsp;1663&nbsp;1698&nbsp;1346&nbsp;94&nbsp;295&nbsp;2054&nbsp;1970&nbsp;673&nbsp;1581&nbsp;626&nbsp;453&nbsp;395&nbsp;234&nbsp;591&nbsp;1689&nbsp;1800&nbsp;1777&nbsp;140&nbsp;1401&nbsp;594&nbsp;750&nbsp;1828&nbsp;1592&nbsp;497&nbsp;1946&nbsp;23&nbsp;1555&nbsp;564&nbsp;629&nbsp;956&nbsp;748&nbsp;897&nbsp;1141&nbsp;230&nbsp;373&nbsp;377&nbsp;1906&nbsp;1272&nbsp;957&nbsp;1648&nbsp;1432&nbsp;343&nbsp;1708&nbsp;1375&nbsp;1350&nbsp;755&nbsp;815&nbsp;265&nbsp;1317&nbsp;1448&nbsp;201&nbsp;2054&nbsp;1717&nbsp;2040&nbsp;1678&nbsp;941&nbsp;1662&nbsp;2051&nbsp;979&nbsp;1052&nbsp;262&nbsp;328&nbsp;1834&nbsp;49&nbsp;1495&nbsp;371&nbsp;1083&nbsp;1559&nbsp;1158&nbsp;2091&nbsp;2092&nbsp;997&nbsp;549&nbsp;2079&nbsp;1383&nbsp;2015&nbsp;1650&nbsp;1113&nbsp;1317&nbsp;1653&nbsp;2090&nbsp;761&nbsp;763&nbsp;1756&nbsp;328&nbsp;1741&nbsp;243&nbsp;24&nbsp;2082&nbsp;1275&nbsp;197&nbsp;1287&nbsp;549&nbsp;1853&nbsp;1444&nbsp;20&nbsp;967&nbsp;1574&nbsp;1991&nbsp;48&nbsp;1534&nbsp;228&nbsp;938&nbsp;1420&nbsp;239&nbsp;30&nbsp;469&nbsp;165&nbsp;1467&nbsp;747&nbsp;1757&nbsp;2037&nbsp;338&nbsp;553&nbsp;1606&nbsp;1988&nbsp;1019&nbsp;1237&nbsp;1364&nbsp;209&nbsp;1808&nbsp;702&nbsp;1737&nbsp;1880&nbsp;1858&nbsp;1820&nbsp;853&nbsp;1896&nbsp;627&nbsp;525&nbsp;585&nbsp;392&nbsp;445&nbsp;1156&nbsp;1646&nbsp;1447&nbsp;1144&nbsp;2003&nbsp;1223&nbsp;855&nbsp;1646&nbsp;2027&nbsp;59&nbsp;1284&nbsp;687&nbsp;1273&nbsp;428&nbsp;942&nbsp;511&nbsp;1117&nbsp;961&nbsp;912&nbsp;1553&nbsp;1541&nbsp;3&nbsp;1433&nbsp;253&nbsp;1586&nbsp;82&nbsp;1846&nbsp;586&nbsp;704&nbsp;1226&nbsp;888&nbsp;1861&nbsp;663&nbsp;1856&nbsp;1342&nbsp;1224&nbsp;326&nbsp;1432&nbsp;1003&nbsp;1802&nbsp;1771&nbsp;653&nbsp;2066&nbsp;1465&nbsp;1239&nbsp;1199&nbsp;1064&nbsp;1846&nbsp;1197&nbsp;362&nbsp;663&nbsp;432&nbsp;399&nbsp;1509&nbsp;58&nbsp;2108&nbsp;1964&nbsp;1572&nbsp;972&nbsp;1748&nbsp;1834&nbsp;1470&nbsp;928&nbsp;1678&nbsp;1913&nbsp;1679&nbsp;198&nbsp;1362&nbsp;1119&nbsp;1123&nbsp;1922&nbsp;1539&nbsp;1840&nbsp;1689&nbsp;1555&nbsp;2008&nbsp;164&nbsp;221&nbsp;485&nbsp;1609&nbsp;1304&nbsp;498&nbsp;988&nbsp;2051&nbsp;653&nbsp;898&nbsp;1475&nbsp;1650&nbsp;158&nbsp;71&nbsp;672&nbsp;1758&nbsp;1455&nbsp;1318&nbsp;1899&nbsp;1995&nbsp;1473&nbsp;741&nbsp;1274&nbsp;1042&nbsp;1308&nbsp;1933&nbsp;678&nbsp;308&nbsp;1022&nbsp;1013&nbsp;1892&nbsp;2066&nbsp;1750&nbsp;1798&nbsp;287&nbsp;2070&nbsp;1447&nbsp;592&nbsp;667&nbsp;22&nbsp;1644&nbsp;113&nbsp;641&nbsp;222&nbsp;1883&nbsp;1614&nbsp;596&nbsp;1741&nbsp;1405&nbsp;336&nbsp;532&nbsp;1844&nbsp;1308&nbsp;1251&nbsp;951&nbsp;379&nbsp;586&nbsp;1165&nbsp;1209&nbsp;1708&nbsp;393&nbsp;1257&nbsp;1881&nbsp;988&nbsp;1948&nbsp;732&nbsp;802&nbsp;339&nbsp;1085&nbsp;1854&nbsp;2110&nbsp;29&nbsp;1970&nbsp;1720&nbsp;1826&nbsp;1362&nbsp;1264&nbsp;404&nbsp;1609&nbsp;586&nbsp;374&nbsp;1352&nbsp;252&nbsp;319&nbsp;259&nbsp;1425&nbsp;1021&nbsp;866&nbsp;173&nbsp;1771&nbsp;138&nbsp;1409&nbsp;1128&nbsp;862&nbsp;964&nbsp;1934&nbsp;109&nbsp;2021&nbsp;1870&nbsp;900&nbsp;1977&nbsp;1098&nbsp;1814&nbsp;1568&nbsp;996&nbsp;292&nbsp;473&nbsp;1595&nbsp;416&nbsp;311&nbsp;620&nbsp;1143&nbsp;801&nbsp;1522&nbsp;588&nbsp;38&nbsp;1611&nbsp;360&nbsp;1375&nbsp;2060&nbsp;336&nbsp;243&nbsp;365&nbsp;1367&nbsp;961&nbsp;304&nbsp;1973&nbsp;1932&nbsp;525&nbsp;56&nbsp;1478&nbsp;2087&nbsp;1042&nbsp;483&nbsp;1311&nbsp;556&nbsp;1470&nbsp;70&nbsp;1706&nbsp;915&nbsp;964&nbsp;1544&nbsp;332&nbsp;358&nbsp;559&nbsp;1926&nbsp;698&nbsp;1696&nbsp;2099&nbsp;316&nbsp;682&nbsp;894&nbsp;1560&nbsp;958&nbsp;653&nbsp;454&nbsp;2026&nbsp;2069&nbsp;284&nbsp;1856&nbsp;1821&nbsp;1668&nbsp;159&nbsp;1553&nbsp;1734&nbsp;459&nbsp;884&nbsp;1433&nbsp;2049&nbsp;1373&nbsp;1322&nbsp;1053&nbsp;1722&nbsp;957&nbsp;1001&nbsp;863&nbsp;1747&nbsp;615&nbsp;215&nbsp;373&nbsp;181&nbsp;1700&nbsp;625&nbsp;347&nbsp;267&nbsp;1452&nbsp;1361&nbsp;961&nbsp;513&nbsp;1820&nbsp;1338&nbsp;1044&nbsp;571&nbsp;853&nbsp;747&nbsp;1313&nbsp;387&nbsp;488&nbsp;1180&nbsp;483&nbsp;131&nbsp;716&nbsp;1959&nbsp;706&nbsp;835&nbsp;210&nbsp;1063&nbsp;1115&nbsp;232&nbsp;1727&nbsp;1738&nbsp;227&nbsp;643&nbsp;2059&nbsp;1160&nbsp;1995&nbsp;270&nbsp;914&nbsp;256&nbsp;642&nbsp;736&nbsp;432&nbsp;1517&nbsp;1256&nbsp;1003&nbsp;1692&nbsp;159&nbsp;384&nbsp;1616&nbsp;2033&nbsp;1039&nbsp;904&nbsp;128&nbsp;986&nbsp;1898&nbsp;159&nbsp;569&nbsp;369&nbsp;233&nbsp;46&nbsp;1790&nbsp;1345&nbsp;257&nbsp;914&nbsp;1328&nbsp;1886&nbsp;1335&nbsp;1688&nbsp;1925&nbsp;1426&nbsp;235&nbsp;404&nbsp;1787&nbsp;2014&nbsp;873&nbsp;1184&nbsp;55&nbsp;1420&nbsp;528&nbsp;1140&nbsp;597&nbsp;1388&nbsp;1579&nbsp;555&nbsp;1233&nbsp;1470&nbsp;847&nbsp;1&nbsp;1938&nbsp;1210&nbsp;1736&nbsp;594&nbsp;350&nbsp;1104&nbsp;369&nbsp;538&nbsp;1212&nbsp;1160&nbsp;1421&nbsp;1873&nbsp;1859&nbsp;476&nbsp;698&nbsp;1660&nbsp;1993&nbsp;1173&nbsp;535&nbsp;17&nbsp;2059&nbsp;531&nbsp;587&nbsp;1094&nbsp;2035&nbsp;510&nbsp;966&nbsp;1983&nbsp;770&nbsp;1379&nbsp;560&nbsp;1551&nbsp;644&nbsp;967&nbsp;1912&nbsp;223&nbsp;1430&nbsp;915&nbsp;658&nbsp;1083&nbsp;1791&nbsp;1568&nbsp;830&nbsp;1081&nbsp;1656&nbsp;839&nbsp;559&nbsp;1895&nbsp;1942&nbsp;489&nbsp;1900&nbsp;1107&nbsp;2085&nbsp;1728&nbsp;307&nbsp;743&nbsp;1749&nbsp;536&nbsp;221&nbsp;675&nbsp;598&nbsp;1547&nbsp;1035&nbsp;943&nbsp;1715&nbsp;638&nbsp;449&nbsp;1149&nbsp;1451&nbsp;513&nbsp;1210&nbsp;1879&nbsp;541&nbsp;1435&nbsp;368&nbsp;486&nbsp;2041&nbsp;58&nbsp;1078&nbsp;2015&nbsp;1721&nbsp;1060&nbsp;237&nbsp;83&nbsp;622&nbsp;1839&nbsp;76&nbsp;836&nbsp;536&nbsp;968&nbsp;759&nbsp;1876&nbsp;511&nbsp;1764&nbsp;758&nbsp;638&nbsp;482&nbsp;2109&nbsp;1014&nbsp;1164&nbsp;170&nbsp;258&nbsp;335&nbsp;1668&nbsp;699&nbsp;83&nbsp;158&nbsp;480&nbsp;696&nbsp;832&nbsp;1806&nbsp;1109&nbsp;1434&nbsp;1432&nbsp;1367&nbsp;1047&nbsp;748&nbsp;1437&nbsp;127&nbsp;87&nbsp;1446&nbsp;1713&nbsp;1474&nbsp;799&nbsp;1770&nbsp;937&nbsp;1050&nbsp;180&nbsp;1809&nbsp;2072&nbsp;682&nbsp;584&nbsp;2002&nbsp;996&nbsp;113&nbsp;568&nbsp;1139&nbsp;932<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            20610<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase33"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 33</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+54<br/>
+9<br/>
+1823&nbsp;294&nbsp;709&nbsp;1882&nbsp;2650&nbsp;2052&nbsp;383&nbsp;2878&nbsp;609<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            338<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase34"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 34</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+207<br/>
+90<br/>
+7868&nbsp;10336&nbsp;33292&nbsp;27286&nbsp;36682&nbsp;42002&nbsp;29592&nbsp;11820&nbsp;13227&nbsp;7116&nbsp;22151&nbsp;132&nbsp;38289&nbsp;11778&nbsp;15337&nbsp;3993&nbsp;10618&nbsp;10153&nbsp;5899&nbsp;37362&nbsp;11579&nbsp;29704&nbsp;35371&nbsp;28804&nbsp;6563&nbsp;24104&nbsp;39552&nbsp;20233&nbsp;32958&nbsp;6127&nbsp;28216&nbsp;16307&nbsp;28769&nbsp;30691&nbsp;17256&nbsp;35484&nbsp;13687&nbsp;42042&nbsp;195&nbsp;21713&nbsp;1611&nbsp;28513&nbsp;14835&nbsp;6252&nbsp;21854&nbsp;3074&nbsp;5645&nbsp;24542&nbsp;29518&nbsp;19187&nbsp;34332&nbsp;7108&nbsp;19964&nbsp;13712&nbsp;36757&nbsp;5513&nbsp;8212&nbsp;15063&nbsp;394&nbsp;25411&nbsp;35768&nbsp;12419&nbsp;28970&nbsp;22017&nbsp;26227&nbsp;7993&nbsp;20700&nbsp;7997&nbsp;41756&nbsp;42179&nbsp;7599&nbsp;18592&nbsp;23669&nbsp;28236&nbsp;39462&nbsp;5240&nbsp;41744&nbsp;26244&nbsp;3077&nbsp;35145&nbsp;28169&nbsp;27787&nbsp;1333&nbsp;37723&nbsp;13768&nbsp;7854&nbsp;10237&nbsp;32042&nbsp;10613&nbsp;10633<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            12499<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase35"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 35</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            2<br/>
+4194<br/>
+258<br/>
+9718494&nbsp;3721219&nbsp;1865717&nbsp;14852413&nbsp;1720192&nbsp;14430946&nbsp;11138825&nbsp;3030056&nbsp;16382635&nbsp;1455996&nbsp;12774104&nbsp;2541240&nbsp;14934631&nbsp;2085432&nbsp;4881473&nbsp;13951927&nbsp;13589418&nbsp;15272187&nbsp;15991674&nbsp;5345772&nbsp;8138501&nbsp;8598698&nbsp;14861163&nbsp;1204536&nbsp;16626927&nbsp;11264534&nbsp;11146821&nbsp;5005438&nbsp;9967297&nbsp;10657816&nbsp;11855277&nbsp;5965710&nbsp;652534&nbsp;17191339&nbsp;2529634&nbsp;5321826&nbsp;14081892&nbsp;15839553&nbsp;17422933&nbsp;12672021&nbsp;12256818&nbsp;6629469&nbsp;5215066&nbsp;13895255&nbsp;2341638&nbsp;12320169&nbsp;1531070&nbsp;6701191&nbsp;11243231&nbsp;13522174&nbsp;16561549&nbsp;13446178&nbsp;14853182&nbsp;1665532&nbsp;11152807&nbsp;7072173&nbsp;11619961&nbsp;8407976&nbsp;567538&nbsp;1132131&nbsp;16525692&nbsp;10444706&nbsp;1800197&nbsp;1895827&nbsp;9382278&nbsp;6418187&nbsp;12689302&nbsp;15288785&nbsp;7451203&nbsp;2092078&nbsp;487384&nbsp;2371665&nbsp;9415042&nbsp;3290257&nbsp;2484972&nbsp;7097146&nbsp;16174339&nbsp;15757112&nbsp;6352436&nbsp;17049998&nbsp;16308559&nbsp;15786343&nbsp;8367039&nbsp;10478651&nbsp;8416936&nbsp;511713&nbsp;13286781&nbsp;6320608&nbsp;10004872&nbsp;10289611&nbsp;7709948&nbsp;10922309&nbsp;4613074&nbsp;725875&nbsp;3867764&nbsp;2933851&nbsp;16512679&nbsp;6502614&nbsp;1516915&nbsp;2916508&nbsp;15641735&nbsp;3953319&nbsp;1686530&nbsp;15612932&nbsp;117605&nbsp;13081527&nbsp;2093580&nbsp;6215243&nbsp;4843101&nbsp;7750698&nbsp;13412269&nbsp;16552222&nbsp;1984834&nbsp;5315096&nbsp;10174708&nbsp;3085762&nbsp;14300424&nbsp;9564197&nbsp;8250864&nbsp;7443448&nbsp;5149772&nbsp;11539340&nbsp;15228256&nbsp;8056982&nbsp;17569944&nbsp;11183930&nbsp;12809464&nbsp;13828913&nbsp;4093390&nbsp;9012850&nbsp;14434998&nbsp;514284&nbsp;7273712&nbsp;4428955&nbsp;9916277&nbsp;12045920&nbsp;17346993&nbsp;10991984&nbsp;17034547&nbsp;15268171&nbsp;16925502&nbsp;6557304&nbsp;9864894&nbsp;707354&nbsp;13563043&nbsp;12092390&nbsp;6241406&nbsp;1591800&nbsp;14332094&nbsp;4360489&nbsp;7582957&nbsp;4134994&nbsp;3884996&nbsp;17537069&nbsp;5664221&nbsp;9409324&nbsp;8836455&nbsp;4254418&nbsp;17314809&nbsp;3768982&nbsp;10907598&nbsp;2136525&nbsp;12081625&nbsp;5893270&nbsp;2362346&nbsp;9421669&nbsp;5487586&nbsp;16753653&nbsp;14759941&nbsp;14801047&nbsp;9196112&nbsp;2719984&nbsp;506563&nbsp;12104327&nbsp;1018870&nbsp;15079701&nbsp;1455451&nbsp;6524946&nbsp;10836426&nbsp;7119248&nbsp;1288119&nbsp;12218011&nbsp;5616993&nbsp;6625233&nbsp;4170126&nbsp;11184657&nbsp;1303373&nbsp;17299204&nbsp;5053402&nbsp;8289955&nbsp;3335387&nbsp;26944&nbsp;13406456&nbsp;15033632&nbsp;3806541&nbsp;11763334&nbsp;9324339&nbsp;4588137&nbsp;13031160&nbsp;2748397&nbsp;3043681&nbsp;12885366&nbsp;3320145&nbsp;5911608&nbsp;10870965&nbsp;5145437&nbsp;2058862&nbsp;7970893&nbsp;12316828&nbsp;6599437&nbsp;2622128&nbsp;14916654&nbsp;14639290&nbsp;13546699&nbsp;15644511&nbsp;15939758&nbsp;17390987&nbsp;9880871&nbsp;4253987&nbsp;16367356&nbsp;5893640&nbsp;10067182&nbsp;13410077&nbsp;6054664&nbsp;14258923&nbsp;1539184&nbsp;2944201&nbsp;4110698&nbsp;13317319&nbsp;2974681&nbsp;10327518&nbsp;684639&nbsp;400442&nbsp;14379308&nbsp;1873858&nbsp;8983706&nbsp;16063410&nbsp;12453091&nbsp;8111689&nbsp;8346315&nbsp;12880078&nbsp;9950002&nbsp;16919451&nbsp;1280618&nbsp;9263998&nbsp;16352823&nbsp;15260388&nbsp;1816689&nbsp;13360493&nbsp;15606072&nbsp;10419319&nbsp;10194042&nbsp;7873887&nbsp;15027297&nbsp;8969606&nbsp;5745634&nbsp;17056621&nbsp;17165484<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            734185<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase36"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 36</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+1<br/>
+2<br/>
+0&nbsp;0<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            0<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase37"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 37</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+4<br/>
+29<br/>
+7&nbsp;1&nbsp;5&nbsp;1&nbsp;2&nbsp;1&nbsp;12&nbsp;11&nbsp;12&nbsp;5&nbsp;15&nbsp;0&nbsp;11&nbsp;6&nbsp;5&nbsp;10&nbsp;10&nbsp;14&nbsp;14&nbsp;4&nbsp;9&nbsp;8&nbsp;13&nbsp;11&nbsp;0&nbsp;6&nbsp;1&nbsp;1&nbsp;8<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            67<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase38"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 38</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+8<br/>
+102<br/>
+23&nbsp;37&nbsp;35&nbsp;46&nbsp;37&nbsp;0&nbsp;27&nbsp;43&nbsp;55&nbsp;10&nbsp;9&nbsp;1&nbsp;12&nbsp;33&nbsp;25&nbsp;3&nbsp;1&nbsp;4&nbsp;18&nbsp;4&nbsp;60&nbsp;15&nbsp;23&nbsp;41&nbsp;28&nbsp;18&nbsp;51&nbsp;32&nbsp;10&nbsp;56&nbsp;0&nbsp;27&nbsp;50&nbsp;26&nbsp;38&nbsp;44&nbsp;7&nbsp;49&nbsp;58&nbsp;23&nbsp;49&nbsp;54&nbsp;6&nbsp;52&nbsp;49&nbsp;21&nbsp;33&nbsp;59&nbsp;24&nbsp;53&nbsp;30&nbsp;56&nbsp;37&nbsp;14&nbsp;61&nbsp;33&nbsp;8&nbsp;59&nbsp;50&nbsp;25&nbsp;10&nbsp;40&nbsp;36&nbsp;52&nbsp;59&nbsp;51&nbsp;32&nbsp;16&nbsp;5&nbsp;53&nbsp;38&nbsp;20&nbsp;48&nbsp;54&nbsp;61&nbsp;25&nbsp;50&nbsp;31&nbsp;51&nbsp;8&nbsp;53&nbsp;39&nbsp;45&nbsp;44&nbsp;5&nbsp;53&nbsp;26&nbsp;22&nbsp;40&nbsp;13&nbsp;4&nbsp;56&nbsp;15&nbsp;51&nbsp;27&nbsp;45&nbsp;55&nbsp;36&nbsp;57&nbsp;40&nbsp;26&nbsp;4<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            601<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase39"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 39</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+23<br/>
+9<br/>
+181&nbsp;102&nbsp;330&nbsp;262&nbsp;524&nbsp;163&nbsp;163&nbsp;442&nbsp;299<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            134<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase40"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 40</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+28<br/>
+64<br/>
+613&nbsp;318&nbsp;764&nbsp;155&nbsp;677&nbsp;319&nbsp;367&nbsp;407&nbsp;75&nbsp;30&nbsp;158&nbsp;277&nbsp;744&nbsp;298&nbsp;499&nbsp;661&nbsp;586&nbsp;29&nbsp;475&nbsp;164&nbsp;282&nbsp;194&nbsp;715&nbsp;780&nbsp;99&nbsp;148&nbsp;36&nbsp;233&nbsp;181&nbsp;181&nbsp;371&nbsp;123&nbsp;582&nbsp;545&nbsp;62&nbsp;119&nbsp;385&nbsp;60&nbsp;163&nbsp;308&nbsp;258&nbsp;664&nbsp;278&nbsp;613&nbsp;79&nbsp;250&nbsp;217&nbsp;162&nbsp;640&nbsp;715&nbsp;768&nbsp;488&nbsp;268&nbsp;264&nbsp;398&nbsp;11&nbsp;667&nbsp;574&nbsp;220&nbsp;55&nbsp;356&nbsp;595&nbsp;596&nbsp;482<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            1100<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase41"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 41</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+965<br/>
+38<br/>
+196026&nbsp;923434&nbsp;469751&nbsp;214021&nbsp;5702&nbsp;827502&nbsp;84631&nbsp;187533&nbsp;766874&nbsp;867142&nbsp;691181&nbsp;12252&nbsp;56299&nbsp;644675&nbsp;835231&nbsp;94488&nbsp;437523&nbsp;262862&nbsp;903739&nbsp;752254&nbsp;435061&nbsp;804220&nbsp;217547&nbsp;8182&nbsp;712755&nbsp;761342&nbsp;854627&nbsp;912820&nbsp;874017&nbsp;875976&nbsp;392291&nbsp;789283&nbsp;124372&nbsp;653581&nbsp;176785&nbsp;143818&nbsp;855330&nbsp;81333<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            27232<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase42"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 42</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+1646<br/>
+2<br/>
+1340971&nbsp;1205562<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            2268<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase43"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 43</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+4<br/>
+18<br/>
+10&nbsp;2&nbsp;14&nbsp;13&nbsp;4&nbsp;8&nbsp;4&nbsp;3&nbsp;7&nbsp;9&nbsp;1&nbsp;8&nbsp;7&nbsp;3&nbsp;11&nbsp;5&nbsp;2&nbsp;6<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            49<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase44"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 44</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+3<br/>
+896<br/>
+0&nbsp;1&nbsp;5&nbsp;5&nbsp;0&nbsp;0&nbsp;3&nbsp;6&nbsp;0&nbsp;5&nbsp;3&nbsp;0&nbsp;5&nbsp;1&nbsp;6&nbsp;0&nbsp;1&nbsp;6&nbsp;7&nbsp;2&nbsp;1&nbsp;5&nbsp;4&nbsp;3&nbsp;0&nbsp;4&nbsp;1&nbsp;1&nbsp;4&nbsp;4&nbsp;8&nbsp;7&nbsp;4&nbsp;0&nbsp;1&nbsp;0&nbsp;3&nbsp;8&nbsp;0&nbsp;7&nbsp;5&nbsp;8&nbsp;0&nbsp;5&nbsp;3&nbsp;3&nbsp;0&nbsp;2&nbsp;8&nbsp;7&nbsp;5&nbsp;8&nbsp;6&nbsp;3&nbsp;7&nbsp;1&nbsp;5&nbsp;5&nbsp;4&nbsp;7&nbsp;7&nbsp;5&nbsp;3&nbsp;4&nbsp;7&nbsp;8&nbsp;3&nbsp;2&nbsp;5&nbsp;2&nbsp;6&nbsp;7&nbsp;8&nbsp;1&nbsp;3&nbsp;3&nbsp;0&nbsp;6&nbsp;6&nbsp;5&nbsp;4&nbsp;3&nbsp;1&nbsp;5&nbsp;6&nbsp;5&nbsp;7&nbsp;1&nbsp;5&nbsp;6&nbsp;1&nbsp;5&nbsp;2&nbsp;3&nbsp;5&nbsp;4&nbsp;0&nbsp;4&nbsp;4&nbsp;0&nbsp;7&nbsp;6&nbsp;2&nbsp;0&nbsp;0&nbsp;4&nbsp;2&nbsp;2&nbsp;5&nbsp;6&nbsp;3&nbsp;1&nbsp;5&nbsp;4&nbsp;5&nbsp;7&nbsp;6&nbsp;3&nbsp;5&nbsp;0&nbsp;1&nbsp;2&nbsp;3&nbsp;5&nbsp;2&nbsp;4&nbsp;5&nbsp;0&nbsp;3&nbsp;4&nbsp;6&nbsp;3&nbsp;6&nbsp;2&nbsp;4&nbsp;1&nbsp;5&nbsp;1&nbsp;2&nbsp;4&nbsp;1&nbsp;6&nbsp;6&nbsp;7&nbsp;5&nbsp;5&nbsp;6&nbsp;5&nbsp;7&nbsp;7&nbsp;1&nbsp;8&nbsp;5&nbsp;8&nbsp;6&nbsp;5&nbsp;8&nbsp;7&nbsp;8&nbsp;8&nbsp;1&nbsp;3&nbsp;1&nbsp;7&nbsp;3&nbsp;8&nbsp;6&nbsp;4&nbsp;2&nbsp;5&nbsp;1&nbsp;8&nbsp;4&nbsp;0&nbsp;6&nbsp;2&nbsp;0&nbsp;8&nbsp;2&nbsp;4&nbsp;5&nbsp;6&nbsp;1&nbsp;5&nbsp;4&nbsp;5&nbsp;8&nbsp;8&nbsp;8&nbsp;2&nbsp;5&nbsp;5&nbsp;0&nbsp;2&nbsp;2&nbsp;7&nbsp;4&nbsp;7&nbsp;8&nbsp;1&nbsp;4&nbsp;7&nbsp;7&nbsp;6&nbsp;4&nbsp;3&nbsp;1&nbsp;7&nbsp;2&nbsp;2&nbsp;8&nbsp;6&nbsp;2&nbsp;7&nbsp;1&nbsp;2&nbsp;4&nbsp;6&nbsp;4&nbsp;6&nbsp;0&nbsp;7&nbsp;6&nbsp;6&nbsp;5&nbsp;0&nbsp;0&nbsp;5&nbsp;4&nbsp;8&nbsp;1&nbsp;1&nbsp;0&nbsp;3&nbsp;4&nbsp;4&nbsp;2&nbsp;3&nbsp;6&nbsp;7&nbsp;3&nbsp;0&nbsp;1&nbsp;3&nbsp;0&nbsp;2&nbsp;3&nbsp;4&nbsp;2&nbsp;5&nbsp;4&nbsp;4&nbsp;8&nbsp;2&nbsp;0&nbsp;8&nbsp;3&nbsp;5&nbsp;2&nbsp;2&nbsp;1&nbsp;1&nbsp;8&nbsp;0&nbsp;7&nbsp;4&nbsp;5&nbsp;7&nbsp;6&nbsp;2&nbsp;1&nbsp;6&nbsp;3&nbsp;8&nbsp;6&nbsp;8&nbsp;8&nbsp;2&nbsp;5&nbsp;8&nbsp;5&nbsp;3&nbsp;0&nbsp;6&nbsp;0&nbsp;0&nbsp;1&nbsp;5&nbsp;5&nbsp;7&nbsp;8&nbsp;8&nbsp;5&nbsp;2&nbsp;7&nbsp;1&nbsp;6&nbsp;2&nbsp;5&nbsp;3&nbsp;7&nbsp;0&nbsp;1&nbsp;4&nbsp;5&nbsp;6&nbsp;6&nbsp;1&nbsp;5&nbsp;5&nbsp;8&nbsp;5&nbsp;3&nbsp;6&nbsp;0&nbsp;1&nbsp;2&nbsp;2&nbsp;5&nbsp;5&nbsp;1&nbsp;3&nbsp;6&nbsp;3&nbsp;8&nbsp;5&nbsp;7&nbsp;4&nbsp;6&nbsp;6&nbsp;7&nbsp;8&nbsp;5&nbsp;2&nbsp;6&nbsp;1&nbsp;2&nbsp;0&nbsp;7&nbsp;5&nbsp;4&nbsp;3&nbsp;4&nbsp;3&nbsp;7&nbsp;3&nbsp;8&nbsp;7&nbsp;2&nbsp;4&nbsp;1&nbsp;1&nbsp;1&nbsp;2&nbsp;4&nbsp;7&nbsp;8&nbsp;0&nbsp;0&nbsp;0&nbsp;1&nbsp;4&nbsp;2&nbsp;3&nbsp;1&nbsp;0&nbsp;6&nbsp;2&nbsp;1&nbsp;3&nbsp;7&nbsp;6&nbsp;4&nbsp;1&nbsp;7&nbsp;1&nbsp;1&nbsp;2&nbsp;7&nbsp;2&nbsp;1&nbsp;8&nbsp;1&nbsp;7&nbsp;5&nbsp;2&nbsp;6&nbsp;4&nbsp;8&nbsp;2&nbsp;2&nbsp;7&nbsp;2&nbsp;1&nbsp;7&nbsp;3&nbsp;8&nbsp;5&nbsp;5&nbsp;5&nbsp;7&nbsp;4&nbsp;1&nbsp;7&nbsp;0&nbsp;6&nbsp;2&nbsp;8&nbsp;6&nbsp;4&nbsp;1&nbsp;7&nbsp;0&nbsp;8&nbsp;7&nbsp;8&nbsp;2&nbsp;3&nbsp;2&nbsp;4&nbsp;6&nbsp;1&nbsp;2&nbsp;7&nbsp;5&nbsp;2&nbsp;5&nbsp;7&nbsp;5&nbsp;3&nbsp;7&nbsp;1&nbsp;8&nbsp;3&nbsp;0&nbsp;4&nbsp;5&nbsp;5&nbsp;7&nbsp;6&nbsp;4&nbsp;6&nbsp;7&nbsp;6&nbsp;8&nbsp;3&nbsp;8&nbsp;4&nbsp;2&nbsp;0&nbsp;2&nbsp;8&nbsp;0&nbsp;7&nbsp;4&nbsp;5&nbsp;6&nbsp;6&nbsp;0&nbsp;7&nbsp;6&nbsp;0&nbsp;0&nbsp;3&nbsp;2&nbsp;8&nbsp;5&nbsp;2&nbsp;5&nbsp;1&nbsp;1&nbsp;4&nbsp;5&nbsp;0&nbsp;4&nbsp;5&nbsp;1&nbsp;3&nbsp;6&nbsp;8&nbsp;8&nbsp;2&nbsp;6&nbsp;6&nbsp;7&nbsp;7&nbsp;2&nbsp;8&nbsp;5&nbsp;2&nbsp;5&nbsp;0&nbsp;6&nbsp;7&nbsp;5&nbsp;1&nbsp;2&nbsp;6&nbsp;8&nbsp;1&nbsp;1&nbsp;7&nbsp;3&nbsp;8&nbsp;8&nbsp;6&nbsp;1&nbsp;6&nbsp;6&nbsp;7&nbsp;6&nbsp;7&nbsp;1&nbsp;6&nbsp;0&nbsp;5&nbsp;0&nbsp;8&nbsp;1&nbsp;8&nbsp;5&nbsp;5&nbsp;0&nbsp;5&nbsp;8&nbsp;2&nbsp;8&nbsp;4&nbsp;8&nbsp;3&nbsp;4&nbsp;8&nbsp;7&nbsp;7&nbsp;7&nbsp;7&nbsp;7&nbsp;6&nbsp;7&nbsp;6&nbsp;7&nbsp;7&nbsp;3&nbsp;7&nbsp;7&nbsp;2&nbsp;6&nbsp;4&nbsp;5&nbsp;0&nbsp;3&nbsp;1&nbsp;2&nbsp;2&nbsp;8&nbsp;7&nbsp;3&nbsp;0&nbsp;6&nbsp;3&nbsp;5&nbsp;0&nbsp;6&nbsp;4&nbsp;0&nbsp;8&nbsp;1&nbsp;1&nbsp;2&nbsp;2&nbsp;6&nbsp;2&nbsp;0&nbsp;3&nbsp;7&nbsp;5&nbsp;5&nbsp;7&nbsp;4&nbsp;5&nbsp;1&nbsp;8&nbsp;3&nbsp;1&nbsp;6&nbsp;2&nbsp;4&nbsp;4&nbsp;4&nbsp;2&nbsp;8&nbsp;3&nbsp;0&nbsp;6&nbsp;4&nbsp;4&nbsp;7&nbsp;3&nbsp;5&nbsp;3&nbsp;8&nbsp;5&nbsp;2&nbsp;8&nbsp;6&nbsp;7&nbsp;6&nbsp;5&nbsp;1&nbsp;7&nbsp;8&nbsp;7&nbsp;7&nbsp;1&nbsp;7&nbsp;2&nbsp;1&nbsp;5&nbsp;7&nbsp;5&nbsp;5&nbsp;4&nbsp;5&nbsp;5&nbsp;2&nbsp;2&nbsp;1&nbsp;8&nbsp;6&nbsp;3&nbsp;1&nbsp;7&nbsp;7&nbsp;8&nbsp;1&nbsp;0&nbsp;0&nbsp;1&nbsp;2&nbsp;6&nbsp;2&nbsp;3&nbsp;6&nbsp;1&nbsp;6&nbsp;0&nbsp;7&nbsp;5&nbsp;5&nbsp;1&nbsp;3&nbsp;1&nbsp;7&nbsp;6&nbsp;1&nbsp;5&nbsp;2&nbsp;2&nbsp;0&nbsp;1&nbsp;6&nbsp;4&nbsp;4&nbsp;4&nbsp;4&nbsp;7&nbsp;5&nbsp;7&nbsp;7&nbsp;7&nbsp;2&nbsp;3&nbsp;0&nbsp;2&nbsp;4&nbsp;4&nbsp;6&nbsp;5&nbsp;2&nbsp;1&nbsp;2&nbsp;7&nbsp;1&nbsp;2&nbsp;8&nbsp;5&nbsp;8&nbsp;4&nbsp;5&nbsp;6&nbsp;6&nbsp;4&nbsp;6&nbsp;6&nbsp;1&nbsp;6&nbsp;5&nbsp;7&nbsp;6&nbsp;5&nbsp;7&nbsp;3&nbsp;5&nbsp;7&nbsp;1&nbsp;1&nbsp;1&nbsp;1&nbsp;6&nbsp;8&nbsp;5&nbsp;6&nbsp;7&nbsp;0&nbsp;5&nbsp;6&nbsp;5&nbsp;7&nbsp;7&nbsp;7&nbsp;1&nbsp;6&nbsp;8&nbsp;8&nbsp;0&nbsp;0&nbsp;6&nbsp;7&nbsp;4&nbsp;7&nbsp;5&nbsp;1&nbsp;4&nbsp;6&nbsp;0&nbsp;7&nbsp;1&nbsp;5&nbsp;5&nbsp;4&nbsp;3&nbsp;7&nbsp;3&nbsp;3&nbsp;6&nbsp;2&nbsp;0&nbsp;3&nbsp;5&nbsp;1&nbsp;4&nbsp;8&nbsp;0&nbsp;8&nbsp;8&nbsp;6&nbsp;0&nbsp;4&nbsp;8&nbsp;1&nbsp;7&nbsp;4&nbsp;6&nbsp;5&nbsp;0&nbsp;5&nbsp;0&nbsp;3&nbsp;6&nbsp;4&nbsp;3&nbsp;1&nbsp;2&nbsp;5&nbsp;5&nbsp;8&nbsp;1&nbsp;5&nbsp;4&nbsp;7&nbsp;4&nbsp;7&nbsp;1&nbsp;2&nbsp;5&nbsp;1&nbsp;2&nbsp;8&nbsp;2&nbsp;2&nbsp;8&nbsp;5&nbsp;1&nbsp;7&nbsp;3&nbsp;7&nbsp;5&nbsp;8&nbsp;8&nbsp;8&nbsp;5&nbsp;2&nbsp;3&nbsp;8&nbsp;1&nbsp;2&nbsp;0&nbsp;8&nbsp;1&nbsp;7&nbsp;5&nbsp;3&nbsp;1&nbsp;7&nbsp;4&nbsp;1&nbsp;5&nbsp;4&nbsp;8&nbsp;4&nbsp;0&nbsp;0&nbsp;0&nbsp;4&nbsp;8&nbsp;7&nbsp;1&nbsp;2&nbsp;1&nbsp;2&nbsp;2&nbsp;3&nbsp;8&nbsp;8&nbsp;3&nbsp;5&nbsp;8&nbsp;1&nbsp;4&nbsp;7&nbsp;6&nbsp;1&nbsp;2&nbsp;5&nbsp;1&nbsp;0&nbsp;5&nbsp;4&nbsp;8&nbsp;6&nbsp;7&nbsp;6&nbsp;7&nbsp;5&nbsp;3&nbsp;5&nbsp;5&nbsp;3&nbsp;2&nbsp;3&nbsp;5&nbsp;3&nbsp;3&nbsp;6&nbsp;3&nbsp;2&nbsp;2&nbsp;8&nbsp;1&nbsp;5&nbsp;6&nbsp;0&nbsp;0&nbsp;6&nbsp;0&nbsp;3&nbsp;8&nbsp;6&nbsp;0&nbsp;7&nbsp;4&nbsp;4&nbsp;8&nbsp;7&nbsp;2&nbsp;2&nbsp;8&nbsp;6&nbsp;6&nbsp;8&nbsp;5&nbsp;2&nbsp;5&nbsp;0&nbsp;7&nbsp;8<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            1674<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase45"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 45</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            3<br/>
+8<br/>
+9<br/>
+59&nbsp;33&nbsp;26&nbsp;12&nbsp;42&nbsp;43&nbsp;57&nbsp;53&nbsp;1<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            32<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase46"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 46</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            4<br/>
+1<br/>
+63<br/>
+0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            0<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase47"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 47</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            4<br/>
+63<br/>
+842<br/>
+1361&nbsp;1996&nbsp;2372&nbsp;2272&nbsp;1406&nbsp;3363&nbsp;1004&nbsp;3660&nbsp;1060&nbsp;1280&nbsp;1583&nbsp;1701&nbsp;1996&nbsp;3281&nbsp;3053&nbsp;3375&nbsp;2973&nbsp;2639&nbsp;2182&nbsp;2182&nbsp;2756&nbsp;2378&nbsp;2187&nbsp;2400&nbsp;537&nbsp;2203&nbsp;897&nbsp;2922&nbsp;633&nbsp;2742&nbsp;582&nbsp;148&nbsp;3628&nbsp;2777&nbsp;39&nbsp;465&nbsp;1582&nbsp;2533&nbsp;3187&nbsp;3635&nbsp;3251&nbsp;1765&nbsp;3751&nbsp;2871&nbsp;2610&nbsp;3940&nbsp;1508&nbsp;3249&nbsp;2727&nbsp;613&nbsp;125&nbsp;2853&nbsp;2399&nbsp;3810&nbsp;377&nbsp;2816&nbsp;1474&nbsp;109&nbsp;2985&nbsp;757&nbsp;3729&nbsp;839&nbsp;1516&nbsp;3190&nbsp;3466&nbsp;512&nbsp;1389&nbsp;3324&nbsp;3358&nbsp;1558&nbsp;3465&nbsp;728&nbsp;1794&nbsp;3781&nbsp;423&nbsp;2854&nbsp;1200&nbsp;1251&nbsp;302&nbsp;1669&nbsp;3590&nbsp;263&nbsp;246&nbsp;2535&nbsp;1326&nbsp;737&nbsp;1178&nbsp;529&nbsp;614&nbsp;1670&nbsp;133&nbsp;3366&nbsp;2024&nbsp;830&nbsp;453&nbsp;2342&nbsp;159&nbsp;3433&nbsp;2460&nbsp;1549&nbsp;2649&nbsp;779&nbsp;1556&nbsp;3690&nbsp;849&nbsp;2642&nbsp;2419&nbsp;2512&nbsp;583&nbsp;672&nbsp;1932&nbsp;907&nbsp;456&nbsp;2244&nbsp;37&nbsp;975&nbsp;2923&nbsp;3898&nbsp;341&nbsp;1138&nbsp;1751&nbsp;22&nbsp;1971&nbsp;1671&nbsp;1959&nbsp;1624&nbsp;3613&nbsp;99&nbsp;3166&nbsp;858&nbsp;3627&nbsp;3262&nbsp;3584&nbsp;2709&nbsp;3851&nbsp;3946&nbsp;758&nbsp;655&nbsp;2900&nbsp;242&nbsp;1593&nbsp;1395&nbsp;198&nbsp;1794&nbsp;1660&nbsp;3044&nbsp;3746&nbsp;3300&nbsp;1258&nbsp;3045&nbsp;691&nbsp;3270&nbsp;197&nbsp;213&nbsp;3947&nbsp;136&nbsp;719&nbsp;3512&nbsp;2941&nbsp;3260&nbsp;3543&nbsp;2339&nbsp;3965&nbsp;947&nbsp;2688&nbsp;1531&nbsp;1901&nbsp;3437&nbsp;1032&nbsp;2574&nbsp;1300&nbsp;2025&nbsp;2014&nbsp;3362&nbsp;3885&nbsp;1212&nbsp;2769&nbsp;2708&nbsp;1482&nbsp;996&nbsp;2289&nbsp;977&nbsp;2132&nbsp;1866&nbsp;238&nbsp;3543&nbsp;1493&nbsp;2064&nbsp;2868&nbsp;1972&nbsp;1927&nbsp;1038&nbsp;340&nbsp;2651&nbsp;1482&nbsp;2016&nbsp;3899&nbsp;2687&nbsp;913&nbsp;1106&nbsp;2992&nbsp;391&nbsp;1576&nbsp;1321&nbsp;2124&nbsp;3788&nbsp;2939&nbsp;766&nbsp;2759&nbsp;2316&nbsp;664&nbsp;1503&nbsp;3467&nbsp;3472&nbsp;1685&nbsp;590&nbsp;1964&nbsp;3178&nbsp;3729&nbsp;1881&nbsp;1003&nbsp;3445&nbsp;304&nbsp;3472&nbsp;3230&nbsp;2602&nbsp;1503&nbsp;1563&nbsp;3665&nbsp;1711&nbsp;484&nbsp;2955&nbsp;3422&nbsp;3869&nbsp;3403&nbsp;1937&nbsp;1317&nbsp;956&nbsp;1826&nbsp;3809&nbsp;2186&nbsp;3170&nbsp;1755&nbsp;1270&nbsp;3257&nbsp;2954&nbsp;1422&nbsp;2847&nbsp;418&nbsp;3212&nbsp;764&nbsp;1108&nbsp;3243&nbsp;3036&nbsp;537&nbsp;3317&nbsp;3204&nbsp;1639&nbsp;1265&nbsp;2044&nbsp;2001&nbsp;1628&nbsp;3592&nbsp;1843&nbsp;2173&nbsp;129&nbsp;2083&nbsp;3045&nbsp;1514&nbsp;2953&nbsp;1660&nbsp;84&nbsp;1006&nbsp;1834&nbsp;3751&nbsp;3449&nbsp;880&nbsp;2345&nbsp;3557&nbsp;77&nbsp;1751&nbsp;940&nbsp;3626&nbsp;395&nbsp;942&nbsp;1424&nbsp;1344&nbsp;2001&nbsp;1242&nbsp;3115&nbsp;296&nbsp;2412&nbsp;3919&nbsp;2277&nbsp;1186&nbsp;855&nbsp;3827&nbsp;3755&nbsp;1145&nbsp;859&nbsp;2606&nbsp;2888&nbsp;707&nbsp;3837&nbsp;3948&nbsp;2240&nbsp;1646&nbsp;2103&nbsp;2300&nbsp;745&nbsp;2169&nbsp;566&nbsp;2296&nbsp;3579&nbsp;2355&nbsp;1690&nbsp;2873&nbsp;1339&nbsp;3549&nbsp;3704&nbsp;1200&nbsp;3849&nbsp;1633&nbsp;2172&nbsp;3796&nbsp;3136&nbsp;941&nbsp;35&nbsp;2316&nbsp;68&nbsp;2163&nbsp;14&nbsp;116&nbsp;294&nbsp;2837&nbsp;3039&nbsp;2646&nbsp;3745&nbsp;3290&nbsp;26&nbsp;3856&nbsp;2060&nbsp;2925&nbsp;2787&nbsp;3286&nbsp;1681&nbsp;1070&nbsp;2558&nbsp;36&nbsp;3292&nbsp;941&nbsp;2880&nbsp;285&nbsp;286&nbsp;77&nbsp;66&nbsp;312&nbsp;387&nbsp;3355&nbsp;1096&nbsp;3018&nbsp;613&nbsp;158&nbsp;449&nbsp;2118&nbsp;3820&nbsp;3031&nbsp;93&nbsp;348&nbsp;3446&nbsp;3751&nbsp;2053&nbsp;2430&nbsp;3615&nbsp;1771&nbsp;1663&nbsp;1924&nbsp;3606&nbsp;692&nbsp;1281&nbsp;1996&nbsp;1155&nbsp;3038&nbsp;893&nbsp;3158&nbsp;1114&nbsp;3067&nbsp;2869&nbsp;3058&nbsp;3472&nbsp;887&nbsp;3737&nbsp;1619&nbsp;1108&nbsp;1574&nbsp;287&nbsp;2360&nbsp;2087&nbsp;2592&nbsp;67&nbsp;2828&nbsp;792&nbsp;1271&nbsp;1913&nbsp;2098&nbsp;3286&nbsp;2158&nbsp;2044&nbsp;64&nbsp;633&nbsp;3593&nbsp;3773&nbsp;107&nbsp;1164&nbsp;1061&nbsp;2633&nbsp;2326&nbsp;3746&nbsp;897&nbsp;876&nbsp;1986&nbsp;256&nbsp;3390&nbsp;725&nbsp;2916&nbsp;301&nbsp;1742&nbsp;3801&nbsp;996&nbsp;241&nbsp;1410&nbsp;1280&nbsp;603&nbsp;789&nbsp;1479&nbsp;3899&nbsp;450&nbsp;1801&nbsp;1057&nbsp;2391&nbsp;1997&nbsp;1993&nbsp;3442&nbsp;106&nbsp;1024&nbsp;2546&nbsp;1367&nbsp;1245&nbsp;1970&nbsp;1051&nbsp;3170&nbsp;996&nbsp;1126&nbsp;2476&nbsp;667&nbsp;2029&nbsp;3309&nbsp;906&nbsp;2193&nbsp;2998&nbsp;1683&nbsp;2135&nbsp;2375&nbsp;35&nbsp;340&nbsp;2177&nbsp;304&nbsp;3266&nbsp;3134&nbsp;1346&nbsp;2729&nbsp;2229&nbsp;2115&nbsp;2518&nbsp;1235&nbsp;13&nbsp;3917&nbsp;2864&nbsp;3273&nbsp;3755&nbsp;2972&nbsp;192&nbsp;469&nbsp;3016&nbsp;1882&nbsp;619&nbsp;3677&nbsp;871&nbsp;1430&nbsp;2458&nbsp;1068&nbsp;3631&nbsp;2401&nbsp;2330&nbsp;235&nbsp;2636&nbsp;1742&nbsp;68&nbsp;3258&nbsp;2945&nbsp;813&nbsp;2856&nbsp;1235&nbsp;12&nbsp;2513&nbsp;3933&nbsp;1706&nbsp;59&nbsp;2651&nbsp;3143&nbsp;3777&nbsp;722&nbsp;3235&nbsp;786&nbsp;3244&nbsp;315&nbsp;1044&nbsp;3716&nbsp;884&nbsp;3422&nbsp;218&nbsp;3178&nbsp;1842&nbsp;1872&nbsp;2700&nbsp;1429&nbsp;185&nbsp;1350&nbsp;3173&nbsp;3168&nbsp;411&nbsp;879&nbsp;3526&nbsp;2777&nbsp;2589&nbsp;2464&nbsp;1140&nbsp;1217&nbsp;2468&nbsp;3710&nbsp;3299&nbsp;1106&nbsp;1116&nbsp;1421&nbsp;2228&nbsp;3122&nbsp;3622&nbsp;2462&nbsp;2185&nbsp;3964&nbsp;3816&nbsp;2146&nbsp;3758&nbsp;3228&nbsp;1248&nbsp;2768&nbsp;3593&nbsp;2537&nbsp;3760&nbsp;2354&nbsp;1129&nbsp;1668&nbsp;2544&nbsp;310&nbsp;1396&nbsp;816&nbsp;2177&nbsp;446&nbsp;1556&nbsp;1109&nbsp;3471&nbsp;312&nbsp;1885&nbsp;767&nbsp;1981&nbsp;3835&nbsp;1734&nbsp;825&nbsp;1281&nbsp;3757&nbsp;1225&nbsp;3152&nbsp;178&nbsp;1435&nbsp;3857&nbsp;543&nbsp;1993&nbsp;2610&nbsp;1101&nbsp;3212&nbsp;3397&nbsp;163&nbsp;2997&nbsp;2397&nbsp;1423&nbsp;287&nbsp;2468&nbsp;2612&nbsp;1106&nbsp;2162&nbsp;3959&nbsp;1780&nbsp;913&nbsp;3245&nbsp;2033&nbsp;2114&nbsp;147&nbsp;2912&nbsp;2346&nbsp;3672&nbsp;3693&nbsp;1467&nbsp;2630&nbsp;2682&nbsp;1234&nbsp;301&nbsp;781&nbsp;3205&nbsp;45&nbsp;3373&nbsp;2820&nbsp;255&nbsp;1416&nbsp;3239&nbsp;2364&nbsp;3881&nbsp;271&nbsp;241&nbsp;448&nbsp;1374&nbsp;2996&nbsp;3175&nbsp;3454&nbsp;1125&nbsp;1657&nbsp;2757&nbsp;348&nbsp;1249&nbsp;478&nbsp;3951&nbsp;2192&nbsp;3959&nbsp;3030&nbsp;1781&nbsp;3604&nbsp;2764&nbsp;3753&nbsp;853&nbsp;3056&nbsp;1534&nbsp;2500&nbsp;816&nbsp;1217&nbsp;1294&nbsp;118&nbsp;3338&nbsp;2415&nbsp;3529&nbsp;798&nbsp;795&nbsp;3954&nbsp;3216&nbsp;2593&nbsp;2175&nbsp;2242&nbsp;2974&nbsp;437&nbsp;1571&nbsp;558&nbsp;1307&nbsp;404&nbsp;719&nbsp;3940&nbsp;1760&nbsp;2590&nbsp;3656&nbsp;2066&nbsp;1552&nbsp;3237&nbsp;936&nbsp;2896&nbsp;2833&nbsp;2357&nbsp;1937&nbsp;2067&nbsp;2501&nbsp;3371&nbsp;2797&nbsp;3910&nbsp;2795&nbsp;2889&nbsp;2939&nbsp;3138&nbsp;2251&nbsp;304&nbsp;652&nbsp;1741&nbsp;3570&nbsp;3675&nbsp;2236&nbsp;1130&nbsp;3210&nbsp;2558&nbsp;788&nbsp;672&nbsp;3845&nbsp;3021&nbsp;2046&nbsp;3392&nbsp;2631&nbsp;883&nbsp;3720&nbsp;3861&nbsp;2956&nbsp;2552&nbsp;2077&nbsp;1241&nbsp;1578&nbsp;2225&nbsp;225&nbsp;1341&nbsp;3963&nbsp;2933&nbsp;2926&nbsp;2390&nbsp;2450&nbsp;610&nbsp;2534&nbsp;3535&nbsp;1531&nbsp;3840&nbsp;2407&nbsp;734&nbsp;3956&nbsp;305&nbsp;3402&nbsp;1735&nbsp;4&nbsp;1258&nbsp;2951&nbsp;3342&nbsp;1752&nbsp;3129&nbsp;2222&nbsp;3428&nbsp;1620&nbsp;923&nbsp;2685&nbsp;2080&nbsp;2723&nbsp;3751&nbsp;659&nbsp;1272&nbsp;2972&nbsp;2025&nbsp;2680&nbsp;3770&nbsp;3301&nbsp;1647&nbsp;2045&nbsp;2452&nbsp;3364&nbsp;1593&nbsp;2926&nbsp;1817&nbsp;1207&nbsp;3418&nbsp;2578&nbsp;2056&nbsp;1955&nbsp;3075&nbsp;1511&nbsp;2429&nbsp;2218&nbsp;2868&nbsp;2272&nbsp;467&nbsp;300&nbsp;2093&nbsp;2190&nbsp;3099&nbsp;2934&nbsp;1605&nbsp;2724&nbsp;2045&nbsp;1713&nbsp;3638&nbsp;1006&nbsp;2970&nbsp;3276&nbsp;3535&nbsp;3671&nbsp;3390&nbsp;2293&nbsp;3787&nbsp;2793&nbsp;475&nbsp;2285&nbsp;1220&nbsp;3451&nbsp;3595&nbsp;1775&nbsp;2751&nbsp;3663&nbsp;235&nbsp;2956&nbsp;3151&nbsp;3182&nbsp;1428&nbsp;3933&nbsp;1922&nbsp;1442&nbsp;3234&nbsp;437&nbsp;1074&nbsp;3296&nbsp;2397&nbsp;893&nbsp;1805&nbsp;3838&nbsp;1955&nbsp;3559&nbsp;1514&nbsp;1832&nbsp;3770&nbsp;2134&nbsp;2952&nbsp;3696&nbsp;2480&nbsp;2123&nbsp;1198&nbsp;1444&nbsp;1213&nbsp;1774&nbsp;966&nbsp;1321&nbsp;826&nbsp;298&nbsp;1498&nbsp;1862&nbsp;3325&nbsp;1506<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            36081<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase48"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 48</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            4<br/>
+639<br/>
+6<br/>
+189501&nbsp;8428&nbsp;3425&nbsp;150995&nbsp;40073&nbsp;144342<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            1049<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase49"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 49</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            4<br/>
+5307<br/>
+10<br/>
+18719429&nbsp;11329162&nbsp;23987771&nbsp;25616517&nbsp;6700588&nbsp;11548457&nbsp;6476402&nbsp;8286340&nbsp;28044153&nbsp;8783723<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            29994<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase50"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 50</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            4<br/>
+5<br/>
+656<br/>
+23&nbsp;10&nbsp;15&nbsp;15&nbsp;24&nbsp;24&nbsp;3&nbsp;9&nbsp;20&nbsp;18&nbsp;8&nbsp;7&nbsp;2&nbsp;8&nbsp;18&nbsp;7&nbsp;22&nbsp;2&nbsp;12&nbsp;11&nbsp;21&nbsp;19&nbsp;9&nbsp;21&nbsp;24&nbsp;8&nbsp;11&nbsp;15&nbsp;22&nbsp;18&nbsp;13&nbsp;8&nbsp;10&nbsp;0&nbsp;4&nbsp;18&nbsp;17&nbsp;21&nbsp;19&nbsp;21&nbsp;10&nbsp;6&nbsp;0&nbsp;18&nbsp;20&nbsp;4&nbsp;5&nbsp;16&nbsp;21&nbsp;6&nbsp;19&nbsp;7&nbsp;11&nbsp;20&nbsp;7&nbsp;3&nbsp;1&nbsp;12&nbsp;8&nbsp;6&nbsp;24&nbsp;13&nbsp;23&nbsp;22&nbsp;15&nbsp;4&nbsp;6&nbsp;20&nbsp;12&nbsp;1&nbsp;16&nbsp;22&nbsp;14&nbsp;15&nbsp;13&nbsp;8&nbsp;21&nbsp;13&nbsp;5&nbsp;6&nbsp;2&nbsp;19&nbsp;1&nbsp;6&nbsp;3&nbsp;11&nbsp;7&nbsp;17&nbsp;11&nbsp;14&nbsp;19&nbsp;12&nbsp;10&nbsp;8&nbsp;22&nbsp;9&nbsp;20&nbsp;14&nbsp;0&nbsp;14&nbsp;21&nbsp;3&nbsp;11&nbsp;17&nbsp;6&nbsp;10&nbsp;9&nbsp;18&nbsp;0&nbsp;16&nbsp;6&nbsp;11&nbsp;18&nbsp;2&nbsp;1&nbsp;17&nbsp;10&nbsp;7&nbsp;22&nbsp;9&nbsp;8&nbsp;3&nbsp;12&nbsp;15&nbsp;17&nbsp;23&nbsp;19&nbsp;16&nbsp;21&nbsp;15&nbsp;21&nbsp;23&nbsp;24&nbsp;24&nbsp;12&nbsp;3&nbsp;19&nbsp;20&nbsp;6&nbsp;3&nbsp;11&nbsp;9&nbsp;11&nbsp;8&nbsp;11&nbsp;24&nbsp;7&nbsp;10&nbsp;6&nbsp;24&nbsp;12&nbsp;16&nbsp;21&nbsp;12&nbsp;13&nbsp;20&nbsp;11&nbsp;9&nbsp;2&nbsp;13&nbsp;5&nbsp;16&nbsp;5&nbsp;19&nbsp;2&nbsp;16&nbsp;13&nbsp;24&nbsp;4&nbsp;11&nbsp;4&nbsp;21&nbsp;18&nbsp;12&nbsp;19&nbsp;18&nbsp;22&nbsp;2&nbsp;8&nbsp;18&nbsp;9&nbsp;7&nbsp;11&nbsp;15&nbsp;0&nbsp;12&nbsp;16&nbsp;11&nbsp;21&nbsp;3&nbsp;0&nbsp;13&nbsp;15&nbsp;21&nbsp;24&nbsp;11&nbsp;15&nbsp;15&nbsp;22&nbsp;22&nbsp;18&nbsp;17&nbsp;14&nbsp;1&nbsp;16&nbsp;4&nbsp;15&nbsp;14&nbsp;6&nbsp;19&nbsp;21&nbsp;13&nbsp;20&nbsp;4&nbsp;19&nbsp;14&nbsp;12&nbsp;22&nbsp;14&nbsp;15&nbsp;18&nbsp;3&nbsp;7&nbsp;12&nbsp;21&nbsp;14&nbsp;15&nbsp;5&nbsp;4&nbsp;9&nbsp;22&nbsp;15&nbsp;18&nbsp;4&nbsp;17&nbsp;17&nbsp;4&nbsp;5&nbsp;21&nbsp;10&nbsp;9&nbsp;10&nbsp;3&nbsp;6&nbsp;4&nbsp;24&nbsp;12&nbsp;11&nbsp;21&nbsp;21&nbsp;16&nbsp;17&nbsp;1&nbsp;21&nbsp;17&nbsp;16&nbsp;8&nbsp;8&nbsp;13&nbsp;12&nbsp;16&nbsp;23&nbsp;18&nbsp;17&nbsp;7&nbsp;5&nbsp;22&nbsp;20&nbsp;10&nbsp;1&nbsp;5&nbsp;24&nbsp;24&nbsp;8&nbsp;2&nbsp;20&nbsp;9&nbsp;16&nbsp;20&nbsp;2&nbsp;1&nbsp;10&nbsp;6&nbsp;20&nbsp;13&nbsp;19&nbsp;1&nbsp;22&nbsp;24&nbsp;3&nbsp;15&nbsp;1&nbsp;6&nbsp;18&nbsp;10&nbsp;3&nbsp;19&nbsp;6&nbsp;19&nbsp;1&nbsp;10&nbsp;3&nbsp;8&nbsp;2&nbsp;6&nbsp;20&nbsp;10&nbsp;23&nbsp;10&nbsp;6&nbsp;12&nbsp;6&nbsp;8&nbsp;3&nbsp;8&nbsp;7&nbsp;4&nbsp;4&nbsp;6&nbsp;16&nbsp;12&nbsp;6&nbsp;6&nbsp;4&nbsp;15&nbsp;4&nbsp;14&nbsp;5&nbsp;23&nbsp;20&nbsp;22&nbsp;16&nbsp;20&nbsp;5&nbsp;24&nbsp;1&nbsp;15&nbsp;7&nbsp;9&nbsp;24&nbsp;23&nbsp;20&nbsp;3&nbsp;18&nbsp;18&nbsp;9&nbsp;18&nbsp;3&nbsp;10&nbsp;10&nbsp;19&nbsp;19&nbsp;14&nbsp;0&nbsp;8&nbsp;0&nbsp;16&nbsp;17&nbsp;17&nbsp;15&nbsp;19&nbsp;21&nbsp;21&nbsp;13&nbsp;15&nbsp;12&nbsp;24&nbsp;3&nbsp;3&nbsp;18&nbsp;9&nbsp;17&nbsp;15&nbsp;8&nbsp;18&nbsp;17&nbsp;5&nbsp;16&nbsp;20&nbsp;11&nbsp;9&nbsp;1&nbsp;3&nbsp;9&nbsp;5&nbsp;24&nbsp;23&nbsp;9&nbsp;4&nbsp;12&nbsp;12&nbsp;12&nbsp;8&nbsp;22&nbsp;5&nbsp;17&nbsp;24&nbsp;18&nbsp;24&nbsp;12&nbsp;17&nbsp;14&nbsp;9&nbsp;12&nbsp;16&nbsp;19&nbsp;11&nbsp;10&nbsp;17&nbsp;11&nbsp;5&nbsp;11&nbsp;15&nbsp;9&nbsp;20&nbsp;12&nbsp;17&nbsp;10&nbsp;14&nbsp;19&nbsp;19&nbsp;9&nbsp;6&nbsp;23&nbsp;18&nbsp;20&nbsp;0&nbsp;0&nbsp;8&nbsp;21&nbsp;15&nbsp;15&nbsp;22&nbsp;6&nbsp;6&nbsp;11&nbsp;7&nbsp;11&nbsp;12&nbsp;8&nbsp;3&nbsp;1&nbsp;6&nbsp;14&nbsp;16&nbsp;8&nbsp;2&nbsp;4&nbsp;10&nbsp;5&nbsp;22&nbsp;13&nbsp;14&nbsp;16&nbsp;14&nbsp;8&nbsp;2&nbsp;5&nbsp;24&nbsp;14&nbsp;4&nbsp;10&nbsp;23&nbsp;18&nbsp;22&nbsp;22&nbsp;17&nbsp;18&nbsp;3&nbsp;20&nbsp;7&nbsp;9&nbsp;22&nbsp;24&nbsp;21&nbsp;4&nbsp;7&nbsp;10&nbsp;10&nbsp;15&nbsp;12&nbsp;2&nbsp;17&nbsp;16&nbsp;0&nbsp;19&nbsp;10&nbsp;10&nbsp;8&nbsp;10&nbsp;3&nbsp;8&nbsp;2&nbsp;15&nbsp;5&nbsp;11&nbsp;11&nbsp;1&nbsp;12&nbsp;0&nbsp;4&nbsp;16&nbsp;6&nbsp;1&nbsp;0&nbsp;0&nbsp;15&nbsp;7&nbsp;13&nbsp;8&nbsp;4&nbsp;8&nbsp;15&nbsp;18&nbsp;10&nbsp;18&nbsp;5&nbsp;5&nbsp;11&nbsp;14&nbsp;22&nbsp;5&nbsp;11&nbsp;13&nbsp;12&nbsp;12&nbsp;20&nbsp;10&nbsp;24&nbsp;23&nbsp;19&nbsp;17&nbsp;16&nbsp;23&nbsp;6&nbsp;7&nbsp;1&nbsp;6&nbsp;4&nbsp;10&nbsp;9&nbsp;5&nbsp;2&nbsp;6&nbsp;7&nbsp;13&nbsp;1&nbsp;17&nbsp;6&nbsp;15&nbsp;11&nbsp;17&nbsp;6&nbsp;4&nbsp;8&nbsp;11&nbsp;3&nbsp;18&nbsp;21&nbsp;8&nbsp;2&nbsp;15&nbsp;18&nbsp;16&nbsp;10&nbsp;12&nbsp;23&nbsp;13&nbsp;13&nbsp;0&nbsp;16&nbsp;10&nbsp;16&nbsp;2&nbsp;22&nbsp;7&nbsp;11&nbsp;12&nbsp;21&nbsp;4&nbsp;16&nbsp;23&nbsp;20&nbsp;4&nbsp;12&nbsp;12&nbsp;13&nbsp;9&nbsp;14&nbsp;2&nbsp;18&nbsp;5&nbsp;6&nbsp;5&nbsp;22&nbsp;5&nbsp;3&nbsp;7&nbsp;14&nbsp;15&nbsp;16&nbsp;13&nbsp;10&nbsp;5&nbsp;13&nbsp;10&nbsp;14&nbsp;0&nbsp;20&nbsp;3&nbsp;2&nbsp;22&nbsp;6&nbsp;1&nbsp;3&nbsp;12&nbsp;14&nbsp;12&nbsp;24&nbsp;20&nbsp;11&nbsp;24&nbsp;16&nbsp;18&nbsp;19&nbsp;24&nbsp;15&nbsp;23&nbsp;4&nbsp;22&nbsp;22&nbsp;1&nbsp;23&nbsp;14&nbsp;3&nbsp;15&nbsp;21&nbsp;20&nbsp;14&nbsp;2&nbsp;0&nbsp;6&nbsp;11&nbsp;17&nbsp;1&nbsp;3&nbsp;7&nbsp;8&nbsp;6&nbsp;17&nbsp;2&nbsp;8&nbsp;18&nbsp;3&nbsp;16&nbsp;22<br/>
+&nbsp;<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            2083<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+
+        <div style="height: 30px"></div>
+
+        <table id="grad1" class="tableLegend tableSummary"
+          <tbody>
+            <tr>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #9F9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">ok</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FFBF00; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FF9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka med izvajanjem</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #C00000; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">se ne prevede</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #B9F; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">timeout (1000 ms)</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #D0E0F0; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">rezultat izrisa</td>
+                </tr>
+              </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <a name="bottom"></a>
+        </div>
+    </body>
+    <!-- java class tester version "1.40.2" -->
+    <!-- 22.11.2016 10:28.11 -->
+    <!-- ENVY13, fe80::f0a3:1db6:9d58:1bf1%17 -->
+</html>

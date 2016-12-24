@@ -1,0 +1,2 @@
+prejsni min: 25 novi: 25
+1

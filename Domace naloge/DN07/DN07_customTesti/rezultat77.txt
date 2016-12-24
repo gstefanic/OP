@@ -1,0 +1,3 @@
+prejsni min: 1 novi: 6
+prejsni min: 2 novi: 6
+3

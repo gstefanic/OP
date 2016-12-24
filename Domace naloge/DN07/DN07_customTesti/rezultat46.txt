@@ -1,0 +1,5 @@
+prejsni min: 4 novi: 82
+prejsni min: 84 novi: 89
+prejsni min: 105 novi: 166
+prejsni min: 101 novi: 369
+5

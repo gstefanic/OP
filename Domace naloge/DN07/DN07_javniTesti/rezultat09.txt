@@ -1,0 +1,5 @@
+prejsni min: 20 novi: 60
+prejsni min: 10 novi: 70
+prejsni min: 10 novi: 30
+prejsni min: 20 novi: 20
+6
