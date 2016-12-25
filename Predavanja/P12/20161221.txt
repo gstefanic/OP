@@ -1,0 +1,12 @@
+Vmesnik (interface)
+
+	posebrn primer mocno okrnjenega abstraktnega razreda
+		vse metode so abstrakne
+		vsi atributi so staticni in dokoncni (final)
+
+	vloga vmesnika
+		z njim predpisemo metode, ki jih mora implementirati nek razred
+		podobno kot pri dedovanju moramo napisati razred, v katerem spragramiramo zahtevane metode
+
+	vmesnik do neke mere odpravlja omejitve zaradi enkratnega dedovanja
+		vsak podrazred deduje samo od enega nadrazreda, lahko pa implementira vec vmesnikov

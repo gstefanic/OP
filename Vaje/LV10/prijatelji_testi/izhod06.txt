@@ -1,0 +1,11 @@
+osebe[0].steviloPrijateljevNaIstemNaslovu(): 2
+osebe[1].steviloPrijateljevNaIstemNaslovu(): 0
+osebe[2].steviloPrijateljevNaIstemNaslovu(): 0
+osebe[3].steviloPrijateljevNaIstemNaslovu(): 2
+osebe[4].steviloPrijateljevNaIstemNaslovu(): 3
+osebe[5].steviloPrijateljevNaIstemNaslovu(): 0
+osebe[6].steviloPrijateljevNaIstemNaslovu(): 2
+osebe[7].steviloPrijateljevNaIstemNaslovu(): 2
+osebe[8].steviloPrijateljevNaIstemNaslovu(): 2
+osebe[9].steviloPrijateljevNaIstemNaslovu(): 0
+osebe[10].steviloPrijateljevNaIstemNaslovu(): 0

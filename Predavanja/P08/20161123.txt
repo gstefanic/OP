@@ -1,0 +1,27 @@
+Urejanje z navadnim izbiranjem
+	Števila v tabeli zelimo urediti v monotono narascajocem zaporedju
+
+	for(int i = 0; i<=a.length-2;i++) {
+		poisci najmanjse stevilo izmed a[i]...a[a.length-1];
+		zamenjaj a[i] in najmanjse stevilo;
+	}
+
+Dvodimenzionalne tabele
+	ureditev podatkov v vrstice in stolpce
+		polozaj vsakega elementa v tabeli predstavljata dva inteksa - vrstica, stolpec
+
+	deklaracija:
+		int[][] a = new int[<steviloVrstic>][<steviloStolpcev>];
+
+	tudi dvodimenzionalna tabela je v resnici enodimenzionalna tabela
+		vsak element je zopet enodimenzionalna tabela
+
+	inicializacija s seznamom vrednosti
+		int[][] a = {{1,2,3}, {2,3,4}, {3,4,5}};
+
+	zanka for-each
+		for(int[] a1 : a) {
+			for (int st : a1) {
+				// obdelaj element st
+			}
+		}

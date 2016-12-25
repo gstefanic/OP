@@ -1,0 +1,12 @@
+Na zacetku:
+Knjiznica ima na voljo 10 izvodov naslova 0
+Knjiznica ima na voljo 10 izvodov naslova 1
+Knjiznica ima na voljo 10 izvodov naslova 2
+Knjiznica ima na voljo 10 izvodov naslova 3
+Knjiznica ima na voljo 10 izvodov naslova 4
+Po izposojah:
+Knjiznica ima na voljo 9 izvodov naslova 0
+Knjiznica ima na voljo 8 izvodov naslova 1
+Knjiznica ima na voljo 9 izvodov naslova 2
+Knjiznica ima na voljo 9 izvodov naslova 3
+Knjiznica ima na voljo 8 izvodov naslova 4

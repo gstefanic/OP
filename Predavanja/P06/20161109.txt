@@ -1,0 +1,50 @@
+Razredi in objekti
+- objekt vsebuje atribute in metode
+- naloga razreda je opisati zgradbo objektov
+
+Razred Delavec
+	deklarirari smo nov podatkovni tip Delavec
+
+Kreiranje objekta
+	- deklaracija spremenljivke, ki predstavlja objekt
+	- dodelitev prostora za ta objekt in določitev začetnih vrednosti atributov
+
+Primer:
+	Delavec d;	// deklaarcija spremenljivke
+	d = new Delavec();	// dodelitev prostora in inicializacija
+
+	Oba koraka lahko združimo:
+	Delavec d = new Delavec();
+
+Konstruktor
+	Posebna metoda, ki jo moramo poklicati, kadar deklariramo nov objekt
+	ime konstruktorja mora biti enako imenu razreda
+	konstruktor ne vrača vrednoti
+	glavna naloga konstruktorja je vzpostavitev začetnih vrednosti atributov
+
+Privzeti konstruktor
+	če ne napišemo lastnega, Java poskrbi za default konstruktor
+	vzpostavi privzete vrednosi atributov
+		numeriči: 0
+		boolean: false
+		char: '\u0000'
+		objektni tip: null
+
+Kreiranje objektov
+	 predstavitev objekta v pomnilniku
+	 spremenljivka d hrani naslov tiste lokacije v pomnilniku, kjer se dejansko nahaja objekt
+
+Dve vrsti podatkovnih tipov
+	Vrednostni podatkovni tipi
+		osnovni podatkovni tipi (byte, short, int, double)
+		prevajalnik ve, koliko prostora mora dodeliti posamezni spremenljivki
+		na lokaciji je vrednost podatka
+
+	Sklicni podatkovni tipi
+		objekti in tabele
+		prevejalnik ne ve koliko prostora bomo potrebovali za nek objekt ali tabelo
+			dedeli samo prostor za sklic/referenco/naslov na tisti del pomnilnika, v katerem bo zapisana dejanska vrednost
+			prostor za objekt ali tabelo se dodeli dinamično, tj. med izvajanjem programa
+			null predstavlja 
+
+javap <Ime Razreda> ... izpiše javne sklice razreda

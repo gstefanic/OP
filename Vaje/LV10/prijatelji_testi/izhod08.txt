@@ -1,0 +1,11 @@
+osebe[0].najstarejsiPrijatelj(): Branko Brezovar (58), Spodnja 9, 4000 Kranj
+osebe[1].najstarejsiPrijatelj(): Helga Hojnik (56), Mala 2, 6000 Koper
+osebe[2].najstarejsiPrijatelj(): Janko Jelenc (72), Zgornja 6, 3000 Celje
+osebe[3].najstarejsiPrijatelj(): Branko Brezovar (58), Spodnja 9, 4000 Kranj
+osebe[4].najstarejsiPrijatelj(): Gregor Golob (33), Sprednja 7, 1000 Ljubljana
+osebe[5].najstarejsiPrijatelj(): null
+osebe[6].najstarejsiPrijatelj(): Iva Ihan (33), Sprednja 7, 1000 Ljubljana
+osebe[7].najstarejsiPrijatelj(): Branko Brezovar (58), Spodnja 9, 4000 Kranj
+osebe[8].najstarejsiPrijatelj(): Gregor Golob (33), Sprednja 7, 1000 Ljubljana
+osebe[9].najstarejsiPrijatelj(): Cvetka Cajzek (79), Velika 10, 5000 Nova Gorica
+osebe[10].najstarejsiPrijatelj(): Franci Frelih (28), Zadnja 11, 2000 Maribor

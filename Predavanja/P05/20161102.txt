@@ -1,0 +1,46 @@
+Rekurzija
+- metoda kliče samo sebe
+	- omogoèa enostaven zapos problemov, ki so efinirani rekurzivno
+	
+- Primer: izračun fakultete
+	n! = n*(n-1)
+	1! = 1
+	
+- Primer: najveèji skupni delitelj števil a in b, a>b
+	èe je a%b==0, je enak b (osnova)
+	je enak najveèjemu skupnemu delutelju števil b in a%b (rekurzivni del)
+	
+- Primer: izraèun n-tega Fibonaccijevega števila
+	fib(n) = fib(n-1)+fib(n-2)
+	fib(0) = 0, fib(1) = 1
+	
+Rekurzija in iteracija
+- vsako rekurzivno metodo lahko pretvorimo v iterativno
+- èe je iteativna rešitev preprosta, admo prednost iteraciji pred rekurzijo
+	- iteativna rešitev zagotavlja boljše delovanje
+	
+Razredi in objekti
+- Objektno usmerjeno programiranje (OOP)
+	- Programske komponente so objekti, ki so podobni objektom iz realnega sveta
+	- Vsi objetki idte vrste tvorijo razred
+	- Vsak objekt je konkreten primerek nekega razreda
+- Zgradba objekta: objekt vsebuje atribute in metode
+	- atributi; za opis lastnosti on stanja objekta
+	- metode: doloèajo operacije, ki jih objekt lahko izvede
+- Naloga razreda je opisati zgradbo objektov
+
+Primer1: Razred Delavec
+- za vsakega delavca hranimo njegovo matièno številko; priimek, ime in število ur, ki jih je opravil v preteklem mesecu
+- deklaracije atributov
+	- atribute delariramo kot spremenljivke
+	- uporabimo doloèilo private
+- deklaracije metoda
+	- uporabimo doloèilo public
+	- izpustimo doloèilo static
+- enkapsulacija (skrivanje podrobnosti)
+	- objekt naj se obnaša kot èrna škatla
+	- podrobna realizacija atributov in metod ni vidna navzven
+- tri vrste metod
+	- setter (metode, ki nastavljajo vrednosti atributov)
+	- getter (metode, ki vraèajo vrednosti atributov)
+	- utility (metode, ki izvajajo operacije, potrebne za rešitev našega problema)

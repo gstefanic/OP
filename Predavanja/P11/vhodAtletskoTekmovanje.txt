@@ -1,0 +1,11 @@
+10
+50 Novak        Miha    Kladivar 1 20.11  0.00  0.00 18.88 20.12 19.01
+51 Petek 	    Peter   Mass     2 0 1 58 67
+52 Gruden       Jaka    Branik   2 0 1 56 88
+53 Mihalic      Franc   Kladivar 1 18.01 19.67  0.00 19.68 20.15 18.01
+54 Petelinkar   Janez   Olimpija 1 19.21 18.37 16.77 17.88 19.12 19.01
+55 Petelin      Rado    Triglav  1 18.44 19.67 18.88  0.00 18.12 19.01
+56 Grdina       Pavel   Branik   2 0 1 57 12
+57 Jarc         Vinko   Olimpija 1 18.21  0.00  0.00 20.88 19.12  0.00
+58 Ahlin        Stane   Branik   2 0 1 56 12
+59 Klepec       Peter   Gorica   2 0 1 56 45

@@ -1,0 +1,13 @@
+Dedovanje
+	mehanizem, ki omogoca, da iz nekega ze obstojecega razreda izpeljemo nov razred
+		nov razred podeduje vse atribute in metode
+		poleg tega lahko v novem razredu deklariramo dodatne atribute in metode
+		ce z neko podedovano metodo nismo zadovoljni, jo lahko redefiniramo
+	terminologija
+		superclass - subclass
+		baseclass - derived class
+
+	redefinicija metod - overriding
+		ce podedovana metoda ni ustrezna, jo deklariramo na novo
+			obdrzati moramo isto ime in enak seznam parametrov (podpis/signature)
+			anotacija: @Override

@@ -1,0 +1,9 @@
+Sprednja 7, 1000 Ljubljana
+Zadnja 11, 2000 Maribor
+Zgornja 6, 3000 Celje
+Spodnja 9, 4000 Kranj
+Velika 10, 5000 Nova Gorica
+Mala 2, 6000 Koper
+Sprednja 8, 1000 Ljubljana
+Zadnja 11, 2000 Maribor
+Sprednja 7, 2000 Maribor

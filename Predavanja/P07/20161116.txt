@@ -1,0 +1,81 @@
+- staticne spremenljivke (class variables)
+	- z dolocilom static na ravni razreda
+	- obstajajo samostojno, niso sestaavni del objekta (v pomnilniku imamo
+	samo en izvod spremenljivke)
+	- spremembo vrednosti občutijo vse metode in objekti
+	- tipicne so za aplikacijske razrede, lahko pa jih najdemo v razredih,
+	ki opisujejo zgradbo objektov
+	- na spremenljivko se sklicujemo z imenom
+
+- spremenljivke objekta (instance variables)
+	- brez dolocila static na ravni razreda
+	- obstajajo kot sestavni del objekta (vsak objekt ima svojo vrednost spremenljivke)
+	- vrednost spremenljivke spreminjamo v vsakem objektu posebej
+
+- staticne metode (class method)
+	- z dolocilom static
+	- obstajajo samostojno, niso del objekta
+	- ne morejo posegati v atribute objektov
+	- klicemo jo z imenom
+
+- metode objekta (instance method) 
+	- brez dolocila static
+	- obnasajo se tako, kot da je metoda sestavni del objekta (navidezno
+	ima vsak objekt svojo metodo)
+	- pri klicu metode je treba navesti ime objekta, ki mu metoda pripada
+
+- referenca this
+	- predstavlja naslov objekta, ki smo ga navedli ob klicu metode
+		- omogoca, da dosptopamo do atributov in metod prvega objekta
+		- referenco this avtomatsko vstavi prevajalnik, lahko pa jo dodamo sami
+
+- dolocila public, private in protected
+	- brez dostopnega dolocila:
+		iz kateregakoli razreda v istem paketu
+	- public
+		iz kateregakili razreda ne glede na paket
+	- private
+		samo znotraj razreda
+	- protected
+		iz kateregakoli podrazreda in iz kateregakoli
+		razreda v istem paketu
+
+- dolocilo final
+	- pri spremenljivkah
+		- vrednosti spremenljivke, ki jo dolocimo ob deklaraciji, ne moremo vec spreminjati
+		- sluzi za deklaracijo konstant
+		- lepopisno pravilo zahtea, da imena kostant pisemo z velikimi crkami
+	- pri metodah
+		- metode ni mogoce redefinirati
+	- pri razredih
+		- iz tega razreda ni moc izpeljati podrazredov (vse metode so dokoncne)
+
+TABELE
+- podatkovna struktura, ki zdruzuje elemente istega tipa
+	- vsak podatek predstavlja en element tabele
+- meti kocke
+	- namesto sestih stevcev lahko uporabimo tabelo s 6 elementi
+- deklaracija:
+	int[] imeTabele;
+- inicializacija:
+	imeTabele = new int[<velikostTabele>];
+- deklaracija in inicializacija skupaj
+	int[] imeTabele = new int[<velikostTabele>];
+
+- kreiranje tabele
+	- dva koraka
+		- deklaracija spremenljivke, ki predstavlja tabelo
+		- dodelitev prostora za tabelo v pomnilniku
+
+- vsak element tagele ima svoj indeks
+	- indeks omogoca dostop do vsakega elementa posebej
+	- v Javi indeksi tecejo od 0 dalje
+
+- vpisovanje vrednosti v tabelo
+	- vpis vrednosti vsakega elementa posebej
+		- s prireditvenimi stavki
+		- z branje, podatkov v zanki
+			spremenljivka i ni vec zgolj stevec, ampak ima tudi vlogo indeksa
+	- inicializacija s seznamom vrednosti
+		double[] od = {1234.55, 999.80};
+		- velikost tabele se v tem primeru doloci samodejno

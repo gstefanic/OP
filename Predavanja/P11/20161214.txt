@@ -1,0 +1,33 @@
+abstrakni razred
+	splosni nadrazred, v katerem so nekatere metode samo nakazane (abstraktne)
+	ne moremo generirati objektov tega razreda
+	sluzi kot osnova za izpeljavo ustreznih podrazredov
+
+abstraktna metoda
+	vsebuje samo glavo, nima pa telesa
+	kadar na nivoju nadrazreda ne moremo opisati operacije, ki jo ta metoda izvede, vendar zelimo
+	doseci, da to metodo, vsebujejo podrazredi
+
+dinamicno povezovanje metod
+	skladnost podatkovnih tipov
+		primerjava vrednosti
+	zamenjava formalnih parametrov s formalnimi
+
+	hierarhija podatkovnih tipov
+		numericni podatkovni tipi
+		tip, ki je nizje v hierarhiji, je skladen s tipom, ki je visje v hierarhiji
+		spremenljivki visjega tipa lahko priredimo vrednist nizjega tipa
+
+	hierarhija podatkovnih tipov pri dedovanju
+		nadrazred in podrazred (in morebitni podrazredi) tvorijo hierarhijo
+			tip nadrazreda je v hierarhiji visje kot tip podrazreda
+		tip podrazreda je skladen s tipam nadrazreda
+		spremenljivki nadrazreda lahko pripredimo vrednost (objekt) podrazreda
+
+	staticni in dinamicni podatkovni tipi
+		staticni podatkovni tip je dolocen ob deklaraciji
+		dinamicni podatkovni tip se spreminja med izvajanjem programa
+
+heterogene tabele
+	tabela, ki vsebuje objekte razlicnih tipov
+	pogoj: vsi tipi morajo biti izpeljani iz istega osnovnega tipa

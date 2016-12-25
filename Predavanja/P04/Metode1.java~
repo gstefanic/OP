@@ -1,0 +1,17 @@
+class Metode1 {
+	public static void naslov1() {
+		System.out.println("FRI");
+		System.out.println("Večna pot 113");
+		System.out.println("1000 Ljubljana");
+	}
+	
+	public static void naslov1(String ime, String ulicaSt, String posta) {
+		System.out.println(ime);
+		System.out.println(ulicaSt);
+		System.out.println(posta);	
+	}
+	
+	public static void main(String[] args) {
+		naslov1();
+	}
+}

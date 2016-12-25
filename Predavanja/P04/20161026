@@ -1,0 +1,22 @@
+Metode
+	Dve vrsti metod
+	- metode, ki ne vračajo vrednosti (procedure)
+		Poudarek je na postopku
+		Klic metode je samostojen stavek
+	- metode, ki vračajo vrednost (funkcije)
+		Poudarek je na vrednosti
+		Klic metode je (praviloma) sestavni del izraza
+
+	Deklaracija metode: glava in telo
+	. glava: npr. public static void main(String[] args)
+		- določila: public static
+		- tip prezultata: void
+		- ime memtode: main
+		- seznam parametrov: (String[] args)
+
+	Klic metode:
+	- Metodo pokličemo z imenom
+		- za metode iz drugih razredov je treba navesti tudi ime razreda
+	- V oklepaju navedemo dejanske parametre
+	- Parametri, ki so v glavi metode, so formalni parametri
+	- Parametri se morajo ujemati v vrstnem redu in tipu
