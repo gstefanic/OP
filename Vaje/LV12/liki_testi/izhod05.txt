@@ -1,0 +1,10 @@
+kvadrat [a = 5] | p = 25, o = 20
+krog [r = 3] | p = 28, o = 19
+pravokotnik [a = 18, b = 2] | p = 36, o = 40
+pravokotnik [a = 4, b = 9] | p = 36, o = 26
+pravokotnik [a = 6, b = 6] | p = 36, o = 24
+kvadrat [a = 6] | p = 36, o = 24
+kvadrat [a = 7] | p = 49, o = 28
+pravokotnik [a = 5, b = 10] | p = 50, o = 30
+krog [r = 4] | p = 50, o = 25
+krog [r = 5] | p = 79, o = 31

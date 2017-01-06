@@ -1,0 +1,15 @@
+pravokotnik [a = 54, b = 84] | p = 4536, o = 276
+pravokotnik [a = 42, b = 108] | p = 4536, o = 300
+pravokotnik [a = 39, b = 39] | p = 1521, o = 156
+pravokotnik [a = 117, b = 13] | p = 1521, o = 260
+pravokotnik [a = 1, b = 4536] | p = 4536, o = 9074
+kvadrat [a = 67] | p = 4489, o = 268
+kvadrat [a = 39] | p = 1521, o = 156
+kvadrat [a = 68] | p = 4624, o = 272
+krog [r = 42] | p = 5542, o = 264
+krog [r = 39] | p = 4778, o = 245
+krog [r = 38] | p = 4536, o = 239
+krog [r = 43] | p = 5809, o = 270
+krog [r = 22] | p = 1521, o = 138
+krog [r = 41] | p = 5281, o = 258
+krog [r = 40] | p = 5027, o = 251
